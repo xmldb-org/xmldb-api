@@ -14,145 +14,150 @@ Howto build:
      
    in the directory where this file is located.
 
-   $Id: build.xml,v 1.4 2004/07/17 09:27:36 per_nyfelt Exp $
+   $Id: build.xml,v 1.5 2004/07/17 16:59:38 per_nyfelt Exp $
 
 -->
 
 <project name="xmldb.xapi.api" default="main" basedir=".">
 
-  <!-- =================================================================== -->
-  <!-- Initializes the build process                                       -->
-  <!-- =================================================================== -->
-  <!-- default directory structure definitions -->
-  <property name="root.dir" value="${basedir}"/>
-  <property name="jar.dir" value="${root.dir}/lib"/>
-  <property name="src.dir" value="${root.dir}/api"/>
-  <property name="common.src.dir" value="${root.dir}/common"/>
-  <property name="build.dir" value="${root.dir}/build"/>
-  <property name="jar.build.dir" value="${build.dir}/jar"/>
-  <property name="build.doc" value="${build.dir}/javadoc"/>
-  <property name="api.build.dir" value="${build.dir}/classes-api"/>
-  <property name="sdk.build.dir" value="${build.dir}/classes-sdk"/>
-  <property name="common.build.dir" value="${build.dir}/common"/>
-  <property name="dist.build.dir" value="${root.dir}/dist/xmldb"/>
-  
-  <property name="javadoc.pkgs" value="org.xmldb.*"/>
-  
-  <!-- classpath to use within project -->
-  <path id="project.classpath">
+    <!-- =================================================================== -->
+    <!-- Initializes the build process                                       -->
+    <!-- =================================================================== -->
+    <!-- default directory structure definitions -->
+    <property name="root.dir" value="${basedir}"/>
+    <property name="jar.dir" value="${root.dir}/lib"/>
+    <property name="src.dir" value="${root.dir}/api"/>
+    <property name="common.src.dir" value="${root.dir}/common"/>
+    <property name="build.dir" value="${root.dir}/build"/>
+    <property name="jar.build.dir" value="${build.dir}/jar"/>
+    <property name="build.doc" value="${build.dir}/javadoc"/>
+    <property name="api.build.dir" value="${build.dir}/classes-api"/>
+    <property name="sdk.build.dir" value="${build.dir}/classes-sdk"/>
+    <property name="common.build.dir" value="${build.dir}/common"/>
+    <property name="dist.build.dir" value="${root.dir}/dist/xmldb"/>
 
-    <!-- compiled classes directory -->
-    <pathelement location="${api.build.dir}"/>
-    <pathelement location="${sdk.build.dir}"/>
+    <property name="javadoc.pkgs" value="org.xmldb.*"/>
 
-    <!-- all jars in jar directory -->
-    <fileset dir="${jar.dir}" />
+    <!-- classpath to use within project -->
+    <path id="project.classpath">
 
-    <!-- system property, environment classpath -->
-    <pathelement path="${java.class.path}"/>
-  </path>
-  
-  <target name="init">
-    <tstamp/>
-    <property name="jarname" value="xmldb-api"/>
-    <property name="sdk.jarname" value="xmldb-api-sdk"/>
-    <property name="common.jarname" value="xmldb-common"/>
-  </target>
+        <!-- compiled classes directory -->
+        <pathelement location="${api.build.dir}"/>
+        <pathelement location="${sdk.build.dir}"/>
 
-  <!-- =================================================================== -->
-  <!-- Prepares the build directory                                        -->
-  <!-- =================================================================== -->
-  <target name="prepare" depends="init">
-    <mkdir dir="${api.build.dir}"/>
-    <mkdir dir="${sdk.build.dir}"/>
-    <mkdir dir="${common.build.dir}"/>
-    <mkdir dir="${jar.build.dir}"/>  
-    <mkdir dir="${jar.dir}"/>
-  </target>
- 
-  <target name="main" depends="bin-jar, bin-jar-sdk, bin-jar-common">
-  </target> 
-  
-  <!-- =================================================================== -->
-  <!-- Compiles the XML:DB API sources                                     -->
-  <!-- =================================================================== -->
-  <target name="compile-api" depends="prepare">
-     <echo message="Compiling XML:DB API - Interfaces"/>
-     <javac srcdir="${src.dir}"
-           destdir="${api.build.dir}"
-           excludes="org/xmldb/api/reference/**, org/xmldb/api/sdk/**, org/xmldb/api/tests/**"
-           classpathref="project.classpath" />
-         <!--classpath refid="project.classpath"/-->
-  </target>
+        <!-- all jars in jar directory -->
+        <fileset dir="${jar.dir}"/>
 
-  <target name="bin-jar" depends="prepare, compile-api">
-    <jar jarfile="${jar.build.dir}/${jarname}.jar"
-         basedir="${api.build.dir}"/>
-  </target>
-  
-  <target name="sdk" depends="compile-sdk, bin-jar-sdk">
-  </target> 
-  
-  <target name="compile-sdk" depends="prepare, compile-api">
-     <echo message="Compiling XML:DB API -  SDK"/>
-     <javac srcdir="${src.dir}"
-           destdir="${sdk.build.dir}"
-           debug="off"
-           deprecation="off"
-           excludes="org/xmldb/api/base/**, org/xmldb/api/modules/**">
-         <classpath refid="project.classpath"/>
-	 </javac>
-  </target>
-  
-  <target name="bin-jar-sdk" depends="prepare, compile-sdk">
-    <jar jarfile="${jar.build.dir}/${sdk.jarname}.jar"
-         basedir="${sdk.build.dir}"
-    />
-  </target>
+        <!-- system property, environment classpath -->
+        <pathelement path="${java.class.path}"/>
+    </path>
+
+    <target name="init">
+        <tstamp/>
+        <property name="jarname" value="xmldb-api"/>
+        <property name="sdk.jarname" value="xmldb-api-sdk"/>
+        <property name="common.jarname" value="xmldb-common"/>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Prepares the build directory                                        -->
+    <!-- =================================================================== -->
+    <target name="prepare" depends="init">
+        <mkdir dir="${api.build.dir}"/>
+        <mkdir dir="${sdk.build.dir}"/>
+        <mkdir dir="${common.build.dir}"/>
+        <mkdir dir="${jar.build.dir}"/>
+        <mkdir dir="${jar.dir}"/>
+    </target>
+
+    <target name="main" depends="bin-jar, bin-jar-sdk, bin-jar-common">
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Compiles the XML:DB API sources                                     -->
+    <!-- =================================================================== -->
+    <target name="compile-api" depends="prepare">
+        <echo message="Compiling XML:DB API - Interfaces"/>
+        <javac srcdir="${src.dir}"
+            destdir="${api.build.dir}"
+            excludes="org/xmldb/api/reference/**, org/xmldb/api/sdk/**, org/xmldb/api/tests/**"
+            classpathref="project.classpath"/>
+        <!--classpath refid="project.classpath"/-->
+    </target>
+
+    <target name="bin-jar" depends="prepare, compile-api">
+        <jar jarfile="${jar.build.dir}/${jarname}.jar"
+            basedir="${api.build.dir}"/>
+    </target>
+
+    <target name="sdk" depends="compile-sdk, bin-jar-sdk">
+    </target>
+
+    <target name="compile-sdk" depends="prepare, compile-api">
+        <echo message="Compiling XML:DB API -  SDK"/>
+        <javac srcdir="${src.dir}"
+            destdir="${sdk.build.dir}"
+            debug="off"
+            deprecation="off"
+            excludes="org/xmldb/api/base/**, org/xmldb/api/modules/**">
+            <classpath refid="project.classpath"/>
+        </javac>
+    </target>
+
+    <target name="bin-jar-sdk" depends="prepare, compile-sdk">
+        <jar jarfile="${jar.build.dir}/${sdk.jarname}.jar"
+            basedir="${sdk.build.dir}"
+            />
+    </target>
 
     <!-- =================================================================== -->
     <!-- Compiles the XML:DB Common sources                                     -->
     <!-- =================================================================== -->
 
     <target name="compile-common" depends="prepare">
-         <echo message="Compiling XML:DB common"/>
-         <javac srcdir="${common.src.dir}"
-               destdir="${common.build.dir}"
-               classpathref="project.classpath" />
-             <!--classpath refid="project.classpath"/-->
-      </target>
+        <echo message="Compiling XML:DB common"/>
+        <javac srcdir="${common.src.dir}"
+            destdir="${common.build.dir}"
+            classpathref="project.classpath"/>
+        <!--classpath refid="project.classpath"/-->
+    </target>
 
-   <target name="bin-jar-common" depends="compile-common">
-    <jar jarfile="${jar.build.dir}/${common.jarname}.jar"
-         basedir="${common.build.dir}"
-    />
-  </target>
+    <target name="bin-jar-common" depends="compile-common">
+        <jar jarfile="${jar.build.dir}/${common.jarname}.jar"
+            basedir="${common.build.dir}"
+            />
+    </target>
 
-  <!-- =================================================================== -->
-  <!-- Tasks to manage execution of tests                                  -->
-  <!-- =================================================================== -->
-  <target name="tests" depends="setup">
-     <java classpathref="project.class.path" 
-          classname="org.xmldb.api.tests.XMLDBTestSuite" 
-          fork="true"/>
-  </target>
-   
-  <!-- Setup the repository for the tests. -->
-  <target name="setup">
-     <mkdir dir="data/child1/subchild1"/>
-     <mkdir dir="data/child1/subchild2"/>
-     <mkdir dir="data/child2/subchild1"/>
+    <!-- =================================================================== -->
+    <!-- Compiles all code                                                   -->
+    <!-- =================================================================== -->
+    <target name="compile" depends="compile-common, compile-api, compile-sdk"/>
 
-     <copy todir="data/child1">
-       <fileset dir="tests/files" excludes="**/CVS"/>          
-     </copy> 
-  </target>
-  
-  <!-- =================================================================== -->
-  <!-- Build Full API docs including SDK files                             -->
-  <!-- =================================================================== -->
-  <target name="javadoc-full" depends="prepare">
-    <delete dir="${build.doc}/full"/>
+    <!-- =================================================================== -->
+    <!-- Tasks to manage execution of tests                                  -->
+    <!-- =================================================================== -->
+    <target name="tests" depends="setup">
+        <java classpathref="project.class.path"
+            classname="org.xmldb.api.tests.XMLDBTestSuite"
+            fork="true"/>
+    </target>
+
+    <!-- Setup the repository for the tests. -->
+    <target name="setup">
+        <mkdir dir="data/child1/subchild1"/>
+        <mkdir dir="data/child1/subchild2"/>
+        <mkdir dir="data/child2/subchild1"/>
+
+        <copy todir="data/child1">
+            <fileset dir="tests/files" excludes="**/CVS"/>
+        </copy>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Build Full API docs including SDK files                             -->
+    <!-- =================================================================== -->
+    <target name="javadoc-full" depends="prepare">
+        <delete dir="${build.doc}/full"/>
 
         <mkdir dir="${build.doc}/full"/>
 
@@ -171,20 +176,20 @@ Howto build:
 
         </javadoc>
 
-  </target>
-  
-  <!-- =================================================================== -->
-  <!-- Build API Specification                                             -->
-  <!-- =================================================================== -->
-  <target name="javadoc-spec" depends="prepare">
-    <deltree dir="${build.doc}/api"/>
-    
-    <mkdir dir="${build.doc}/api"/>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Build API Specification                                             -->
+    <!-- =================================================================== -->
+    <target name="javadoc-spec" depends="prepare">
+        <deltree dir="${build.doc}/api"/>
+
+        <mkdir dir="${build.doc}/api"/>
 
 
         <javadoc packagenames="org.xmldb.api,
-	                           org.xmldb.api.base,
-	                           org.xmldb.api.modules"
+                               org.xmldb.api.base,
+                               org.xmldb.api.modules"
             sourcepath="${src.dir}"
             destdir="${build.doc}/api"
             public="true"
@@ -194,54 +199,54 @@ Howto build:
             header="&lt;b&gt;XML:DB API&lt;/b&gt;"
             bottom="&lt;font size=2&gt;Copyright (C) &lt;a href=http://xmldb-org.sourceforge.net&gt;XML:DB Initiative&lt;/a&gt;. All rights reserved.%lt;/font&gt;"
             classpathref="project.classpath"/>
-  </target>
-  
-  <!-- =================================================================== -->
-  <!-- Builds the distribution tar and zips                                -->
-  <!-- =================================================================== -->
-  <target name="dist" depends="main, sdk, javadoc-full, setup, clean-build">
-    
-    <mkdir dir="${dist.build.dir}"/>
-        
-    <copy todir="${dist.build.dir}">
-      <fileset dir="." excludes="**/CVS, **/classes-common/**, **/data/**, **/dist/**"/> 
-    </copy>
-    
-    <!-- finally build the archives -->
-    <antcall target="dist-archive"/>        
-  </target>
-  
-  <!-- 
-     Build the dist jar and zip archive files 
-  -->
-  <target name="dist-archive" depends="init">
-    <property name="distrib.file" value="${jarname}-${DSTAMP}"/>
-    
-    <tar tarfile="${distrib.file}.tar" basedir="${dist.build.dir}/.."/>
-    <gzip zipfile="../downloads/${distrib.file}.tar.gz" src="${distrib.file}.tar"/>
-    <delete file="${distrib.file}.tar"/>
-    
-    <!--zip zipfile="${distrib.file}.zip" basedir="${distrib.file}"/-->  
-  </target>
-  
-  <!-- =================================================================== -->
-  <!-- Cleans everything                                                   -->
-  <!-- =================================================================== -->
-  <target name="clean" depends="init, clean-build, clean-jar">
-    <delete dir="${dist.build.dir}"/>
-    <delete dir="data"/>    
-  </target>
+    </target>
 
-  <target name="clean-build">
-    <delete dir="${build.dir}"/>
-    <delete dir="${sdk.build.dir}"/>
-    <delete dir="${common.build.dir}"/>
-  </target>
-  
-  <target name="clean-jar">
-    <delete file="${jar.dir}/${jarname}.jar"/>
-    <delete file="${jar.dir}/${sdk.jarname}.jar"/>
-    <delete file="${jar.dir}/${common.jarname}.jar"/>
-  </target>
-  
+    <!-- =================================================================== -->
+    <!-- Builds the distribution tar and zips                                -->
+    <!-- =================================================================== -->
+    <target name="dist" depends="clean-build, main, sdk, javadoc-full, setup">
+
+        <mkdir dir="${dist.build.dir}"/>
+
+        <copy todir="${dist.build.dir}">
+            <fileset dir="." excludes="**/CVS, **/classes-common/**, **/data/**, **/dist/**"/>
+        </copy>
+
+        <!-- finally build the archives -->
+        <antcall target="dist-archive"/>
+    </target>
+
+    <!--
+       Build the dist jar and zip archive files
+    -->
+    <target name="dist-archive" depends="init">
+        <property name="distrib.file" value="${jarname}-${DSTAMP}"/>
+
+        <tar tarfile="${distrib.file}.tar" basedir="${dist.build.dir}/.."/>
+        <gzip zipfile="../downloads/${distrib.file}.tar.gz" src="${distrib.file}.tar"/>
+        <delete file="${distrib.file}.tar"/>
+
+        <!--zip zipfile="${distrib.file}.zip" basedir="${distrib.file}"/-->
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Cleans everything                                                   -->
+    <!-- =================================================================== -->
+    <target name="clean" depends="init, clean-build, clean-jar">
+        <delete dir="${dist.build.dir}"/>
+        <delete dir="data"/>
+    </target>
+
+    <target name="clean-build">
+        <delete dir="${build.dir}"/>
+        <delete dir="${sdk.build.dir}"/>
+        <delete dir="${common.build.dir}"/>
+    </target>
+
+    <target name="clean-jar">
+        <delete file="${jar.dir}/${jarname}.jar"/>
+        <delete file="${jar.dir}/${sdk.jarname}.jar"/>
+        <delete file="${jar.dir}/${common.jarname}.jar"/>
+    </target>
+
 </project>

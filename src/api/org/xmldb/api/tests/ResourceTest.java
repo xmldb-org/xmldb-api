@@ -53,104 +53,123 @@ package org.xmldb.api.tests;
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
 
-import java.io.*;
-
 import junit.framework.*;
+import org.apache.xerces.parsers.SAXParser;
+import org.w3c.dom.Node;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.modules.BinaryResource;
+import org.xmldb.api.modules.XMLResource;
 
-import org.xmldb.api.modules.*;
-
-import org.w3c.dom.*;
-import org.xml.sax.*;
-import org.apache.xerces.parsers.*;
+import java.io.StringReader;
 
 public class ResourceTest extends XMLDBTestCase {
-   
-   public ResourceTest(String name) {
-      super(name);
-   }
-   
-   public static Test suite() {
-      return new TestSuite(ResourceTest.class);
-   }      
-   
-   public void testBinaryResource() {
-      try {
-         if ( supportsBinary ) {
-            byte[] content = new byte[3];
-            content[0] = 0x1;
-            content[1] = 0x2;
-            content[2] = 0x3;
-            BinaryResource res = 
-               (BinaryResource) col.createResource("test", BinaryResource.RESOURCE_TYPE);
-            assertTrue(res.getId().equals("test"));
-            assertTrue(res.getParentCollection() == col);
-            
-            res.setContent(content);         
-            byte[] result = (byte[]) res.getContent();
-            
-            assertTrue(result != null);
-            assertTrue(result[0] == 0x1);
-            assertTrue(result[1] == 0x2);
-            assertTrue(result[2] == 0x3);
-         }
-      } catch (Exception e) {         
-         fail( e.getMessage( ) );
-      }   
-   }
-   
-   public void testXMLResource() {
-      try {
-         String content = "<?xml version=\"1.0\"?><tag1><tag2>value</tag2></tag1>";
-         
-         XMLResource res = 
-            (XMLResource) col.createResource("test", XMLResource.RESOURCE_TYPE);
-         assertTrue(res.getId().equals("test"));
-         assertTrue(res.getId().equals(res.getDocumentId()));
-         assertTrue(res.getParentCollection() == col);
-         
-         res.setContent(content);         
-         String result = (String) res.getContent();
-         
-         assertTrue(result != null);
-         assertTrue(content.equals(result));
 
-         Node node = res.getContentAsDOM();
-         assertTrue(node != null);
-   
-         res.setContentAsDOM(node);
-         Node node2 = res.getContentAsDOM();
-         assertTrue(node2 != null);
-         
-         // TODO: better validate DOM handling
-         // Test creation via DOM
-         // Test setContentAsDOM INVALID_RESOURCE exception
-         // Test setContentAsDOM WRONG_CONTENT_TYPE exception
-         
-         // TODO: add SAX validation
-         content = "<?xml version=\"1.0\"?><tag1 name=\"tag1\">";
-         content += "<tag2 name=\"tag2\" xmlns:pre=\"http:///pre\">";
-         content += "<pre:tag3>value&amp;        &#5030;    </pre:tag3>\n";
-         content += "</tag2></tag1><?pi-test value=\"none\"?>";
-         XMLReader xr = new SAXParser();
-         ContentHandler handler = res.setContentAsSAX();
-         xr.setContentHandler(handler);
-         xr.setErrorHandler((ErrorHandler) handler);
-         if (content != null) {
-            xr.parse(new InputSource(new StringReader(content)));
-         }
-         // TODO: turn this into a real test case.
-         assertNotNull(res.getContent());
-      } catch (Exception e) {
-         e.printStackTrace();
-         fail( e.getMessage( ) );
-      }
-   }
-   
-   public void testStub() {
-      try {             
-    
-      } catch (Exception e) {
-         fail( e.getMessage( ) );
-      }   
-   }
+    private static final String resId = "test";
+
+    public ResourceTest(String name) {
+        super(name);
+    }
+
+    public static Test suite() {
+        return new TestSuite(ResourceTest.class);
+    }
+
+    private void cleanupExistingResource() throws XMLDBException {
+        // cleanup from lefovers due to previous failures etc.
+        Resource temp = col.getResource(resId);
+        if (temp != null) {
+            col.removeResource(temp);
+        }
+    }
+
+    public void testBinaryResource() {
+        try {
+            if (supportsBinary) {
+                byte[] content = new byte[3];
+                content[0] = 0x1;
+                content[1] = 0x2;
+                content[2] = 0x3;
+
+                cleanupExistingResource();
+
+                BinaryResource res =
+                        (BinaryResource) col.createResource(resId, BinaryResource.RESOURCE_TYPE);
+                assertTrue(res.getId().equals(resId));
+                assertTrue(res.getParentCollection() == col);
+
+                res.setContent(content);
+                byte[] result = (byte[]) res.getContent();
+
+                assertTrue(result != null);
+                assertTrue(result[0] == 0x1);
+                assertTrue(result[1] == 0x2);
+                assertTrue(result[2] == 0x3);
+            }
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    public void testXMLResource() {
+        try {
+            String content = "<?xml version=\"1.0\"?><tag1><tag2>value</tag2></tag1>";
+
+            cleanupExistingResource();
+
+            XMLResource res =
+                    (XMLResource) col.createResource(resId, XMLResource.RESOURCE_TYPE);
+            assertTrue(res.getId().equals(resId));
+            assertTrue(res.getId().equals(res.getDocumentId()));
+            assertTrue(res.getParentCollection() == col);
+
+            res.setContent(content);
+            String result = (String) res.getContent();
+
+            assertTrue(result != null);
+            assertTrue(content.equals(result));
+
+            Node node = res.getContentAsDOM();
+            assertTrue(node != null);
+
+            res.setContentAsDOM(node);
+            Node node2 = res.getContentAsDOM();
+            assertTrue(node2 != null);
+
+            // TODO: better validate DOM handling
+            // Test creation via DOM
+            // Test setContentAsDOM INVALID_RESOURCE exception
+            // Test setContentAsDOM WRONG_CONTENT_TYPE exception
+
+            // TODO: add SAX validation
+            content = "<?xml version=\"1.0\"?><tag1 name=\"tag1\">";
+            content += "<tag2 name=\"tag2\" xmlns:pre=\"http:///pre\">";
+            content += "<pre:tag3>value&amp;        &#5030;    </pre:tag3>\n";
+            content += "</tag2></tag1><?pi-test value=\"none\"?>";
+            XMLReader xr = new SAXParser();
+            ContentHandler handler = res.setContentAsSAX();
+            xr.setContentHandler(handler);
+            xr.setErrorHandler((ErrorHandler) handler);
+            if (content != null) {
+                xr.parse(new InputSource(new StringReader(content)));
+            }
+            // TODO: turn this into a real test case.
+            assertNotNull(res.getContent());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+    }
+
+    public void testStub() {
+        try {
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
 }

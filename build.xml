@@ -57,10 +57,11 @@
             <fileset dir="src/api/org"/>
         </copy>
 	    <ant dir="src" target="dist" inheritall="false" />
-        <copy tofile="dist/xmldb/xmldb.jar">
-            <fileset dir="src/lib/xmldb-api-*.jar"/>
+        <copy todir="dist/xmldb/" >
+            <fileset file="src/build/jar/*.jar"/>
         </copy>
-	    <tar tarfile="../downloads/xmldb-api-${DSTAMP}.tar.gz" compression="gzip"  >
+        <delete file="downloads/xmldb-api-${DSTAMP}.tar.gz" />
+	    <tar tarfile="downloads/xmldb-api-${DSTAMP}.tar.gz" compression="gzip"  >
             <tarfileset dir="dist" />
         </tar>
     </target>
