@@ -131,7 +131,12 @@ public class ResourceTest extends XMLDBTestCase {
             String result = (String) res.getContent();
 
             assertTrue(result != null);
-            assertTrue(content.equals(result));
+            // the resource could come back as valid XML but with whitespace
+            String processedContent = compressXMLString(content);
+            String processedResult = compressXMLString(result);
+            //System.out.println("processedContent = " + processedContent);
+            //System.out.println("processedResult  = " + processedResult);
+            assertTrue(processedContent.equals(processedResult));
 
             Node node = res.getContentAsDOM();
             assertTrue(node != null);
@@ -153,7 +158,9 @@ public class ResourceTest extends XMLDBTestCase {
             XMLReader xr = new SAXParser();
             ContentHandler handler = res.setContentAsSAX();
             xr.setContentHandler(handler);
-            xr.setErrorHandler((ErrorHandler) handler);
+            if (handler instanceof ErrorHandler) {
+                xr.setErrorHandler((ErrorHandler) handler);
+            }
             if (content != null) {
                 xr.parse(new InputSource(new StringReader(content)));
             }
@@ -163,6 +170,14 @@ public class ResourceTest extends XMLDBTestCase {
             e.printStackTrace();
             fail(e.getMessage());
         }
+    }
+
+    private String compressXMLString(String xml) throws Exception {
+        XMLReader xr = new SAXParser();
+        ContentHandler handler = new StringContentHandler();
+        xr.setContentHandler(handler);
+        xr.parse(new InputSource(new StringReader(xml)));
+        return handler.toString();
     }
 
     public void testStub() {
