@@ -1,18 +1,23 @@
 <?xml version="1.0"?>
 
 <book software="" title="XML:DB Initiative" copyright="2000-2003 The XML:DB Initiative">
-  <external id="back" label="XML:DB Home" href="http://www.xmldb.org/index.html"/>
+  <!--external id="back" label="XML:DB Home" href="http://www.xmldb.org/index.html"/-->
+  <external id="back" label="XML:DB Home" href="../index.html"/>
   <separator/>
   <page id="index" label="Index" source="index.xml"/>
   <spec id="xapi-req" label="Requirements" source="xapi-req.xml"/>
   <spec id="xapi-draft" label="Working Draft" source="xapi-draft.xml"/>
   <spec id="UseCases" label="API Use Cases" source="UseCases.xml"/>
   <separator/>
-  <external id="javadoc" label="JavaDoc" href="http://www.xmldb.org/xapi/api/index.html"/>
-  <external id="repository" label="Repository" href="http://cvs.smb-tec.com/cgi-bin/cvsweb.cgi/xmldb/xapi"/>
+  <!--external id="javadoc" label="JavaDoc" href="http://www.xmldb.org/xapi/api/index.html"/-->
+  <!--external id="repository" label="Repository" href="http://cvs.smb-tec.com/cgi-bin/cvsweb.cgi/xmldb/xapi"/-->
+  <external id="javadoc" label="JavaDoc" href="api/index.html"/>
+  <external id="repository" label="Repository" href="http://cvs.sourceforge.net/viewcvs.py/xmldb-org/"/>
   <separator/>
-  <external id="maillist" label="Mail List" href="http://www.xmldb.org/projects.html"/>
-  <external id="mailarchive" label="Mail Archive" href="http://archive.xmldb.org"/>
+  <!--external id="maillist" label="Mail List" href="http://www.xmldb.org/projects.html"/-->
+  <!--external id="mailarchive" label="Mail Archive" href="http://archive.xmldb.org"/-->
+  <external id="maillist" label="Mail List" href="http://sourceforge.net/mail/?group_id=75532"/>
+  <external id="mailarchive" label="Mail Archive" href="http://sourceforge.net/mail/?group_id=75532"/>
   
   <!--hiddenspec id="base" source="base.xml"/>
   <hiddenspec id="BinaryResource" source="BinaryResource.xml"/>

@@ -2,16 +2,15 @@
 <project name="xmldb.xapi" default="docs" basedir=".">
 
     <property name="build.compiler" value="modern"/>
-    <property name="build.dir" value="build"/>
-    <property name="build.doc.api" value="${build.dir}/javadoc"/>
-    <property name="src.dir" value="src"/>
-    <property name="dist.dir" value="dist"/>
-    <property name="lib.dir" value="../stylebook/lib"/>
+    <property name="build.dir" value="${basedir}/build"/>
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="dist.dir" value="${basedir}/dist"/>
+    <property name="stylebook.lib.dir" value="../stylebook/lib"/>
     <property name="skin" value="../stylebook/styles"/>
 
     <path id="project.classpath">
         <fileset dir="${build.dir}"/>
-        <fileset dir="${lib.dir}"/>
+        <fileset dir="${stylebook.lib.dir}"/>
     </path>
 
     <target name="clean">
@@ -19,6 +18,7 @@
     </target>
 
     <target name="prepare">
+        <tstamp/>
         <mkdir dir="${build.dir}"/>
     </target>
 
@@ -26,43 +26,39 @@
            Generate stylebook documentation
     =======================================================================-->
     <target name="docs" depends="prepare">
-        <mkdir dir="${build.doc.api}"/>
-
-        <javadoc packagenames="org.xmldb.api,
-	                           org.xmldb.api.base,
-	                           org.xmldb.api.modules"
-            sourcepath="${src.dir}/api"
-            destdir="${build.doc.api}"
-            public="true"
-            version="true"
-            author="true"
-            doctitle="XML:DB API Specification"
-            header="&lt;b&gt;XML:DB API&lt;/b&gt;"
-            bottom="&lt;font size=2&gt;Copyright (C) &lt;a href=http://www.xmldb.org&gt;XML:DB Initiative&lt;/a&gt;. All rights reserved.%lt;/font&gt;"
-            classpathref="project.classpath"/>
+        <java classname="org.apache.stylebook.StyleBook"
+            fork="yes"
+            failonerror="yes"
+            classpathref="project.classpath">
+            <arg line="targetDirectory=${build.dir}"/>
+            <arg line="./book.xml"/>
+            <arg line="${skin}"/>
+        </java>
+        <ant dir="src" target="javadoc-spec" inheritall="false">
+              <property name="build.doc" value="${build.dir}" /> 
+        </ant>
     </target>
 
     <!--======================================================================
            Compile all sources
     =======================================================================-->
     <target name="compile" depends="prepare">
-        <javac srcdir="${src.dir}"
-            destDir="${build.dir}"
-            classpathref="project.classpath"
-            failonerror="true"/>
+        <ant dir="src" target="compile" inheritall="false"/>
+
     </target>
 
     <target name="dist" depends="compile">
         <mkdir dir="${dist.dir}"/>
         <mkdir dir="${dist.dir}/xmldb"/>
 	    <copy todir="dist/xmldb">
-            <fileset dir="src/api/org dist/xmldb"/>
+            <fileset dir="src/api/org"/>
         </copy>
-	    <ant dir="src"/>
-        <copy tofile="dist/xmldb/xmldb.jar">            
+	    <ant dir="src" target="dist" inheritall="false" />
+        <copy tofile="dist/xmldb/xmldb.jar">
             <fileset dir="src/lib/xmldb-api-*.jar"/>
-        </copy>	
-	    <tar tarfile="../downloads/xmldb-api-`date +%m%d%Y`.tar.gz"
-            includes="dist/**"/>
+        </copy>
+	    <tar tarfile="../downloads/xmldb-api-${DSTAMP}.tar.gz" compression="gzip"  >
+            <tarfileset dir="dist" />
+        </tar>
     </target>
 </project>

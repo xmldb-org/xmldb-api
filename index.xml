@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id: index.xml,v 1.2 2002/07/04 15:01:16 lars Exp $ -->
+<!-- $Id: index.xml,v 1.1 2004/05/30 11:54:44 per_nyfelt Exp $ -->
 
 <!DOCTYPE document SYSTEM "sbk:/style/dtd/document-v10.dtd">
 
@@ -31,19 +31,19 @@
                <li><link href="xapi-draft.html">Working Draft</link>, last release Sept. 24, 2001</li>
                <li><link href="UseCases.html">API Use Cases Draft</link>, last release Sept. 24, 2001</li>
                <li><link href="xapi-req.html">Draft Requirements</link>, last release Nov. 15, 2000</li>               
-               <li><link href="downloads/xmldb-20010924.tar.gz">Java Interfaces</link>, last release Sept. 24, 2001</li>
+               <li><link href="http://sourceforge.net/project/showfiles.php?group_id=75532">Java Interfaces</link>, last release Sept. 24, 2001</li>
             </ul>
          </p>
 
          <p>
              <strong>Mailing List:</strong>
+
              <ul>
-               <li>Subscribe: <link href="mailto:xapi-dev-request@xmldb.org">xapi-dev-request@xmldb.org</link>
-                   with the word <code>subscribe</code> in the body</li>
-               <li>Unsubscribe: <link href="mailto:xapi-dev-request@xmldb.org">xapi-dev-request@xmldb.org</link>
-                   with the word <code>unsubscribe</code> in the body</li>
-               <li>Post: <link href="mailto:xapi-dev@xmldb.org">xapi-dev@xmldb.org</link></li>
-               <li>Mail Archive: <link href="http://archive.xmldb.org/">http://archive.xmldb.org/</link></li>
+
+               <li>List: <link href="http://lists.sourceforge.net/lists/listinfo/xmldb-org-xapi">The Xmldb-org-xapi
+             mailing list</link> </li>
+               <li>Post: <link href="mailto:xmldb-org-xapi@lists.sourceforge.net">mailto:xmldb-org-xapi@lists.sourceforge.net</link></li>
+               <li>Mail Archive: <link href="http://sourceforge.net/mailarchive/forum.php?forum=xmldb-org-xapi">http://sourceforge.net/mailarchive</link></li>
              </ul>
          </p>
          
@@ -52,7 +52,7 @@
             <ul>
                <li>
                   The reference implementation is available for 
-                  <link href="downloads/xmldb-api-11112001.tar.gz">download</link>. 
+                  <link href="http://sourceforge.net/project/showfiles.php?group_id=75532">download</link>.
                   This implementation provides a simple file system based
                   implementation of the API. The download also includes the 
                   most current Java intefaces and the driver development
