@@ -1,0 +1,54 @@
+Removed the INVALID_SERVICE error from ErrorCodes because it is no longer used.
+Removed the registerService method from the Collection interface.
+Changed ErrorCodes from being an Enum to being an Interface to better control
+   the allocation of error code numbers.
+ErrorCodes are now allocated to categories and grouped with all related codes
+   being in the same series.
+Added new getCollection method containing username and password parameters to 
+   DatabaseManager
+Added username and password paramters to the getCollection() method in the
+   Database interface.
+Added RESOURCE_TYPE constant to XMLResource and BinaryResource
+Changed Java mapping for BinaryResource to handle byte arrays for content. 
+Added XUpdateService.
+Added CollectionManagementService.
+Added COLLECTION_CLOSED error code to ErrorCodes.
+Added isOpen method to the Collection interface.
+Added ResourceSet interface as new result for XPath queries.
+Added setNamespace method to XPathQueryService.
+Added getNamespace method to XPathQueryService.
+Added clearNamespaces method to XPathQueryService.
+Added removeNamespace method to XPathQueryService.
+Added queryResource method to XPathQueryService to handle queries against a
+   single resource.
+Added getDocumentId() to the XMLResource interface.
+Removed getName from Configurable interface.
+Added getName to the Database interface.
+Added getName to the Collection interface.
+Added getName to the Service interface.
+Added COLLECTION_CLOSED error code to all methods in Collection that should not
+   be called after close has been called.
+In the Java API Changed XMLDBException to extend Exception instead of
+   RuntimeException. 
+
+-- Changes published on May 07
+Fixed Compilation Errors when using a strict IDL compiler.
+Added getName to Configurable interface.
+Removed getName from Service interface
+Added exceptions
+Removed DatabaseManager from IDL
+Removed Resource scope around modules.
+Added getResourceType to Resource
+Added listChildCollections to Collection
+Added getChildCollection to Collection
+Added listResources to Collection
+Removed getChildCollections from Collection
+Removed getResources from Collection
+Added DOM and SAX support directly to XMLResource
+Removed DOMNodeResource
+Removed SAXResource
+Added NOT_IMPLEMENTED error code
+Changed DatabaseManager.getProperty, setProperty and getDatabases to not throw exceptions.
+Added a resourceType parameter to Collection.createResource()
+
+

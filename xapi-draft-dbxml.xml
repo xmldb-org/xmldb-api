@@ -1,0 +1,717 @@
+<?xml version="1.0"?>
+<!-- $Id: xapi-draft-dbxml.xml,v 1.1.1.1 2002/01/30 09:46:42 lars Exp $ -->
+
+<!DOCTYPE specification SYSTEM "sbk:/style/dtd/specification-v10.dtd">
+
+<specification>
+
+   <header>
+      <title>XML Database API Draft Proposal</title>
+      <version>2000-11-17</version>
+      <type>Working Draft</type>
+      <authors>
+         <person name="Tom Bradford" email="bradford@dbxmlgroup.com"/>
+         <person name="Kimbro Staken" email="kstaken@dbxmlgroup.com"/>         
+      </authors>
+      <notice>
+      This is a Proposed XML:DB Working Draft for review by all interested parties.
+      It is a draft document and may be updated, replaced, or obsoleted by other
+      documents at any time. It is inappropriate to use Proposed Working Drafts as reference 
+      material or to cite them as other than &quot;work in progress&quot;. This work
+      is part of the <link href="http://www.xmldb.org/">XML:DB Project</link>.
+      </notice>
+      <abstract>
+      This document defines a proposed draft specification for the XML Database API.      
+      </abstract>
+   </header>
+
+   <body>
+
+      <s1 title="XML Database API">
+
+         <s2 title="Abstract">
+
+            <p>
+            This document defines a proposed draft specification for the XML Database API.
+            This is a very preliminary document to generate discussion at this
+            stage it is not to be considered an official draft
+            </p>
+            <p>
+            NOTE: This API is currently specified in Java even though it is the 
+            goal of XML:DB to insure the interfaces can be implemented in 
+            multiple languages.   
+            </p>
+            <p>
+            A gizipped tar file containing the java source files for the api is available 
+            for <link href="downloads/xapi-draft.tar.gz">download</link>
+            </p>
+         </s2>
+     </s1>
+     
+     <s1 title="Interfaces">
+
+<s2 title="Connection">
+<source>
+<![CDATA[
+/**
+ * getConnection represents a physical (or logical) connection to 
+ * an XML database.
+ */
+
+public interface Connection {
+   /**
+    * getFeatures returns the feature set for this Connection.
+    *
+    * @see org.xmldb.cli.Features
+    *
+    * @return a Feature set
+    */   
+   Features getFeatures();
+   
+   /**
+    * getDriver returns the Driver that manages this Connection.
+    *
+    * @return The Driver
+    */
+   Driver getDriver();  
+
+   /**
+    * createTransaction creates a new Transaction object.
+    *
+    * @return A new Transaction
+    */
+   Transaction createTransaction() throws NotSupportedException;
+
+   /**
+    * resolveContainer resolves/opens a Container based on the Connection-
+    * relative location provided.
+    *
+    * @param location The Container location
+    * @return The resolved Container
+    */
+   Container resolveContainer(String location) throws NotFoundException;
+   
+   /**
+    * createContainer attempts to create a new Container based on the
+    * Connection-relative location provided.
+    *
+    * @param location The Container location
+    * @return The newly created Container
+    */
+   Container createContainer(String location) throws NotFoundException, NotSupportedException;
+   
+   /**
+    * destroyContainer attempts to destroy the phyiscal image of the
+    * specific Container object.
+    *
+    * @param container The Container to destroy
+    */
+   boolean destroyContainer(Container container) throws NotSupportedException;
+   
+   /**
+    * getLanguages returns a list of the query languages supported by this
+    * Connection.  Languages are considered features, so a developer may
+    * also check the Feature set for a specific version of a language.
+    *
+    * @return The language set
+    */
+   String[] getLanguages() throws NotSupportedException;
+   
+   /**
+    * getDefaultLanguage returns the default language used by this
+    * Connection.  Languages are considered features, so a developer may
+    * also check the Feature set for a specific version of a language.
+    *
+    * @return The default language name
+    */
+   String getDefaultLanguage() throws NotSupportedException;
+   
+
+   /**
+    * setDefaultLanguage setsthe default language to be used by this
+    * Connection.  Languages are considered features, so a developer may
+    * also check the Feature set for a specific version of a language.
+    *
+    * @return The default language name
+    */   
+   void setDefaultLanguage(String language) throws NotSupportedException;
+   
+   /**
+    * query performs a query against this Connection using the Connection's
+    * default query language.
+    *
+    * @param query The query to execute
+    * @return The resulting Container
+    */
+   Container query(String query) throws DBException;     
+
+   /**
+    * queryWithLanguage performs a query against this Connection using the 
+    * specified query language.
+    *
+    * @param query The query to execute
+    * @param language The language to use
+    * @return The resulting Container
+    */   
+   Container queryWithLanguage(String query, String language) throws DBException;
+   
+   /**
+    * query performs a query against this Connection using the Connection's
+    * default query language.  The query is represented as a DOM Document.
+    *
+    * @param query The query to execute
+    * @return The resulting Container
+    */   
+   Container queryDOM(org.w3c.dom.Document query) throws DBException;
+   
+   /**
+    * queryDOMWithLanguage performs a query against this Connection using 
+    * the specified query language.  The query is represented as a DOM Document.
+    *
+    * @param query The query to execute
+    * @param language The language to use
+    * @return The resulting Container
+    */      
+   Container queryDOMWithLanguage(org.w3c.dom.Document query, String language) throws DBException;
+   
+   /**
+    * getRootContainer returns the root-level Container relative to the
+    * current Connection.  The contents of this Container will differ
+    * depending upon the implementation.
+    *
+    * @return The root-level Container
+    */
+   Container getRootContainer() throws NotSupportedException;
+   
+   /**
+    * close closes the current Connection and releases any resources being
+    * maintained by the Connection.
+    */
+   void close() throws DBException;
+}
+]]>
+</source>
+</s2>
+
+<s2 title="Container">
+<source>
+<![CDATA[
+/**
+ * Container is the generic representation of a Document Set.
+ */
+
+public interface Container {  
+   /**
+    * getFeatures returns the feature set for this Container.
+    *
+    * @see org.xmldb.cli.Features
+    *
+    * @return a Feature set
+    */      
+   Features getFeatures();
+   
+   /**
+    * getParentContainer returns the parent Container of this Container 
+    * (or null if there is none).
+    *
+    * @return The parent Container (or null)
+    */
+   Container getParentContainer() throws NotSupportedException;
+   
+   /**
+    * getChildContainerCount returns the number of child Containers that
+    * this Container maintains.
+    *
+    * @return The child count
+    */
+   int getChildContainerCount() throws NotSupportedException;
+   
+   /**
+    * getChildContainers returns the set of child Containers that this
+    * Container maintains.  If this features is supported by the 
+    * implementation and there or no child containers, this method
+    * MUST return a 0-length array of Container.
+    *
+    * @return The child Containers
+    */
+   Container[] getChildContainers() throws NotSupportedException;
+   
+   /**
+    * getDocumentCount returns the number of Documents being maintained
+    * by this Container.
+    *
+    * @return The Document count 
+    */
+   int getDocumentCount() throws NotSupportedException;
+   
+   /**
+    * createID attempts to create a unique ID in the context of this Container.
+    *
+    * @param id A hint for the ID creation
+    * @return The newly created ID
+    */
+   ID createID(Object id) throws NotSupportedException;  
+   
+   /**
+    * addDocumentText attempts to add a Document to this Container.  The
+    * Document is represented in a textual format and therefore the
+    * implementation is responsible for parsing to a native format.
+    *
+    * @param text The Document
+    * @return A newly created ID
+    */
+   ID addDocumentText(String text) throws ReadOnlyException, NotSupportedException;
+   
+   /**
+    * addDocumentText attempts to add a Document to this Container.  The
+    * Document is represented by a DOM tree and therefore the implementation 
+    * is responsible for converting to a native format.
+    *
+    * @param doc The Document
+    * @return A newly created ID
+    */
+   ID addDocumentDOM(org.w3c.dom.Document doc) throws ReadOnlyException, NotSupportedException;
+   
+   /**
+    * setDocumentText attempts to add or overwrite a Document in this 
+    * Container.  The Document is represented in a textual format and 
+    * therefore the implementation is responsible for parsing to a native 
+    * format.
+    *
+    * @param id The Document ID
+    * @param text The Document
+    */
+   void setDocumentText(ID id, String text) throws ReadOnlyException, NotSupportedException;
+   
+   /**
+    * setDocumentText attempts to add or overwrite a Document in this 
+    * Container.  The Document is represented by a DOM tree and 
+    * therefore the implementation is responsible for converting to a native 
+    * format.
+    *
+    * @param id The Document ID
+    * @param doc The Document
+    */   
+   void setDocumentDOM(ID id, org.w3c.dom.Document doc) throws ReadOnlyException, NotSupportedException;
+
+   /**
+    * getDocument retrieves a Document by ID.  The Document 
+    * is returned as Text.
+    *
+    * @param id The Document ID
+    * @return The Document
+    */
+   String getDocumentText(ID id) throws NotFoundException;  
+   
+   /**
+    * getDocumentDOM retrieves a Document by ID.  The Document 
+    * is returned as a DOM tree.
+    *
+    * @param id The Document ID
+    * @return The Document
+    */   
+   org.w3c.dom.Document getDocumentDOM(ID id) throws NotFoundException, NotSupportedException;
+   
+   /**
+    * getDocument retrieves a Document by streaming it to a SAX ContentHandler.
+    *
+    * @param id The Document ID
+    * @param handler The SAX ContentHandler
+    */   
+   void getDocumentSAX(ID id, org.xml.sax.ContentHandler handler) throws NotFoundException, NotSupportedException;   
+
+   /**
+    * removeDocument attempts to remove a Document from the Container.
+    * 
+    * @param id The Document ID
+    */
+   boolean removeDocument(ID id) throws ReadOnlyException, NotSupportedException;   
+
+   /**
+    * close closes the current Container and releases any resources being
+    * maintained by the Container.
+    */
+   void close() throws DBException; 
+}
+]]>
+</source>
+</s2>
+
+<s2 title="OrderedContainer">
+<source>
+<![CDATA[
+/**
+ * OrderedContainer represents an ordered Container.  OrderedContainers
+ * are usually returned as the result of a query.
+ */
+
+public interface OrderedContainer extends Container {
+   /**
+    * getIterator returns a DocumentIterator that will allow the client
+    * to return the Documents of the Container in an ordered fashion.
+    *
+    * @return A DocumentIterator
+    */
+   DocumentIterator getIterator();
+}
+]]>
+</source>
+</s2>
+
+<s2 title="DocumentIterator">
+<source>
+<![CDATA[
+/**
+ * DocumentIterator allows a client to iterate over a set of Documents.
+ */
+
+public interface DocumentIterator {
+   /**
+    * getContainer returns the Container that this DocumentIterator was
+    * generated for (if any).
+    *
+    * @return The Container
+    */
+   Container getContainer();
+   
+   /**
+    * hasMoreDocuments returns whether or not the DocumentIterator has reached
+    * the end of its set.
+    *
+    * @return More Documents or not
+    */
+   boolean hasMoreDocuments();
+   
+   /**
+    * nextID returns the next Document ID in the set
+    * 
+    * @return The next ID
+    */
+   ID nextID();
+   
+   /**
+    * nextDocumentText returns the next Document in the set as text.
+    *
+    * @return The next Document
+    */
+   String nextDocumentText(); 
+   
+   /**
+    * nextDocumentDOM returns the next Document in the set as a DOM tree.
+    *
+    * @return The next Document  
+    */
+   org.w3c.dom.Document nextDocumentDOM() throws NotSupportedException;
+   
+   /**
+    * nextDocumentSAX processes the next Document in the set using the
+    * specified SAX ContentHandler.
+    *
+    * @param handler The SAX ContentHandler
+    */
+   void nextDocumentSAX(org.xml.sax.ContentHandler handler) throws NotSupportedException;
+   
+   /**
+    * getID returns the current Document ID in the Document set.
+    *
+    * @return the current ID
+    */
+   ID getID();
+   
+   /**
+    * getDocumentText returns the current Document in the set as text.
+    *
+    * @return The current Document
+    */
+   String getDocumentText();
+   
+   /**
+    * getDocumentDOM returns the current Document in the set as a DOM tree.
+    *
+    * @return The current Document  
+    */   
+   org.w3c.dom.Document getDocumentDOM() throws NotSupportedException;
+   
+   /**
+    * getDocumentSAX processes the current Document in the set using the
+    * specified SAX ContentHandler.
+    *
+    * @param handler The SAX ContentHandler
+    */   
+   void getDocumentSAX(org.xml.sax.ContentHandler handler) throws NotSupportedException;
+   
+   /**
+    * close closes the current DocumentIterator and releases any resources 
+    * being maintained by the DocumentIterator.
+    */
+   void close() throws DBException;    
+}
+]]>
+</source>
+</s2>
+
+<s2 title="ID">
+<source>
+<![CDATA[
+/**
+ * ID is the generic representation of a Unique Identifier.  An ID's
+ * underlying implementation is vendor specific, and an ID should not
+ * necessarily be considered globally unique.
+ */
+
+public interface ID {
+   /**
+    * equalTo compares this ID to another ID and returns whether
+    * or not the two are identical.
+    *
+    * @param id The compared ID
+    * @return If they are identical
+    */
+   boolean equalTo(ID id);
+}
+]]>
+</source>
+</s2>
+
+<s2 title="Features">
+<source>
+<![CDATA[
+/**
+ * Features exposes the features supported by an implementation.
+ */
+
+public interface Features {   
+   /**
+    * listFeatures returns the set of features contained in this feature
+    * set.
+    *
+    * @return The feature names
+    */
+   String[] listFeatures();
+   
+   /**
+    * listVersions returns the set of versions supported by the specified
+    * feature.
+    *
+    * @param name The name to lookup
+    * @return The supported versions
+    */
+   String[] listVersions(String name);
+   
+   /**
+    * hasFeature returns whether or not the specified feature name and
+    * version are supported.
+    *
+    * @param name The feature name
+    * @param version The version
+    * @return Whether or not the feature version is supported
+    */
+   boolean hasFeature(String name, String version);
+}
+]]>
+</source>
+</s2>
+
+<s2 title="Transaction">
+<source>
+<![CDATA[
+/**
+ * Transactions exposes database transaction capabilities.
+ */
+
+public interface Transaction {   
+   /**
+    * start starts the current Transaction.
+    */   
+   void start() throws DBException;
+   
+   /**
+    * commit commits all pending modifications for the current Transaction.
+    */
+   void commit() throws DBException;
+   
+   /**
+    * rollback reverts all pending modifications for the current Transaction.
+    */
+   void rollback() throws DBException; 
+
+   /**
+    * close closes the current Transaction and releases any resources being
+    * maintained by the Transaction
+    */
+   void close() throws DBException;
+}
+]]>
+</source>
+</s2>
+
+<s2 title="Driver Manager">                      
+            
+<source>
+<![CDATA[
+/**
+ * DriverManager manages a set of Drivers and handles returning Database
+ * Connections based on those Drivers.
+ */
+
+public interface DriverManager {
+
+   /**
+    * getDrivers retrieves the set of Drivers being managed.
+    *
+    * @return the Drivers
+    */
+   Driver[] getDrivers();
+   
+   /**
+    * registerDriverByName attempts to register a Driver by name (Class name).
+    *
+    * @param name The name to use
+    */
+   void registerDriverByName(String name) throws NotFoundException, IllegalAccessException;
+   
+   /**
+    * registerDriver attempts to register a Driver by Driver instance.
+    *
+    * @param driver The Driver instance
+    */   
+   void registerDriver(Driver driver) throws IllegalAccessException;
+   
+   /**
+    * unregisterDriver attempts to unregister (remove) a Driver from
+    * the DriverManager.
+    *
+    * @param driver The Driver to remove
+    * @return whether or not the Driver was removed
+    */
+   boolean unregisterDriver(Driver driver) throws NotFoundException, IllegalAccessException;
+   
+   /**
+    * getDriver returns the Driver that matches the specified URI.
+    * 
+    * @param uri The URI to lookup
+    * @return The Driver for that URI
+    */
+   Driver getDriver(String uri) throws NotFoundException;
+   
+   /**
+    * getConnection attempts to open a Connection using the Driver that
+    * matches the specified URI.
+    *
+    * @param uri The URI to connect to
+    * @return The Connection
+    */
+   Connection getConnection(String uri) throws NotSupportedException;
+}
+]]>
+</source>           
+</s2>         
+   
+<s2 title="Driver">
+<source>
+<![CDATA[
+/**
+ * Drivers provide basic mechanisms for resolving Container references.
+ */
+
+public interface Driver {
+   /**
+    * getFeatures returns the feature set for this Driver
+    *
+    * @see org.xmldb.cli.Features
+    *
+    * @return a Feature set
+    */      
+   Features getFeatures();
+   
+   /**
+    * checkURI checks to see if the specified URI is supported by this 
+    * Driver.
+    *
+    * @param uri the URI to check
+    * @return Whether or not it's supported
+    */
+   boolean checkURI(String uri);
+   
+   /**
+    * getConnection creates a Connection for the specified URI.
+    *
+    * @param uri the URI to connect to
+    * @return The Connection  
+    */
+   Connection getConnection(String uri);
+}          
+]]>
+</source>  
+</s2>
+
+      </s1>
+      <s1 title="Exceptions">
+<s2 title="IllegalAccessException">
+<source>
+<![CDATA[
+/**
+ * IllegalAccessException is thrown when an item cannot be accessed.
+ */
+
+public class IllegalAccessException extends DBException {
+   public IllegalAccessException(String message) {
+      super(message);
+   }
+}
+]]>
+</source>
+</s2>
+
+<s2 title="NotFoundException">
+<source>
+<![CDATA[
+/**
+ * NotFoundException is thrown when an item cannot be found.
+ */
+
+public class NotFoundException extends DBException {
+   public NotFoundException(String message) {
+      super(message);
+   }
+}
+]]>
+</source>
+</s2>
+<s2 title="NotSupportedException">
+<source>
+<![CDATA[
+/**
+ * NotSupportedException is thrown when a feature is not supported.
+ */
+
+public class NotSupportedException extends DBException {
+   public NotSupportedException(String message) {
+      super(message);
+   }
+}
+]]>
+</source>
+</s2>
+
+<s2 title="ReadOnlyException">
+<source>
+<![CDATA[
+/**
+ * ReadOnlyException is thrown when a container or item is read-only.
+ */
+
+public class ReadOnlyException extends DBException {
+   public ReadOnlyException(String message) {
+      super(message);
+   }
+}
+]]>
+</source>
+</s2>
+      </s1>
+   </body>
+
+</specification>
+
+

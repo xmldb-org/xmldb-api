@@ -1,0 +1,417 @@
+<HTML><HEAD><SCRIPT language="JavaScript" src="resources/script.js" type="text/javascript"></SCRIPT><TITLE>XML Database API Draft Proposal</TITLE></HEAD><BODY alink="#0F4CC8" bgcolor="#EFEFEF" leftmargin="0" link="#0F4CC8" marginheight="0" marginwidth="0" text="#1E1446" topmargin="0" vlink="#0F4CC8"><TABLE border="0" cellpadding="0" cellspacing="0" width="100%"><TR><TD align="right" bgcolor="#EFEFEF" valign="top"><TABLE border="0" cellpadding="0" cellspacing="0" width="140"><TR><TD align="left"><A href="index.html"><IMG border="0" src="resources/logo.jpg"></A><BR>
+  <A href="http://www.xmldb.org/index.html" onMouseOut="rolloverOff('side-ext-2');" onMouseOver="rolloverOn('side-ext-2');"><IMG alt="XML:DB Home" border="0" hspace="0" name="side-ext-2" onLoad="rolloverLoad('side-ext-2','graphics/ext-2-label-2.jpg','graphics/ext-2-label-3.jpg');" src="graphics/ext-2-label-3.jpg" vspace="0"></A><BR>
+  <IMG border="0" src="resources/menu_sep.jpg"><BR>
+  <A href="index.html" onMouseOut="rolloverOff('side-index');" onMouseOver="rolloverOn('side-index');"><IMG alt="Index" border="0" hspace="0" name="side-index" onLoad="rolloverLoad('side-index','graphics/index-label-2.jpg','graphics/index-label-3.jpg');" src="graphics/index-label-3.jpg" vspace="0"></A><BR>
+  <A href="xapi-req.html" onMouseOut="rolloverOff('side-xapi-req');" onMouseOver="rolloverOn('side-xapi-req');"><IMG alt="Requirements" border="0" hspace="0" name="side-xapi-req" onLoad="rolloverLoad('side-xapi-req','graphics/xapi-req-label-2.jpg','graphics/xapi-req-label-3.jpg');" src="graphics/xapi-req-label-3.jpg" vspace="0"></A><BR>
+  <A href="xapi-draft.html" onMouseOut="rolloverOff('side-xapi-draft');" onMouseOver="rolloverOn('side-xapi-draft');"><IMG alt="Working Draft" border="0" hspace="0" name="side-xapi-draft" onLoad="rolloverLoad('side-xapi-draft','graphics/xapi-draft-label-2.jpg','graphics/xapi-draft-label-3.jpg');" src="graphics/xapi-draft-label-3.jpg" vspace="0"></A><BR>
+  <IMG alt="API Use Cases" border="0" hspace="0" src="graphics/UseCases-label-1.jpg" vspace="0"><BR>
+  
+  <IMG border="0" src="resources/menu_sep.jpg"><BR>
+  <A href="http://www.xmldb.org/projects.html" onMouseOut="rolloverOff('side-ext-16');" onMouseOver="rolloverOn('side-ext-16');"><IMG alt="Mail List" border="0" hspace="0" name="side-ext-16" onLoad="rolloverLoad('side-ext-16','graphics/ext-16-label-2.jpg','graphics/ext-16-label-3.jpg');" src="graphics/ext-16-label-3.jpg" vspace="0"></A><BR>
+  <A href="http://archive.xmldb.org" onMouseOut="rolloverOff('side-ext-18');" onMouseOver="rolloverOn('side-ext-18');"><IMG alt="Mail Archive" border="0" hspace="0" name="side-ext-18" onLoad="rolloverLoad('side-ext-18','graphics/ext-18-label-2.jpg','graphics/ext-18-label-3.jpg');" src="graphics/ext-18-label-3.jpg" vspace="0"></A><BR>
+  
+  
+  
+  
+  
+  
+  
+       
+    
+<!--end navigation panel--><IMG border="0" src="resources/menu_bottom.jpg" valign="bottom"></TD></TR></TABLE></TD><TD align="left" valign="top" width="100%"><TABLE border="0" cellpadding="5" cellspacing="0" width="100%"><TR><TD></TD></TR><TR><TD></TD></TR><TR><TD></TD></TR><TR><TD><DIV align="center"><TABLE align="center" border="0" cellpadding="0" cellspacing="0" width="60%"><TBODY><TR><TD bgcolor="#64697C"><TABLE border="0" cellpadding="1" cellspacing="1" width="100%"><TR><TD align="center" bgcolor="#A8ADD5" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Authors</B></FONT></TD></TR><TR><TD align="left" bgcolor="#C5CADD" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Members of the XML:DB API Mailing List</B> - xapi-dev@xmldb.org</FONT></TD></TR><TR><TD align="left" bgcolor="#C5CADD" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Kimbro Staken (Editor)</B> - kstaken@dbxmlgroup.com</FONT></TD></TR><TR><TD align="center" bgcolor="#A8ADD5" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Status</B></FONT></TD></TR><TR><TD align="left" bgcolor="#C5CADD" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Working Draft (Experimental) - 2001-03-16</B></FONT></TD></TR><TR><TD align="center" bgcolor="#A8ADD5" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Notice</B></FONT></TD></TR><TR><TD align="left" bgcolor="#C5CADD" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      This is a XML:DB Working Draft for review by all interested parties.
+      It is a draft document and may be updated, replaced, or obsoleted by other
+      documents at any time. It is inappropriate to use Working Drafts as reference 
+      material or to cite them as other than &quot;work in progress&quot;. This work
+      is part of the XML:DB Project.
+      Comments on this specification should be sent to XML:DB API mailing list
+      xapi-dev@xmldb.org.
+      </FONT></TD></TR><TR><TD align="center" bgcolor="#A8ADD5" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Abstract</B></FONT></TD></TR><TR><TD align="left" bgcolor="#C5CADD" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      This document defines a draft specification for the XML Database API. This API is being developed through 
+      the mailing lists of the XML:DB organization and the contents are attributed to the members of those lists.      
+      </FONT></TD></TR></TABLE></TD></TR></TBODY></TABLE></DIV><BR><DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="98%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="+1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B>Table of Contents</B></I></FONT></TD></TR></TABLE><BR><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="98%"><TR><TD><FONT color="#000000" face="arial,helvetica,sanserif">1 <A href="#N589e56">API Use Cases</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.1 <A href="#N472d48">DOM Document Retrieval</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.1 <A href="#N476128">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.2 <A href="#N3b8b49">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.2 <A href="#N6df3f6">Test XML Document Retrieval</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2.1 <A href="#N228362">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2.2 <A href="#N5fcf29">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.3 <A href="#N2bc3f5">SAX Document Retrieval</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.3.1 <A href="#N1cb0f4">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.3.2 <A href="#N25844f">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.4 <A href="#N4e3f41">Binary Content Retrieval</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.4.1 <A href="#N309e87">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.4.2 <A href="#N77c31d">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.5 <A href="#N1acd47">Retrieving a DOM Node</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.5.1 <A href="#N1980d5">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.5.2 <A href="#N595492">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.6 <A href="#N1b04e2">Inserting a DOM Document</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.6.1 <A href="#N7a1576">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.6.2 <A href="#N171b26">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.7 <A href="#N5dcec6">Inserting a SAX Document</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.7.1 <A href="#N941f7">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.7.2 <A href="#N49d67c">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.8 <A href="#N325b9d">Inserting a Text XML Document</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.8.1 <A href="#N64ab4d">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.8.2 <A href="#N2a55aa">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.9 <A href="#N1ce060">Deleting a Resource</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.9.1 <A href="#N1ca803">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.9.2 <A href="#N5a67c9">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.10 <A href="#N4ecfdd">Updating a DOM Document</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.10.1 <A href="#N79e304">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.10.2 <A href="#N273686">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.11 <A href="#N30d82d">Updating a Document using SAX</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.11.1 <A href="#N203c31">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.11.2 <A href="#N4fc156">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.12 <A href="#N409554">Updating a Text XML Document</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.12.1 <A href="#N2116c9">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.12.2 <A href="#N5f1832">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.13 <A href="#Nbf072">Searching with XPath</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.13.1 <A href="#N13c0cf">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.13.2 <A href="#N576e70">Solution</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;1.14 <A href="#N56f631">Transactional Inserting of DOM Documents</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.14.1 <A href="#N63c624">Required Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.14.2 <A href="#N657e8f">Solution</A><BR></FONT><P></P><FONT face="arial,helvetica,sanserif"><B>Appendices</B></FONT><P></P></TD></TR></TABLE><BR><BR></DIV>
+      <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="98%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="+1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N589e56">API Use Cases</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="98%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+         <P align="justify">
+            The XML:DB API Use Cases attempt to outline the most common usage
+            scenarios for the API and provide solutions to those scenarios. The
+            solutions are written in a language that is basically Java but
+            without the surrounding class context or error handling. 
+            These solutions are very
+            similar to the source IDL but it is necessary to use a concrete
+            programming language to show proper type handling.
+         </P>
+         <P align="justify">
+             All Use Cases assume the following preamble code. The scenario is
+             simple access to a database from Vendor X. The database contains a
+             collection of documents containing movie descriptions.
+         </P>
+         <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+
+// Get a reference to the movies Collection
+String collectionURI = 
+   &quot;xmldb:vendorx://db.xmlmovies.com:2030/movies&quot;;
+Collection collection = 
+   DatabaseManager.getCollection(collectionURI, null);
+         </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N472d48">DOM Document Retrieval</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Retrieve a document from the database using a known ID. We want
+               to work with the result as a DOM Document object.
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N476128">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 1</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N3b8b49">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+collection.setProperty(&quot;ResourceType&quot;, &quot;DOMNode&quot;);
+
+String id = &quot;gladiator-2000&quot;;
+DOMNodeResource resource = 
+   (DOMNodeResource) collection.getResource(id);
+
+Document doc = (Document) resource.getContent();
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N6df3f6">Test XML Document Retrieval</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">               
+               Retrieve a document from the database using a known ID. We want
+               to work with the result as text XML.
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N228362">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 0</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N5fcf29">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+collection.setProperty(&quot;ResourceType&quot;, &quot;TextXML&quot;);
+
+String id = &quot;gladiator-2000&quot;;
+XMLResource resource = 
+   (XMLResource) collection.getResource(id);
+
+String doc = (String) resource.getContent();
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N2bc3f5">SAX Document Retrieval</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Retrieve a document from the database using a known ID. We want
+               to use a SAX content handler to handle the document.
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N1cb0f4">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 1</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N25844f">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+collection.setProperty(&quot;ResourceType&quot;, &quot;SAX&quot;);
+
+String id = &quot;gladiator-2000&quot;;
+SAXResource resource = 
+   (SAXResource) collection.getResource(id);
+
+// A custom SAX Content Handler is required to handle the SAX events
+ContentHandler handler = new MyContentHandler();
+
+resource.setContentHandler(handler);
+resource.getContent();
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N4e3f41">Binary Content Retrieval</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Retrieve a binary BLOB from the database. The blob is identified
+               with a known ID.
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N309e87">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 0, BinaryResource</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N77c31d">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+collection.setProperty(&quot;ResourceType&quot;, &quot;Binary&quot;);
+
+String id = &quot;gladiator-2000-img&quot;;
+BinaryResource resource = 
+   (BinaryResource) collection.getResource(id);
+
+// Return value of getContent must be defined in the specific language mapping
+// for the language used. For Java this is InputStream.
+InputStream img = (InputStream) resource.getContent();
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N1acd47">Retrieving a DOM Node</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Retrieve a document from the database using a known ID. We want
+               to work with the result as a DOM Node object.               
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N1980d5">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 1</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N595492">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+collection.setProperty(&quot;ResourceType&quot;, &quot;DOMNode&quot;);
+
+String id = &quot;gladiator-2000&quot;;
+DOMNodeResource resource = 
+   (DOMNodeResource) collection.getResource(id);
+
+Node node = (Node) resource.getContent();
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N1b04e2">Inserting a DOM Document</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Store a new DOM document in the database using a known ID.
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N7a1576">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 1</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N171b26">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+// Document is assumed to be a valid DOM document. Where this comes from is
+// outside the scope of the API
+Document document;
+
+collection.setProperty(&quot;ResourceType&quot;, &quot;DOMNode&quot;);
+
+String id = &quot;gladiator-2000&quot;;
+DOMNodeResource resource = 
+   (DOMNodeResource) collection.createResource(id);
+
+resource.setContent(document);
+collection.storeResource(resource);
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N5dcec6">Inserting a SAX Document</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Use a SAX ContentHandler to store a new document in the database 
+               using a known ID.               
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N941f7">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 1</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N49d67c">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+// File containing the XML to be inserted
+String fileName = &quot;gladiator-2000.xml&quot;;
+
+collection.setProperty(&quot;ResourceType&quot;, &quot;SAX&quot;);
+
+String id = &quot;gladiator-2000&quot;;
+SAXResource resource = 
+   (SAXResource) collection.createResource(id);
+
+ContentHandler handler = resource.getContentHandler();
+
+XMLReader reader = XMLReaderFactory.createXMLReader();
+reader.setContentHandler(handler);
+reader.parse(new InputSource(fileName));
+
+collection.storeResource(resource);
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N325b9d">Inserting a Text XML Document</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Store a new text XML document in the database using a known ID.               
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N64ab4d">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 0</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N2a55aa">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+
+// document is assumed to be a valid XML document. Where this comes from is
+// outside the scope of the API
+String document;
+
+collection.setProperty(&quot;ResourceType&quot;, &quot;TextXML&quot;);
+
+String id = &quot;gladiator-2000&quot;;
+XMLResource resource = 
+   (XMLResource) collection.createResource(id);
+
+resource.setContent(document);
+collection.storeResource(resource);
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N1ce060">Deleting a Resource</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Remove an existing Resource from the database using a known ID.
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N1ca803">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 0</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N5a67c9">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+String id = &quot;gladiator-2000&quot;;
+collection.removeResource(collection.getResource(id));
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N4ecfdd">Updating a DOM Document</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Update an existing DOM document stored in the database.
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N79e304">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 1</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N273686">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+collection.setProperty(&quot;ResourceType&quot;, &quot;DOMNode&quot;);
+
+String id = &quot;gladiator-2000&quot;;
+DOMNodeResource resource = 
+   (DOMNodeResource) collection.getResource(id);
+
+Document document = (Document) resource.getContent();
+
+// Change document ...
+
+resource.setContent(document);
+collection.storeResource(resource);
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N30d82d">Updating a Document using SAX</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               
+            </P>
+            <P><TABLE border="0" cellpadding="0" cellspacing="3" width="100%"><TR><TD valign="top" width="28"><IMG alt="Note" border="0" height="29" hspace="0" src="resources/note.gif" vspace="0" width="28"></TD><TD valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><I>Not sure how to do this.</I></FONT></TD></TR></TABLE></P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N203c31">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 1</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N4fc156">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N409554">Updating a Text XML Document</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Update an existing Text XML document stored in the database.
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N2116c9">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 0</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N5f1832">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+collection.setProperty(&quot;ResourceType&quot;, &quot;TextXML&quot;);
+
+String id = &quot;gladiator-2000&quot;;
+XMLResource resource = 
+   (XMLResource) collection.getResource(id);
+
+String document = (String) resource.getContent();
+
+// Change document ...
+
+resource.setContent(document);
+collection.storeResource(resource);
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->         
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="Nbf072">Searching with XPath</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Search the collection for all movies with the title Gladiator. We
+               want to work with the results as DOM Nodes.
+            </P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N13c0cf">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 1</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N576e70">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+String xpath = &quot;/movie/title='Gladiator'&quot;;
+
+collection.setProperty(&quot;ResourceType&quot;, &quot;DOMNode&quot;);
+
+XPathQueryService service =
+   (XPathQueryService) collection.getService(&quot;XPathQueryService&quot;, &quot;1.0&quot;);
+
+ResourceIterator results = service.query(xpath);
+while (results.hasMoreResources()) {
+   DOMNodeResource resource = 
+      (DOMNodeResource) results.nextResource();
+   Node result = (Node) resource.getContent();
+}
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N56f631">Transactional Inserting of DOM Documents</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Insert multiple DOM documents under the control of a transaction.     
+            </P>
+            <P><TABLE border="0" cellpadding="0" cellspacing="3" width="100%"><TR><TD valign="top" width="28"><IMG alt="Note" border="0" height="29" hspace="0" src="resources/note.gif" vspace="0" width="28"></TD><TD valign="top"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><I>The current IDL for the TransactionService is more of a stub
+            then anything. We should probably reuse an existing transaction API
+            if possible.</I></FONT></TD></TR></TABLE></P>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N63c624">Required Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">Core Level 1, TransactionService</P>               
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N657e8f">Solution</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">   
+               <DIV align="center"><TABLE border="0" cellpadding="0" cellspacing="4"><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#ffffff"><PRE>
+ 
+// Documents are assumed to be valid DOM documents. Where this comes from is
+// outside the scope of the API
+Document document1;
+Document document2;
+
+collection.setProperty(&quot;ResourceType&quot;, &quot;DOMNode&quot;);
+
+String id1 = &quot;gladiator-2000&quot;;
+String id2 = &quot;gonein60seconds-2000&quot;;
+
+TransactionService transaction = 
+   (TransactionService) collection.getService(&quot;TransactionService&quot;, &quot;1.0&quot;);
+
+transaction.begin();   
+
+DOMNodeResource resource1 = 
+   (DOMNodeResource) collection.createResource(id1);
+
+resource1.setContent(document1);
+collection.storeResource(resource1);
+
+DOMNodeResource resource2 = 
+   (DOMNodeResource) collection.createResource(id2);
+
+resource2.setContent(document2);
+collection.storeResource(resource2);
+
+transaction.commit();
+               </PRE></TD><TD bgcolor="#AAAAAA" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR><TR><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD><TD bgcolor="#AAAAAA" height="1" width="1"><IMG border="0" height="1" hspace="0" src="resources/void.gif" vspace="0" width="1"></TD></TR></TABLE></DIV>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         
+      </FONT></TD></TR></TABLE></DIV><BR><!--end s1-->
+   </TD></TR></TABLE><!--end content panel--></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="100%"><TR><TD bgcolor="#64697C"><IMG height="1" src="images/dot.gif" width="1"></TD></TR><TR><TD align="center"><FONT color="#64697C" face="arial,helvetica,sanserif" size="-1"><I>
+               Copyright &copy; 2000,2001 The XML:DB Initiative.
+               All Rights Reserved.
+             </I></FONT></TD></TR><TR><TD></TD></TR></TABLE></BODY></HTML>

@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+<!-- $Id: xapi-draft.xml,v 1.1.1.1 2002/01/30 09:46:42 lars Exp $ -->
+
+<!DOCTYPE specification SYSTEM "sbk:/style/dtd/specification-v10.dtd">
+
+<specification>
+
+   <header>
+      <title>XML Database API Draft</title>
+      <version>2001-09-20</version>
+      <type>Working Draft</type>
+      <authors>
+         <person name="Members of the XML:DB API Mailing List" email="xapi-dev@xmldb.org"/>         
+         <person name="Kimbro Staken (Editor)" email="kstaken@dbxmlgroup.com"/>                                    
+      </authors>
+      <notice>
+      This is a XML:DB Working Draft for review by all interested parties.
+      It is a draft document and may be updated, replaced, or obsoleted by other
+      documents at any time. It is inappropriate to use Working Drafts as reference 
+      material or to cite them as other than &quot;work in progress&quot;. This work
+      is part of the <link href="http://www.xmldb.org/">XML:DB Project</link>.
+      Comments on this specification should be sent to XML:DB API mailing list
+      <link href="mailto:xapi-dev@xmldb.org">xapi-dev@xmldb.org</link>.
+      </notice>
+      <abstract>
+      This document defines a draft specification for the XML Database API. This API is being developed through 
+      the mailing lists of the XML:DB organization and the contents are attributed to the members of those lists.      
+      </abstract>
+   </header>
+
+   <body>
+      <s1 title="XML:DB Database API Introduction">
+         <p>
+            The XML:DB API is designed to enable a common access mechanism to 
+            XML databases. 
+            The API enables the construction of applications
+            to store, retrieve, modify and query data that is stored in an XML database.
+            These facilities are intended to enable the construction of
+            applications for any XML database that claims conformance with the
+            XML:DB API.
+            The API can
+            be considered generally equivalent to technologies such as ODBC,
+            JDBC or Perl DBI.
+         </p>
+         <p>
+            A major goal of the XML:DB API is to be modular and to define a 
+            simple baseline for 
+            implementors to follow. To achieve this goal the API is
+            broken into small <link href="#Modules">modules</link> that are then 
+            bundled together in the 
+            form of <link href="#CoreLevels">API Core Level specifications</link>. 
+         </p>
+         <p>
+            The API Core Level specifications form the basis for interoperability by 
+            enabling a vendor to specify the maximum Core Level at which they 
+            are conformant. Applications can tailor their functionality based on 
+            Core Level or may require a specific Core Level to function. Vendors
+            are free to add any additional modules beyond the base Core Level
+            requirements but they are not required to do so. This modular nature
+            provides a very clean path to increase support from one Core Level
+            to the next.
+         </p>
+         <p>
+            On the surface this structure may seem overly complex and at first
+            brush it is. However it is born out of the fact that the XML
+            database arena is very new and rapidly changing. At this stage of
+            evolution the playing field has not stabalized enough to know
+            exactly what level of functionality is required to build
+            applications. The Core Level mechanism is designed to keep things
+            simple while still allowing significant evolution of the
+            specification over the next few years. This model is in many ways
+            similar to that being taken by the W3C DOM working group and is in
+            the spirit of the <link href="http://www.ietf.org/rfc/rfc2026.txt">
+            Internet Standards Process RFC2026</link>.
+         </p>
+         <p>
+            All API functionality is specified in terms of OMG IDL. IDL is easy
+            to understand and acts as a filter to minimize language specific
+            functionality. Language bindings for specific languages will be
+            provided. Initial language support looks to consist of Java and
+            Python but is open to the contribution of additional languages as
+            interest dictates.
+         </p>
+      </s1> 
+      <s1 title="Getting Started">
+         <p>
+            This section provides some tips for getting started in understanding
+            the XML:DB API.
+         </p>
+         <p>
+            The best place to start is probably by looking at the 
+            <link href="UseCases.html">Use Cases</link>
+            document. This document provides common database usage scenarios 
+            with solutions implemented using the XML:DB API. Each solution
+            specifies the Core Level support and optional API modules required 
+            to complete the task. This
+            provides an example oriented introduction to the various API
+            modules. 
+         </p>
+         <p>
+            From there the next step is to study the 
+            <link href="#Base">API Base module</link>. This module is required
+            for all implementations and forms the heart of the XML:DB API
+            functionality.
+         </p>
+         <p>
+            After studying the use cases and API Base module you should have a
+            good idea of what the API is good for and how it works. If you need
+            more detail then you can dig into the other modules.
+         </p>
+      </s1>
+      
+      <anchor id="CoreLevels"/>
+      <s1 title="Core Level Specifications">
+         <p>
+            Core Levels define a set of baseline implementation levels that
+            implementors can strive for. They provide a common, simple to
+            understand bundling of XML:DB API modules to form workable API
+            implementations. This tiered approach is taken to achieve the
+            highest level of interoperability possible while still enabling
+            advanced functionality for applications that can limit their scope
+            to a smaller set of API implementations. 
+         </p>
+         <p>
+            While a minimum baseline is specified to insure interoperability, it is
+            strongly suggested that implementors strive for the highest Core
+            Level implementation possible.
+         </p>
+         <s2 title="Minimum Conformance Level">
+            <p>
+               Core Level 0 is the minimum level that must be implemented in 
+               order to claim XML:DB API conformance. It is safe to assume that
+               any product that claims conformance with the XML:DB API
+               specification will at a minimum support Core Level 0
+               functionality in an interoperable fashion. 
+            </p>            
+         </s2>
+         <anchor id="CoreLevel0"/>
+         <s2 title="Core Level 0">
+            <p>
+               Core Level 0 consists of the following modules. All
+               modules must be implemented to be considered conformant.
+            </p>
+            <ul>
+               <li><link href="#Base">API Base</link></li>
+               <li><link href="#XMLResource">XMLResource</link></li>
+            </ul>
+         </s2>
+         <s2 title="Core Level 1">
+            <p>
+               Core Level 1 consists of the following modules. All
+               modules must be implemented to be considered conformant.
+            </p>
+            <ul>
+               <li><link href="#CoreLevel0">All Core Level 0 functionality</link></li>               
+               <li><link href="#XPathQueryService">XPathQueryService</link></li>
+            </ul>
+         </s2>
+      </s1>
+      <anchor id="Modules"/>           
+      <s1 title="Modules">
+         <p>
+            This is a list of all modules currently defined within the scope
+            of the XML:DB API. Not all modules are included in the Core Level
+            specifications but are available to be added to implementations at
+            any Core Level.
+         </p>
+         <p>
+            You can view a frames based version of all module documentation
+            <link href="api/">here</link>.
+         </p>
+         <anchor id="Base"/>
+         <s2 title="API Base">            
+            <p>
+            
+            The API Base module is the core of the XML:DB API. It provides the
+            basic framework that all other modules hang off of. All API
+            implementations regardless of Core Level support must implement this
+            module.
+            </p>
+            <p>
+            <link href="api/org/xmldb/api/base/package-summary.html">Specification</link> <link href="idl/base.idl">IDL</link>
+            </p>
+         </s2>
+         <anchor id="Resource"/>
+         <s2 title="Resources">
+            <anchor id="XMLResource"/>
+            <s3 title="XMLResource">
+               <p>
+                  An XMLResource represents basic XML data. It provides access 
+                  to that XML data as either textual XML, a W3C DOM Node or
+                  via a SAX ContentHandler.                  
+               </p>
+               <p>
+                  <link href="api/org/xmldb/api/modules/XMLResource.html">Specification</link> <link href="idl/XMLResource.idl">IDL</link>
+               </p>
+            </s3>            
+            
+            <anchor id="BinaryResource"/>
+            <s3 title="BinaryResource">
+               <p>
+                  A binary resource represents a block of binary data or blob 
+                  stored in the database.
+               </p>
+               <p>
+                  <link href="api/org/xmldb/api/modules/BinaryResource.html">Specification</link> 
+                  <link href="idl/BinaryResource.idl">IDL</link>
+               </p>
+            </s3>            
+         </s2>
+         <s2 title="Services">
+            <anchor id="XPathQueryService"/>
+            <s3 title="XPathQueryService">
+               <p>
+                  A Service to enable querying Collections using XPaths.
+               </p>
+               <p>
+                  <link href="api/org/xmldb/api/modules/XPathQueryService.html">Specification</link> 
+                  <link href="idl/XPathQueryService.idl">IDL</link>
+               </p>
+            </s3>
+            
+            <anchor id="XUpdateQueryService"/>
+            <s3 title="XUpdateQueryService">
+               <p>
+                  A Service to enable updating collections and documents using
+                  the XML:DB XUpdate language.
+               </p>
+               <p>
+                  <link href="api/org/xmldb/api/modules/XUpdateQueryService.html">Specification</link> 
+                  <link href="idl/XUpdateQueryService.idl">IDL</link>
+               </p>
+            </s3> 
+            
+            <anchor id="CollectionManagementService"/>
+            <s3 title="CollectionManagementService">
+               <p>
+                  A Service to enable basic Collection management. In general
+                  Collection management will vary widely across database
+                  implementations so this service provides a very simple
+                  interface.
+               </p>
+               <p>
+                  <link href="api/org/xmldb/api/modules/CollectionManagementService.html">Specification</link> 
+                  <link href="idl/CollectionManagementService.idl">IDL</link>
+               </p>
+            </s3> 
+            
+            <anchor id="TransactionService"/>
+            <s3 title="TransactionService">
+               <p>
+                  A Service to enable wrapping of multiple changes to a
+                  Collection within a Transaction context.
+               </p>
+               <p>
+                  <link href="api/org/xmldb/api/modules/TransactionService.html">Specification</link> <link href="idl/TransactionService.idl">IDL</link>
+               </p>
+            </s3>            
+         </s2>
+      </s1>
+      <s1 title="Changes">
+         <p>
+            Changes in this section cover all modules.
+         </p>
+         <p>
+            Changes from the May. 07, 2001 draft.
+         </p>
+         <ul>
+            <li>Removed the INVALID_SERVICE error from ErrorCodes because it is no longer used.</li>
+            <li>Removed the registerService method from the Collection interface.</li>
+            <li>Changed ErrorCodes from being an Enum to being an Interface to better control
+               the allocation of error code numbers.</li>
+            <li>ErrorCodes are now allocated to categories and grouped with all related codes
+               being in the same series.</li>
+            <li>Added new getCollection method containing username and password parameters to 
+               DatabaseManager</li>
+            <li>Added username and password paramters to the getCollection() method in the
+               Database interface.</li>
+            <li>Added RESOURCE_TYPE constant to XMLResource and BinaryResource</li>
+            <li>Changed Java mapping for BinaryResource to handle byte arrays for content.</li> 
+            <li>Added XUpdateService.</li>
+            <li>Added CollectionManagementService.</li>
+            <li>Added COLLECTION_CLOSED error code to ErrorCodes.</li>
+            <li>Added isOpen method to the Collection interface.</li>
+            <li>Added ResourceSet interface as new result for XPath queries.</li>
+            <li>Added setNamespace method to XPathQueryService.</li>
+            <li>Added getNamespace method to XPathQueryService.</li>
+            <li>Added clearNamespaces method to XPathQueryService.</li>
+            <li>Added removeNamespace method to XPathQueryService.</li>
+            <li>Added queryResource method to XPathQueryService to handle queries against a
+               single resource.</li>
+            <li>Added getDocumentId() to the XMLResource interface.</li>
+            <li>Removed getName from Configurable interface.</li>
+            <li>Added getName to the Database interface.</li>
+            <li>Added getName to the Collection interface.</li>
+            <li>Added getName to the Service interface.</li>
+            <li>Added COLLECTION_CLOSED error code to all methods in Collection that should not
+               be called after close has been called.</li>
+            <li>In the Java API Changed XMLDBException to extend Exception instead of
+               RuntimeException.</li> 
+         </ul>
+         <p>
+            Changes from the Mar. 15, 2001 draft.
+         </p>
+         <ul>
+            <li>Changed module specs from spec format to use Javadoc</li>
+            <li>Fixed Compilation Errors when using a strict IDL compiler.</li>
+            <li>Added getName to Configurable interface.</li>
+            <li>Removed getName from Service interface</li>
+            <li>Added XMLDBException and ErrorCodes</li>            
+            <li>Removed DatabaseManager from IDL</li>
+            <li>Removed Resource scope around modules</li>
+            <li>Added getResourceType to Resource</li>
+            <li>Added listChildCollections to Collection</li>
+            <li>Added getChildCollection to Collection</li>
+            <li>Added listResources to Collection</li>
+            <li>Removed getChildCollections from Collection</li>
+            <li>Removed getResources from Collection</li>
+            <li>Added DOM and SAX support directly to XMLResource</li>
+            <li>Removed DOMNodeResource</li>
+            <li>Removed SAXResource</li>
+            <li>Added NOT_IMPLEMENTED error code</li>               
+            <li>Changed DatabaseManager.getProperty, setProperty and getDatabases to not throw exceptions</li>
+            <li>Added a resourceType parameter to Collection.createResource()</li>            
+         </ul>
+      </s1>
+   </body>
+
+</specification>

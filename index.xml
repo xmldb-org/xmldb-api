@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<!-- $Id: index.xml,v 1.2 2002/07/04 15:01:16 lars Exp $ -->
+
+<!DOCTYPE document SYSTEM "sbk:/style/dtd/document-v10.dtd">
+
+<document>
+   <header>
+      <title>XML:DB Initiative: API for XML Databases</title>
+      <subtitle>Who We Are</subtitle>
+      <authors>
+         <person name="Lars Martin" email="lars@smb-tec.com"/>
+         <person name="Kimbro Staken" email="kstaken@dbxmlgroup.com"/>         
+      </authors>
+   </header>
+
+   <body>
+      <s1 title="Application Programming Interface for XML Databases">
+
+         <p>
+            The goal of the Working Group is to develop an Application
+            Programming Interface (API) for XML databases. This API should be
+            vendor neutral to support use with the largest array of
+            databases possible. The API is also intended to be implementable in
+            multiple languages though it does assume the implementation language
+            is object oriented.
+         </p>
+          
+         <p>
+            <strong>Current Releases:</strong>
+            <ul>
+               <li><link href="xapi-draft.html">Working Draft</link>, last release Sept. 24, 2001</li>
+               <li><link href="UseCases.html">API Use Cases Draft</link>, last release Sept. 24, 2001</li>
+               <li><link href="xapi-req.html">Draft Requirements</link>, last release Nov. 15, 2000</li>               
+               <li><link href="downloads/xmldb-20010924.tar.gz">Java Interfaces</link>, last release Sept. 24, 2001</li>
+            </ul>
+         </p>
+
+         <p>
+             <strong>Mailing List:</strong>
+             <ul>
+               <li>Subscribe: <link href="mailto:xapi-dev-request@xmldb.org">xapi-dev-request@xmldb.org</link>
+                   with the word <code>subscribe</code> in the body</li>
+               <li>Unsubscribe: <link href="mailto:xapi-dev-request@xmldb.org">xapi-dev-request@xmldb.org</link>
+                   with the word <code>unsubscribe</code> in the body</li>
+               <li>Post: <link href="mailto:xapi-dev@xmldb.org">xapi-dev@xmldb.org</link></li>
+               <li>Mail Archive: <link href="http://archive.xmldb.org/">http://archive.xmldb.org/</link></li>
+             </ul>
+         </p>
+         
+         <p>
+            <strong>Implementations:</strong>
+            <ul>
+               <li>
+                  The reference implementation is available for 
+                  <link href="downloads/xmldb-api-11112001.tar.gz">download</link>. 
+                  This implementation provides a simple file system based
+                  implementation of the API. The download also includes the 
+                  most current Java intefaces and the driver development
+                  kit to make creating Java drivers easier. This implementation
+                  is current with the Sept. 24 draft. Released on Nov. 11, 2001.
+                  This is the initial public release.
+               </li>
+               <li>
+                  The <link href="http://www.dbxml.org/">dbXML Project</link> 
+                  has a complete Core Level 1 Java implementation 
+                  based on the Sept. 24 draft. The implementation is part of the
+                  1.0b3 release of the dbXML Core.
+               </li>
+               <li>
+                  The <link href="http://exist.sourceforge.net/">eXist
+                  Project</link> has a Core Level 1 Java implementation based on
+                  the Sept. 24 draft. The implementation is part of the 0.6
+                  release of eXist.
+               </li>
+               <li>
+                  The <link href="http://www.ozone-db.org/">Ozone Project</link>
+                  is working on a Java implementation based on the May 07 draft.
+                  Work is in the early stages.
+               </li>
+               <li>   
+                  Jeremias Maerki has developed a java implementation for JDBC
+                  datasources based on the May 07 draft. 
+                  <link href="http://www.outline.ch/files/xmldb_jdbc_dist_20010802.jar ">Download</link>
+               </li>
+            </ul>            
+         </p>
+         <p>
+            If you know of any other implementations that are in
+            progress please email <link
+            href="mailto:info@xmldb.org">info@xmldb.org</link> so that we may
+            add them to the list.
+         </p>
+         
+         <p>
+            <strong>Older Documents:</strong>
+            <ul>
+               <li><link href="archive/05072001/xapi-draft.html">May. 7, 2001 Working Draft</link></li>
+               <li><link href="archive/05072001/UseCases.html">May. 7, 2001 API Use Cases Draft</link></li>
+
+               <li><link href="archive/03092001/xapi-draft.html">Mar. 15, 2001 Working Draft (Experimental)</link></li>
+               <li><link href="archive/03092001/UseCases.html">Mar. 15, 2001 API Use Cases Draft (Experimental)</link></li>
+
+               <li><fork href="http://uche.ogbuji.net/papers/xmldb-cli.html">Proposed Draft API (Uche Ogbuji - Fourthought Inc.)</fork> Last updated January 10, 2001</li>
+               <li><fork href="http://www.smb-tec.com/api/index.html">Proposed Draft API (Lars Martin - SMB GmbH)</fork> Last updated January 3, 2001</li>
+               <li><link href="xapi-draft-dbxml.html">Proposed Draft API (Tom Bradford, Kimbro Staken - The dbXML Group)</link>, Last updated November 17, 2000</li>
+            </ul>
+         </p>
+         <p>
+            <strong>Other Pointers:</strong>
+         </p>
+
+         <ul>
+            <li><fork href="http://www.w3.org/XML/Query">XML Query Working Group</fork>
+                Copyright 2000 by W3C:<br/>
+
+               <em>&quot;The mission of the XML Query working group is to provide flexible query
+                   facilities to extract data from real and virtual documents on the Web, therefore
+                   finally providing the needed interaction between the web world and the database world.
+                   Ultimately, collections of XML files will be accessed like databases.&quot;
+               </em>
+         
+            </li>
+
+            <li><fork href="http://www.rpbourret.com/xml/XMLAndDatabases.htm">XML and Databases</fork>,
+                Copyright 1999-2000 by Ronald Bourret:<br/>
+            
+               <em>&quot;This paper briefly discusses the relationship between XML and databases
+                   and describes some of the types of software available to process XML documents
+                   with databases. Although it is not intended to be exhaustive, I hope that it
+                   describes some of the major issues in using XML with databases. It is somewhat
+                   biased towards relational databases simply because that is where my experience
+                   is.&quot;
+               </em>
+
+            </li>
+
+         </ul>
+
+      </s1>
+      
+   </body>
+
+</document>

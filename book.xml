@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<book software="" title="XML:DB Initiative" copyright="2000-2003 The XML:DB Initiative">
+  <external id="back" label="XML:DB Home" href="http://www.xmldb.org/index.html"/>
+  <separator/>
+  <page id="index" label="Index" source="index.xml"/>
+  <spec id="xapi-req" label="Requirements" source="xapi-req.xml"/>
+  <spec id="xapi-draft" label="Working Draft" source="xapi-draft.xml"/>
+  <spec id="UseCases" label="API Use Cases" source="UseCases.xml"/>
+  <separator/>
+  <external id="javadoc" label="JavaDoc" href="http://www.xmldb.org/xapi/api/index.html"/>
+  <external id="repository" label="Repository" href="http://cvs.smb-tec.com/cgi-bin/cvsweb.cgi/xmldb/xapi"/>
+  <separator/>
+  <external id="maillist" label="Mail List" href="http://www.xmldb.org/projects.html"/>
+  <external id="mailarchive" label="Mail Archive" href="http://archive.xmldb.org"/>
+  
+  <!--hiddenspec id="base" source="base.xml"/>
+  <hiddenspec id="BinaryResource" source="BinaryResource.xml"/>
+  <hiddenspec id="DOMNodeResource" source="DOMNodeResource.xml"/>
+  <hiddenspec id="SAXResource" source="SAXResource.xml"/>
+  <hiddenspec id="XMLResource" source="XMLResource.xml"/>
+  <hiddenspec id="TransactionService" source="TransactionService.xml"/>
+  <hiddenspec id="XPathQueryService" source="XPathQueryService.xml"/>     
+  <hiddenspec id="xapi-draft-dbxml" source="xapi-draft-dbxml.xml"/-->  
+</book>

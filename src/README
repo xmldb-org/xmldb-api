@@ -1,0 +1,78 @@
+This distribution includes the files that make up the XML:DB API for Java. 
+There are three components included in the distribution.
+
+1. The XML:DB API Interfaces
+
+   The API interfaces are what driver developers must implement when creating a
+   new driver and are the interfaces that applications are developed against. 
+   Along with the interfaces a concrete DriverManager implementation is also
+   provides. The API intefaces are located in the JAR file named
+   xmldb-[date].jar where [date] is the date of the release.
+   
+   The packages that make up the API interfaces are.
+   
+   org.xmldb.api.DatabaseManager.java
+   org.xmldb.api.base
+   org.xmldb.api.modules
+   
+2. The XML:DB API Reference Implementation
+
+   The reference implementation provides a very simple file system based
+   implementation of the XML:DB API. This provides what is basically a very
+   simple native XML database that uses directories to represent collections and
+   just stores the XML in files. 
+   
+   The packages that make up the reference implementation are.
+   
+   org.xmldb.api.reference
+   
+3. The XML:DB API Driver Software Development Kit
+
+   The driver development kit provides a set of base classes that can be 
+   extended to simplify and speed the development of XML:DB API drivers. These
+   classes are used to provide the basis for the reference implementation and
+   therefore a simple example of how a driver can be implemented. Using the SDK
+   classes significantly reduces the amount of code that must be written to
+   create a new driver.
+   
+   Along with the SDK base classes the SDK also contains a set of jUnit test
+   cases that can be used to help validate the driver while it is being
+   developed. The test cases are still in development but there are enough tests
+   currently to be useful.
+   
+   The packages that make up the SDK are.
+   
+   org.xmldb.api.sdk
+   org.xmldb.api.tests
+   
+The reference implementation and driver SDK are in the JAR xmldb-sdk-[date].jar
+where [date] is the date of the release.
+
+
+Running the tests on the reference implementation.
+
+The reference impl uses a directory structure that is by default located in the
+data directory. The first time you run the tests a data directory and set of
+sample data will be created in the current directory. Running the tests requires
+that you have an ant installation. Ant is available from 
+http://jakarta.apache.org/.
+
+Once you have Ant installed, running the tests consists of typing the following
+command.
+
+   ant tests
+   
+If all tests pass you should see something like the following.
+
+setup:
+
+tests:
+     [java] ................
+     [java] Time: 1.906
+     [java] 
+     [java] OK (16 tests)
+     [java] 
+
+BUILD SUCCESSFUL
+
+

@@ -1,0 +1,242 @@
+<HTML><HEAD><SCRIPT language="JavaScript" src="resources/script.js" type="text/javascript"></SCRIPT><TITLE>XML Database API Draft Proposal</TITLE></HEAD><BODY alink="#0F4CC8" bgcolor="#EFEFEF" leftmargin="0" link="#0F4CC8" marginheight="0" marginwidth="0" text="#1E1446" topmargin="0" vlink="#0F4CC8"><TABLE border="0" cellpadding="0" cellspacing="0" width="100%"><TR><TD align="right" bgcolor="#EFEFEF" valign="top"><TABLE border="0" cellpadding="0" cellspacing="0" width="140"><TR><TD align="left"><A href="index.html"><IMG border="0" src="resources/logo.jpg"></A><BR>
+  <A href="http://www.xmldb.org/index.html" onMouseOut="rolloverOff('side-ext-2');" onMouseOver="rolloverOn('side-ext-2');"><IMG alt="XML:DB Home" border="0" hspace="0" name="side-ext-2" onLoad="rolloverLoad('side-ext-2','graphics/ext-2-label-2.jpg','graphics/ext-2-label-3.jpg');" src="graphics/ext-2-label-3.jpg" vspace="0"></A><BR>
+  <IMG border="0" src="resources/menu_sep.jpg"><BR>
+  <A href="index.html" onMouseOut="rolloverOff('side-index');" onMouseOver="rolloverOn('side-index');"><IMG alt="Index" border="0" hspace="0" name="side-index" onLoad="rolloverLoad('side-index','graphics/index-label-2.jpg','graphics/index-label-3.jpg');" src="graphics/index-label-3.jpg" vspace="0"></A><BR>
+  <A href="xapi-req.html" onMouseOut="rolloverOff('side-xapi-req');" onMouseOver="rolloverOn('side-xapi-req');"><IMG alt="Requirements" border="0" hspace="0" name="side-xapi-req" onLoad="rolloverLoad('side-xapi-req','graphics/xapi-req-label-2.jpg','graphics/xapi-req-label-3.jpg');" src="graphics/xapi-req-label-3.jpg" vspace="0"></A><BR>
+  <IMG alt="Working Draft" border="0" hspace="0" src="graphics/xapi-draft-label-1.jpg" vspace="0"><BR>
+  <A href="UseCases.html" onMouseOut="rolloverOff('side-UseCases');" onMouseOver="rolloverOn('side-UseCases');"><IMG alt="API Use Cases" border="0" hspace="0" name="side-UseCases" onLoad="rolloverLoad('side-UseCases','graphics/UseCases-label-2.jpg','graphics/UseCases-label-3.jpg');" src="graphics/UseCases-label-3.jpg" vspace="0"></A><BR>
+  
+  <IMG border="0" src="resources/menu_sep.jpg"><BR>
+  <A href="http://www.xmldb.org/projects.html" onMouseOut="rolloverOff('side-ext-16');" onMouseOver="rolloverOn('side-ext-16');"><IMG alt="Mail List" border="0" hspace="0" name="side-ext-16" onLoad="rolloverLoad('side-ext-16','graphics/ext-16-label-2.jpg','graphics/ext-16-label-3.jpg');" src="graphics/ext-16-label-3.jpg" vspace="0"></A><BR>
+  <A href="http://archive.xmldb.org" onMouseOut="rolloverOff('side-ext-18');" onMouseOver="rolloverOn('side-ext-18');"><IMG alt="Mail Archive" border="0" hspace="0" name="side-ext-18" onLoad="rolloverLoad('side-ext-18','graphics/ext-18-label-2.jpg','graphics/ext-18-label-3.jpg');" src="graphics/ext-18-label-3.jpg" vspace="0"></A><BR>
+  
+  
+  
+  
+  
+  
+  
+       
+    
+<!--end navigation panel--><IMG border="0" src="resources/menu_bottom.jpg" valign="bottom"></TD></TR></TABLE></TD><TD align="left" valign="top" width="100%"><TABLE border="0" cellpadding="5" cellspacing="0" width="100%"><TR><TD></TD></TR><TR><TD></TD></TR><TR><TD></TD></TR><TR><TD><DIV align="center"><TABLE align="center" border="0" cellpadding="0" cellspacing="0" width="60%"><TBODY><TR><TD bgcolor="#64697C"><TABLE border="0" cellpadding="1" cellspacing="1" width="100%"><TR><TD align="center" bgcolor="#A8ADD5" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Authors</B></FONT></TD></TR><TR><TD align="left" bgcolor="#C5CADD" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Members of the XML:DB API Mailing List</B> - xapi-dev@xmldb.org</FONT></TD></TR><TR><TD align="left" bgcolor="#C5CADD" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Kimbro Staken (Editor)</B> - kstaken@dbxmlgroup.com</FONT></TD></TR><TR><TD align="center" bgcolor="#A8ADD5" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Status</B></FONT></TD></TR><TR><TD align="left" bgcolor="#C5CADD" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Working Draft (Experimental) - 2001-03-16</B></FONT></TD></TR><TR><TD align="center" bgcolor="#A8ADD5" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Notice</B></FONT></TD></TR><TR><TD align="left" bgcolor="#C5CADD" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      This is a XML:DB Working Draft for review by all interested parties.
+      It is a draft document and may be updated, replaced, or obsoleted by other
+      documents at any time. It is inappropriate to use Working Drafts as reference 
+      material or to cite them as other than &quot;work in progress&quot;. This work
+      is part of the XML:DB Project.
+      Comments on this specification should be sent to XML:DB API mailing list
+      xapi-dev@xmldb.org.
+      </FONT></TD></TR><TR><TD align="center" bgcolor="#A8ADD5" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1"><B>Abstract</B></FONT></TD></TR><TR><TD align="left" bgcolor="#C5CADD" valign="center"><FONT color="#000000" face="arial,helvetica,sanserif" size="-1">
+      This document defines a draft specification for the XML Database API. This API is being developed through 
+      the mailing lists of the XML:DB organization and the contents are attributed to the members of those lists.      
+      </FONT></TD></TR></TABLE></TD></TR></TBODY></TABLE></DIV><BR><DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="98%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="+1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B>Table of Contents</B></I></FONT></TD></TR></TABLE><BR><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="98%"><TR><TD><FONT color="#000000" face="arial,helvetica,sanserif">1 <A href="#N12dcdb">XML:DB Database API Introduction</A><BR>2 <A href="#N61be92">Getting Started</A><BR>3 <A href="#Na3d3b">Core Level Specifications</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;3.1 <A href="#N305acd">Minimum Conformance Level</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;3.2 <A href="#N200185">Core Level 0</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;3.3 <A href="#N43c315">Core Level 1</A><BR>4 <A href="#N3a6076">Modules</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;4.1 <A href="#N18fa47">API Base</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;4.2 <A href="#N516fc1">Resources</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2.1 <A href="#N7ecd78">XMLResource</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2.2 <A href="#N1756a4">DOMNodeResource</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2.3 <A href="#N41fab6">SAXResource</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2.4 <A href="#N44cbbe">BinaryResource</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;4.3 <A href="#N1eb0">Services</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.3.1 <A href="#N554d32">XPathQueryService</A><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.3.2 <A href="#N14a18d">TransactionService</A><BR></FONT><P></P><FONT face="arial,helvetica,sanserif"><B>Appendices</B></FONT><P></P></TD></TR></TABLE><BR><BR></DIV>
+      <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="98%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="+1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N12dcdb">XML:DB Database API Introduction</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="98%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+         <P align="justify">
+            The XML:DB API is designed to enable a common access mechanism to 
+            XML databases. 
+            The API enables the construction of applications
+            to store, retrieve, modify and query data that is stored in an XML database.
+            These facilities are intended to enable the construction of
+            applications for any XML database that claims conformance with the
+            XML:DB API.
+            The API can
+            be considered generally equivalent to technologies such as ODBC,
+            JDBC or Perl DBI.
+         </P>
+         <P align="justify">
+            A major goal of the XML:DB API is to be modular and to define a 
+            simple baseline for 
+            implementors to follow. To achieve this goal the API is
+            broken into small <A href="#Modules">modules</A> that are then 
+            bundled together in the 
+            form of <A href="#CoreLevels">API Core Level specifications</A>. 
+         </P>
+         <P align="justify">
+            The API Core Level specifications form the basis for interoperability by 
+            enabling a vendor to specify the maximum Core Level at which they 
+            are conformant. Applications can tailor their functionality based on 
+            Core Level or may require a specific Core Level to function. Vendors
+            are free to add any additional modules beyond the base Core Level
+            requirements but they are not required to do so. This modular nature
+            provides a very clean path to increase support from one Core Level
+            to the next.
+         </P>
+         <P align="justify">
+            On the surface this structure may seem overly complex and at first
+            brush it is. However it is born out of the fact that the XML
+            database arena is very new and rapidly changing. At this stage of
+            evolution the playing field has not stabalized enough to know
+            exactly what level of functionality is required to build
+            applications. The Core Level mechanism is designed to keep things
+            simple while still allowing significant evolution of the
+            specification over the next few years. This model is in many ways
+            similar to that being taken by the W3C DOM working group and is in
+            the spirit of the <A href="http://www.ietf.org/rfc/rfc2026.txt">
+            Internet Standards Process RFC2026</A>.
+         </P>
+         <P align="justify">
+            All API functionality is specified in terms of OMG IDL. IDL is easy
+            to understand and acts as a filter to minimize language specific
+            functionality. Language bindings for specific languages will be
+            provided. Initial language support looks to consist of Java and
+            Python but is open to the contribution of additional languages as
+            interest dictates.
+         </P>
+      </FONT></TD></TR></TABLE></DIV><BR><!--end s1--> 
+      <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="98%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="+1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N61be92">Getting Started</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="98%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+         <P align="justify">
+            This section provides some tips for getting started in understanding
+            the XML:DB API.
+         </P>
+         <P align="justify">
+            The best place to start is probably by looking at the 
+            <A href="UseCases.html">Use Cases</A>
+            document. This document provides common database usage scenarios 
+            with solutions implemented using the XML:DB API. Each solution
+            specifies the Core Level support and optional API modules required 
+            to complete the task. This
+            provides an example oriented introduction to the various API
+            modules. 
+         </P>
+         <P align="justify">
+            From there the next step is to study the 
+            <A href="#Base">API Base module</A>. This module is required
+            for all implementations and forms the heart of the XML:DB API
+            functionality.
+         </P>
+         <P align="justify">
+            After studying the use cases and API Base module you should have a
+            good idea of what the API is good for and how it works. If you need
+            more detail then you can dig into the other modules.
+         </P>
+      </FONT></TD></TR></TABLE></DIV><BR><!--end s1-->
+      
+      <A name="CoreLevels"><!--anchor--></A>
+      <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="98%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="+1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="Na3d3b">Core Level Specifications</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="98%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+         <P align="justify">
+            Core Levels define a set of baseline implementation levels that
+            implementors can strive for. They provide a common, simple to
+            understand bundling of XML:DB API modules to form workable API
+            implementations. This tiered approach is taken to achieve the
+            highest level of interoperability possible while still enabling
+            advanced functionality for applications that can limit their scope
+            to a smaller set of API implementations. 
+         </P>
+         <P align="justify">
+            While a minimum baseline is specified to insure interoperability, it is
+            strongly suggested that implementors strive for the highest Core
+            Level implementation possible.
+         </P>
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N305acd">Minimum Conformance Level</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Core Level 0 is the minimum level that must be implemented in 
+               order to claim XML:DB API conformance. It is safe to assume that
+               any product that claims conformance with the XML:DB API
+               specification will at a minimum support Core Level 0
+               functionality in an interoperable fashion. 
+            </P>            
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         <A name="CoreLevel0"><!--anchor--></A>
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N200185">Core Level 0</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Core Level 0 consists of the following modules. All
+               modules must be implemented to be considered conformant.
+            </P>
+            <BLOCKQUOTE><UL><LI><A href="#Base">API Base</A></LI><LI><A href="#XMLResource">XMLResource</A></LI></UL></BLOCKQUOTE>
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N43c315">Core Level 1</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <P align="justify">
+               Core Level 1 consists of the following modules. All
+               modules must be implemented to be considered conformant.
+            </P>
+            <BLOCKQUOTE><UL><LI><A href="#CoreLevel0">All Core Level 0 functionality</A></LI><LI><A href="#DOMNodeResource">DOMNodeResource</A></LI><LI><A href="#SAXResource">SAXResource</A></LI><LI><A href="#XPathQueryService">XPathQueryService</A></LI></UL></BLOCKQUOTE>
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+      </FONT></TD></TR></TABLE></DIV><BR><!--end s1-->
+      <A name="Modules"><!--anchor--></A>           
+      <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="98%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="+1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N3a6076">Modules</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="98%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+         <P align="justify">
+            This is a list of all modules currently defined within the scope
+            of the XML:DB API. Not all modules are included in the Core Level
+            specifications but are available to be added to implementations at
+            any Core Level.
+         </P>
+         <A name="Base"><!--anchor--></A>
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N18fa47">API Base</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">            
+            <P align="justify">
+            
+            The API Base module is the core of the XML:DB API. It provides the
+            basic framework that all other modules hang off of. All API
+            implementations regardless of Core Level support must implement this
+            module.
+            </P>
+            <P align="justify">
+            <A href="base.html">Specification</A> <A href="idl/base.idl">IDL</A>
+            </P>
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         <A name="Resource"><!--anchor--></A>
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N516fc1">Resources</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <A name="XMLResource"><!--anchor--></A>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N7ecd78">XMLResource</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">
+                  An XMLResource represents basic XML data as simple text data.
+                  This is the simplest and most interoperable format for XML data.
+               </P>
+               <P align="justify">
+                  <A href="XMLResource.html">Specification</A> <A href="idl/XMLResource.idl">IDL</A>
+               </P>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            
+            <A name="DOMNodeResource"><!--anchor--></A>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N1756a4">DOMNodeResource</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">
+                  A DOMNodeResource provides access to XML data via the W3C DOM API
+                  for XML. The interface exposes the underlying resource as a DOM
+                  Node.
+               </P>
+               <P align="justify">
+                  <A href="DOMNodeResource.html">Specification</A> <A href="idl/DOMNodeResource.idl">IDL</A>
+               </P>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            
+            <A name="SAXResource"><!--anchor--></A>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N41fab6">SAXResource</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">
+                  A SAXResource provides SAX ContentHandler access to XML data 
+                  stored in the database.
+               </P>
+               <P align="justify">
+                  <A href="SAXResource.html">Specification</A> <A href="idl/SAXResource.idl">IDL</A>
+               </P>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            
+            <A name="BinaryResource"><!--anchor--></A>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N44cbbe">BinaryResource</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">
+                  A binary resource represents a block of binary data or blob 
+                  stored in the database.
+               </P>
+               <P align="justify">
+                  <A href="BinaryResource.html">Specification</A> <A href="idl/BinaryResource.idl">IDL</A>
+               </P>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->            
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+         <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="95%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N1eb0">Services</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="95%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+            <A name="XPathQueryService"><!--anchor--></A>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N554d32">XPathQueryService</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">
+                  <A href="XPathQueryService.html">Specification</A> <A href="idl/XPathQueryService.idl">IDL</A>
+               </P>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->
+            
+            <A name="TransactionService"><!--anchor--></A>
+            <DIV align="right"><TABLE border="0" cellpadding="1" cellspacing="0" width="90%"><TR><TD bgcolor="#C5CADD" width="100%"><FONT color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><IMG border="0" height="5" hspace="0" src="resources/void.gif" vspace="0" width="5"><I><B><A name="N14a18d">TransactionService</A></B></I></FONT></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="90%"><TR><TD><FONT color="#000000" face="Arial, Helvetica, sans-serif">
+               <P align="justify">
+                  <A href="TransactionService.html">Specification</A> <A href="idl/TransactionService.idl">IDL</A>
+               </P>
+            </FONT></TD></TR></TABLE></DIV><BR><!--end s3-->            
+         </FONT></TD></TR></TABLE></DIV><BR><!--end s2-->
+      </FONT></TD></TR></TABLE></DIV><BR><!--end s1-->
+   </TD></TR></TABLE><!--end content panel--></TD></TR></TABLE><BR><TABLE border="0" cellpadding="0" cellspacing="0" width="100%"><TR><TD bgcolor="#64697C"><IMG height="1" src="images/dot.gif" width="1"></TD></TR><TR><TD align="center"><FONT color="#64697C" face="arial,helvetica,sanserif" size="-1"><I>
+               Copyright &copy; 2000,2001 The XML:DB Initiative.
+               All Rights Reserved.
+             </I></FONT></TD></TR><TR><TD></TD></TR></TABLE></BODY></HTML>
