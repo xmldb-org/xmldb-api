@@ -65,7 +65,7 @@ module org { module xmldb { module api { module modules {
    interface XMLResource : base::Resource {
       const string RESOURCE_TYPE = "XMLResource";
       
-      string getDocumentId() raises (XMLDBException);
+      string getDocumentId() raises (base::XMLDBException);
       Node getContentAsDOM() raises (base::XMLDBException);
       void setContentAsDOM( in Node content) raises (base::XMLDBException);
       void getContentAsSAX( in ContentHandler handler ) raises (base::XMLDBException);

@@ -4,7 +4,7 @@ package org.xmldb.api.modules;
  *  The XML:DB Initiative Software License, Version 1.0
  *
  *
- * Copyright (c) 2000-2003 The XML:DB Initiative.  All rights
+ * Copyright (c) 2000-2004 The XML:DB Initiative.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without

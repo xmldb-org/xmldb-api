@@ -166,6 +166,13 @@ module org { module xmldb { module api { module base {
       Resource getMembersAsResource() raises (XMLDBException);
       long getSize() raises (XMLDBException);      
       void clear() raises (XMLDBException);            
-   }
+   };
+
+   interface CompiledExpression {
+       /**
+         * Prepare the expression for being reused.
+         */
+        void reset();
+   };
 
 }; }; }; };

@@ -51,4 +51,7 @@ Added NOT_IMPLEMENTED error code
 Changed DatabaseManager.getProperty, setProperty and getDatabases to not throw exceptions.
 Added a resourceType parameter to Collection.createResource()
 
+-- 2004-jun-12
+Added XQueryService and CompiledExpression
+
 

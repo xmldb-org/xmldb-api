@@ -1,10 +1,9 @@
-package org.xmldb.api.modules;
-
+package org.xmldb.api.base;
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
  *
- * Copyright (c) 2000-2004 The XML:DB Initiative.  All rights
+ * Copyright (c) 2000-2003 The XML:DB Initiative.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,42 +51,11 @@ package org.xmldb.api.modules;
  * individuals on behalf of the XML:DB Initiative. For more information
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
-import org.xmldb.api.base.*;
 
-/**
- * CollectionManagementService is a <code>Service</code> that enables the basic
- * management of collections within a database. The functionality provided is
- * very basic because collection management varies widely among databases. This
- * service simply provides functionality for those databases that are able
- * to implement this basic functionality.
- */
-public interface CollectionManagementService extends Service {
-   /**
-    * Creates a new <code>Collection</code> in the database. The default 
-    * configuration of the database is determined by the implementer. The 
-    * new <code>Collection</code> will be created relative to the <code>
-    * Collection</code> from which the <code>CollectionManagementService</code>
-    * was retrieved.
-    *
-    * @param name The name of the collection to create.
-    * @return The created <code>Collection</code> instance.
-    * @exception XMLDBException with expected error codes.<br />
-    *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
-    */
-   Collection createCollection(String name) throws XMLDBException;
+public interface CompiledExpression {
 
-   /**
-    * Removes a named <code>Collection</code> from the system. The 
-    * name for the <code>Collection</code> to remove is relative to the <code>
-    * Collection</code> from which the <code>CollectionManagementService</code>
-    * was retrieved.
-    *
-    * @param name The name of the collection to remove.
-    * @exception XMLDBException with expected error codes.<br />
-    *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
-    */
-   void removeCollection(String name) throws XMLDBException;
-}
-
+  /**
+   * Prepare the expression for being reused.
+   */
+  void reset ();
+} 
