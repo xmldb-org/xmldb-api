@@ -13,10 +13,10 @@ Build Instructions:
          ant.sh -buildfile buildCommon.xml      (on Unix)
    on the directory where this file is located.
 
-$Id: buildCommon.xml,v 1.1 2003/04/24 14:40:38 lars Exp $
+$Id: buildCommon.xml,v 1.1 2004/05/30 11:54:44 per_nyfelt Exp $
 ==================================================================== -->
 
-<project name="xmldb-common" default="compile.all" basedir=".">
+<project name="xmldb.xapi.common" default="compile.all" basedir=".">
 
   <!-- =================================================================== -->
   <!-- Initializes the build process                                       -->

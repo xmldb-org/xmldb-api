@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="xmldb.xapi" default="docs" basedir=".">
+
+    <property name="build.compiler" value="modern"/>
+    <property name="build.dir" value="build"/>
+    <property name="build.doc.api" value="${build.dir}/javadoc"/>
+    <property name="src.dir" value="src"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="lib.dir" value="../stylebook/lib"/>
+    <property name="skin" value="../stylebook/styles"/>
+
+    <path id="project.classpath">
+        <pathelement path="${build.dir}"/>
+        <pathelement path="${lib.dir}"/>
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${build.dir}"/>
+    </target>
+
+    <!--======================================================================
+           Generate stylebook documentation
+    =======================================================================-->
+    <target name="docs" depends="prepare">
+        <mkdir dir="${build.doc.api}"/>
+
+        <javadoc packagenames="org.xmldb.api,
+	                           org.xmldb.api.base,
+	                           org.xmldb.api.modules"
+            sourcepath="${src.dir}/api"
+            destdir="${build.doc.api}"
+            public="true"
+            version="true"
+            author="true"
+            doctitle="XML:DB API Specification"
+            header="&lt;b&gt;XML:DB API&lt;/b&gt;"
+            bottom="&lt;font size=2&gt;Copyright (C) &lt;a href=http://www.xmldb.org&gt;XML:DB Initiative&lt;/a&gt;. All rights reserved.%lt;/font&gt;"
+            classpathref="project.classpath"/>
+    </target>
+
+    <!--======================================================================
+           Compile all sources
+    =======================================================================-->
+    <target name="compile" depends="prepare">
+        <javac srcdir="${src.dir}"
+            destDir="${build.dir}"
+            classpathref="project.classpath"
+            failonerror="true"/>
+    </target>
+
+    <target name="dist" depends="compile">
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}/xmldb"/>
+	    <copy todir="dist/xmldb">
+            <fileset dir="src/api/org dist/xmldb"/>
+        </copy>
+	    <ant dir="src"/>
+        <copy tofile="dist/xmldb/xmldb.jar">            
+            <fileset dir="src/lib/xmldb-api-*.jar"/>
+        </copy>	
+	    <tar tarfile="../downloads/xmldb-api-`date +%m%d%Y`.tar.gz"
+            includes="dist/**"/>
+    </target>
+</project>

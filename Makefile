@@ -1,6 +1,7 @@
 STYLEBOOK = org.apache.stylebook.StyleBook
-CLASSPATH = ../lib/xerces.jar:../lib/xalan.jar:../lib/stylebook-1.0-b2.jar
-SKIN = ../styles/xmldb
+LIBDIR = ../stylebook/lib
+CLASSPATH = $(LIBDIR)/xerces.jar:$(LIBDIR)/xalan.jar:$(LIBDIR)/stylebook-1.0-b2.jar
+SKIN = ../stylebook/styles
 SOURCES = `find src/ -name "*.java"`
 
 all:	javadocs
