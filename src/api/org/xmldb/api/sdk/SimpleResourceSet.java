@@ -52,9 +52,6 @@ package org.xmldb.api.sdk;
  * individuals on behalf of the XML:DB Initiative. For more information
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
-
-import org.xmldb.api.reference.modules.*;
-
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.*;
 
@@ -100,8 +97,8 @@ public abstract class SimpleResourceSet implements ResourceSet {
     * @return the <code>Resource</code> instance.
     * @exception XMLDBException 
     */
-   public Resource getResource(long index) throws XMLDBException {
-      return (XMLResource) resources.get((int) index);
+   public Resource getResource(int index) throws XMLDBException {
+      return (XMLResource) resources.get(index);
    }
 
    /**
@@ -110,7 +107,7 @@ public abstract class SimpleResourceSet implements ResourceSet {
     * @return the number of <code>Resource</code> instances in the set.
     * @exception XMLDBException     
     */
-   public long getSize() throws XMLDBException {
+   public int getSize() throws XMLDBException {
       return resources.size();
    }
 
@@ -122,7 +119,25 @@ public abstract class SimpleResourceSet implements ResourceSet {
    public void addResource(Resource res) throws XMLDBException {
       resources.add(res);
    }
-   
+
+    /**
+     * Adds all <code>Resource</code> instances in the resourceSet
+     * to this set.
+     *
+     * @param rSet The <code>ResourceSet</code> containing all the <code>Resource</code>'s
+     *             to add to the set.
+     * @throws org.xmldb.api.base.XMLDBException
+     *          with expected error codes.<br />
+     *          <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
+     *          specific errors that occur.<br />
+     */
+    public void addAll(ResourceSet rSet) throws XMLDBException {
+        ResourceIterator it = rSet.getIterator();
+        while (it.hasMoreResources()) {
+            addResource(it.nextResource());
+        }
+    }
+
    /**
     * Removes all <code>Resource</code> instances from the set.
     *
@@ -139,8 +154,8 @@ public abstract class SimpleResourceSet implements ResourceSet {
     * @param index The index of the <code>Resource</code> instance to remove.
     * @exception XMLDBException     
     */
-   public void removeResource(long index) throws XMLDBException {
-      resources.remove((int) index);
+   public void removeResource(int index) throws XMLDBException {
+      resources.remove(index);
    }      
    
    /**

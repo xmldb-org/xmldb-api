@@ -14,7 +14,7 @@ Howto build:
      
    in the directory where this file is located.
 
-   $Id: build.xml,v 1.3 2004/06/08 19:45:02 per_nyfelt Exp $
+   $Id: build.xml,v 1.4 2004/07/17 09:27:36 per_nyfelt Exp $
 
 -->
 
@@ -29,6 +29,7 @@ Howto build:
   <property name="src.dir" value="${root.dir}/api"/>
   <property name="common.src.dir" value="${root.dir}/common"/>
   <property name="build.dir" value="${root.dir}/build"/>
+  <property name="jar.build.dir" value="${build.dir}/jar"/>
   <property name="build.doc" value="${build.dir}/javadoc"/>
   <property name="api.build.dir" value="${build.dir}/classes-api"/>
   <property name="sdk.build.dir" value="${build.dir}/classes-sdk"/>
@@ -55,6 +56,7 @@ Howto build:
     <tstamp/>
     <property name="jarname" value="xmldb-api"/>
     <property name="sdk.jarname" value="xmldb-api-sdk"/>
+    <property name="common.jarname" value="xmldb-common"/>
   </target>
 
   <!-- =================================================================== -->
@@ -64,10 +66,11 @@ Howto build:
     <mkdir dir="${api.build.dir}"/>
     <mkdir dir="${sdk.build.dir}"/>
     <mkdir dir="${common.build.dir}"/>
+    <mkdir dir="${jar.build.dir}"/>  
     <mkdir dir="${jar.dir}"/>
   </target>
  
-  <target name="main" depends="compile-api, compile-sdk, bin-jar, bin-jar-sdk">
+  <target name="main" depends="bin-jar, bin-jar-sdk, bin-jar-common">
   </target> 
   
   <!-- =================================================================== -->
@@ -83,9 +86,8 @@ Howto build:
   </target>
 
   <target name="bin-jar" depends="prepare, compile-api">
-    <jar jarfile="${jar.dir}/${jarname}.jar"
-         basedir="${api.build.dir}"
-    />
+    <jar jarfile="${jar.build.dir}/${jarname}.jar"
+         basedir="${api.build.dir}"/>
   </target>
   
   <target name="sdk" depends="compile-sdk, bin-jar-sdk">
@@ -102,8 +104,8 @@ Howto build:
 	 </javac>
   </target>
   
-  <target name="bin-jar-sdk" depends="prepare">
-    <jar jarfile="${jar.dir}/${sdk.jarname}.jar"
+  <target name="bin-jar-sdk" depends="prepare, compile-sdk">
+    <jar jarfile="${jar.build.dir}/${sdk.jarname}.jar"
          basedir="${sdk.build.dir}"
     />
   </target>
@@ -119,6 +121,12 @@ Howto build:
                classpathref="project.classpath" />
              <!--classpath refid="project.classpath"/-->
       </target>
+
+   <target name="bin-jar-common" depends="compile-common">
+    <jar jarfile="${jar.build.dir}/${common.jarname}.jar"
+         basedir="${common.build.dir}"
+    />
+  </target>
 
   <!-- =================================================================== -->
   <!-- Tasks to manage execution of tests                                  -->
@@ -232,7 +240,8 @@ Howto build:
   
   <target name="clean-jar">
     <delete file="${jar.dir}/${jarname}.jar"/>
-    <delete file="${jar.dir}/${sdk.jarname}.jar"/>    
+    <delete file="${jar.dir}/${sdk.jarname}.jar"/>
+    <delete file="${jar.dir}/${common.jarname}.jar"/>
   </target>
   
 </project>

@@ -58,12 +58,10 @@ import org.xmldb.api.modules.*;
 import org.xmldb.api.sdk.*;
 import org.xmldb.api.reference.modules.*;
 
-import java.util.List;
 import java.io.*;
 
 import org.w3c.dom.*;
 
-import org.apache.xerces.parsers.*;
 import org.apache.xml.serialize.*;
 
 /**
@@ -93,7 +91,7 @@ public class ResourceSetImpl extends SimpleResourceSet {
          }
       }
    }
-   
+
    /**
     * Returns a <code>Resource</code> containing an XML representation of all
     * resources stored in the set.        

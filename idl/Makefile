@@ -20,6 +20,6 @@ interfaces:
 	rm $(BUILD)/org/xmldb/api/base/*POA.java
 	rm $(BUILD)/org/xmldb/api/base/*Helper.java
 	rm $(BUILD)/org/xmldb/api/base/*Holder.java
-	rm $(BUILD)/org/xmldb/api/base/security/*POA.java	
+	rm $(BUILD)/org/xmldb/api/security/*POA.java	
 	rm $(BUILD)/org/xmldb/api/modules/*POA.java
 

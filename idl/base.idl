@@ -161,6 +161,7 @@ module org { module xmldb { module api { module base {
    interface ResourceSet {      
       Resource getResource( in long index ) raises (XMLDBException);
       void addResource( in Resource res ) raises (XMLDBException);
+      void addAll( in ResourceSet rSet ) raises (XMLDBException);
       void removeResource( in long index ) raises (XMLDBException);
       ResourceIterator getIterator() raises (XMLDBException);
       Resource getMembersAsResource() raises (XMLDBException);
