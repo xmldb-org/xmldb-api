@@ -1,0 +1,27 @@
+junit.jar
+---------
+url: www.junit.org
+version: 3.8.1.
+used by: Testsuite
+
+xalan.jar
+---------
+url: www.apache.org/xml
+version:
+used by: common
+
+xerces.jar
+----------
+url: www.apache.org/xml
+version: 1.2.0
+used by: Reference implementation (e.g. SimpleResourceSet)
+
+omquery.jar
+-----------
+
+
+xtdash.jar
+----------
+
+
+
