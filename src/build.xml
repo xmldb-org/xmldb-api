@@ -14,7 +14,7 @@ Howto build:
      
    in the directory where this file is located.
 
-   $Id: build.xml,v 1.1 2004/05/30 11:54:44 per_nyfelt Exp $
+   $Id: build.xml,v 1.2 2004/06/06 10:54:23 per_nyfelt Exp $
 
 -->
 
@@ -24,24 +24,26 @@ Howto build:
   <!-- Initializes the build process                                       -->
   <!-- =================================================================== -->
   <!-- default directory structure definitions -->
-  <property name="root.dir" value="."/>
+  <property name="root.dir" value="${basedir}"/>
   <property name="jar.dir" value="${root.dir}/lib"/>
   <property name="src.dir" value="${root.dir}/api"/>  
-  <property name="build.dir" value="${root.dir}/classes"/>
-  <property name="sdk.build.dir" value="${root.dir}/classes-sdk"/>
+  <property name="build.dir" value="${root.dir}/build"/>
+  <property name="build.doc" value="${build.dir}/javadoc"/>
+  <property name="api.build.dir" value="${build.dir}/classes-api"/>
+  <property name="sdk.build.dir" value="${build.dir}/classes-sdk"/>
   <property name="dist.build.dir" value="${root.dir}/dist/xmldb"/>
   
   <property name="javadoc.pkgs" value="org.xmldb.*"/>
   
   <!-- classpath to use within project -->
-  <path id="project.class.path">
+  <path id="project.classpath">
+
     <!-- compiled classes directory -->
-    <pathelement location="${build.dir}"/>
+    <pathelement location="${api.build.dir}"/>
+    <pathelement location="${sdk.build.dir}"/>
 
     <!-- all jars in jar directory -->
-    <fileset dir="${jar.dir}">
-      <include name="*.jar"/>
-    </fileset>
+    <fileset dir="${jar.dir}" />
 
     <!-- system property, environment classpath -->
     <pathelement path="${java.class.path}"/>
@@ -57,7 +59,7 @@ Howto build:
   <!-- Prepares the build directory                                        -->
   <!-- =================================================================== -->
   <target name="prepare" depends="init">
-    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${api.build.dir}"/>
     <mkdir dir="${sdk.build.dir}"/>
     <mkdir dir="${jar.dir}"/>
   </target>
@@ -71,15 +73,15 @@ Howto build:
   <target name="compile" depends="prepare">  
      <echo message="Compiling XML:DB API - Interfaces"/>
      <javac srcdir="${src.dir}"
-           destdir="${build.dir}"
-           excludes="org/xmldb/api/reference/**, org/xmldb/api/sdk/**, org/xmldb/api/tests/**">
-         <classpath refid="project.class.path"/>
-	 </javac>
+           destdir="${api.build.dir}"
+           excludes="org/xmldb/api/reference/**, org/xmldb/api/sdk/**, org/xmldb/api/tests/**"
+           classpathref="project.classpath" />
+         <!--classpath refid="project.classpath"/-->
   </target>
 
   <target name="bin-jar" depends="prepare, compile">
     <jar jarfile="${jar.dir}/${jarname}.jar"
-         basedir="${build.dir}"
+         basedir="${api.build.dir}"
     />
   </target>
   
@@ -93,7 +95,7 @@ Howto build:
            debug="off"
            deprecation="off"
            excludes="org/xmldb/api/base/**, org/xmldb/api/modules/**">
-         <classpath refid="project.class.path"/>
+         <classpath refid="project.classpath"/>
 	 </javac>
   </target>
   
@@ -127,42 +129,44 @@ Howto build:
   <!-- Build Full API docs including SDK files                             -->
   <!-- =================================================================== -->
   <target name="javadoc" depends="prepare">
-    <delete dir="./javadoc"/>
-    
-    <mkdir dir="./javadoc"/>
+    <delete dir="${build.doc}/full"/>
 
-    <javadoc packagenames="org.xmldb.*"
-             sourcepath="${src.dir}"
-             destdir="./javadoc"
-             public="true"
-             version="true"
-             author="true"
-             overview=""
-             doctitle="XML:DB API SDK"
-             header="XML:DB API SDK"
-             bottom="Copyright (c) 2001 The XML:DB Initiative All rights reserved"
-    />
+        <mkdir dir="${build.doc}/full"/>
+
+        <javadoc packagenames="org.xmldb.**"
+            sourcepath="${src.dir}"
+            destdir="${build.doc}/full"
+            public="true"
+            version="true"
+            author="true"
+            doctitle="XML:DB API Specification"
+            header="&lt;b&gt;XML:DB API&lt;/b&gt;"
+            bottom="&lt;font size=2&gt;Copyright (C) &lt;a href=http://www.xmldb.org&gt;XML:DB Initiative&lt;/a&gt;. All rights reserved.%lt;/font&gt;"
+            classpathref="project.classpath"/>
+
   </target>
   
   <!-- =================================================================== -->
   <!-- Build API Specification                                             -->
   <!-- =================================================================== -->
   <target name="javadoc-spec" depends="prepare">
-    <deltree dir="../api"/>
+    <deltree dir="${build.doc}/api"/>
     
-    <mkdir dir="../api"/>
+    <mkdir dir="${build.doc}/api"/>
 
-    <javadoc packagenames="org.xmldb.api, org.xmldb.api.base, org.xmldb.api.modules"
-             sourcepath="${src.dir}"
-             destdir="../api"
-             public="true"
-             version="true"
-             author="true"
-             overview=""
-             doctitle="XML:DB API Specification"
-             header="XML:DB API"
-             bottom="Copyright (c) 2001 The XML:DB Initiative All rights reserved"
-    />
+
+        <javadoc packagenames="org.xmldb.api,
+	                           org.xmldb.api.base,
+	                           org.xmldb.api.modules"
+            sourcepath="${src.dir}"
+            destdir="${build.doc}/api"
+            public="true"
+            version="true"
+            author="true"
+            doctitle="XML:DB API Specification"
+            header="&lt;b&gt;XML:DB API&lt;/b&gt;"
+            bottom="&lt;font size=2&gt;Copyright (C) &lt;a href=http://www.xmldb.org&gt;XML:DB Initiative&lt;/a&gt;. All rights reserved.%lt;/font&gt;"
+            classpathref="project.classpath"/>
   </target>
   
   <!-- =================================================================== -->
