@@ -105,7 +105,7 @@ public class DatabaseManager
     *  </code> instance is invalid.
     */
    public static void registerDatabase (Database database) throws XMLDBException {
-      System.out.println( "trying to register database" );
+      //System.out.println( "trying to register database" );
       if ((database.getName() == null) || (database.getName().equals(""))) {
          throw new XMLDBException(ErrorCodes.INVALID_DATABASE);
       }
