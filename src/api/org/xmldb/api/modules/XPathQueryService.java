@@ -61,7 +61,9 @@ import org.xmldb.api.base.*;
  * single XML <code>Resource</code> stored in the <code>Collection</code>.
  */
 public interface XPathQueryService extends Service {
-   
+
+    public static final String SERVICE_NAME = "XPathQueryService";
+
    /**
     * Sets a namespace mapping in the internal namespace map used to evaluate
     * queries. If <code>prefix</code> is null or empty the default namespace is

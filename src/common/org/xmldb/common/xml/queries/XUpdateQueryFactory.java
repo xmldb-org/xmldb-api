@@ -56,20 +56,22 @@ import javax.xml.parsers.FactoryConfigurationError;
 
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/04/24 14:14:10 $
+ * @version $Revision: 1.1 $ $Date: 2004/05/30 11:54:45 $
  * @author <a href="http://www.softwarebuero.de">SMB</a>
  * @see XUpdateQuery
  */
 public abstract class XUpdateQueryFactory {
 
 
+    public static final String FACTORY_KEY = "org.xmldb.common.xml.queries.XUpdateQueryFactory";
+
     public XUpdateQueryFactory() {
     }
 
 
     public static XUpdateQueryFactory newInstance() {
-        String factoryName = System.getProperty("org.xmldb.common.xml.queries.XUpdateQueryFactory",
-                "org.xmldb.lexus.XUpdateQueryFactoryImpl");
+        String factoryName = System.getProperty(FACTORY_KEY,
+                "org.xmldb.xupdate.lexus.XUpdateQueryFactoryImpl");
 
         XUpdateQueryFactory factory = null;
 

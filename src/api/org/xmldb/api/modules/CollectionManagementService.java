@@ -62,6 +62,8 @@ import org.xmldb.api.base.*;
  * to implement this basic functionality.
  */
 public interface CollectionManagementService extends Service {
+
+    public static final String SERVICE_NAME = "CollectionManagementService";
    /**
     * Creates a new <code>Collection</code> in the database. The default 
     * configuration of the database is determined by the implementer. The 

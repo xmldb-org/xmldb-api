@@ -61,6 +61,8 @@ import org.xmldb.api.base.*;
  * <b>Note: This interface needs much better definition</b>
  */
 public interface TransactionService extends Service {
+
+    public static final String SERVICE_NAME = "TransactionService"; 
    /**
     * Begin the transaction
     *
