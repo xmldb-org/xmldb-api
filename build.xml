@@ -10,8 +10,8 @@
     <property name="skin" value="../stylebook/styles"/>
 
     <path id="project.classpath">
-        <pathelement path="${build.dir}"/>
-        <pathelement path="${lib.dir}"/>
+        <fileset dir="${build.dir}"/>
+        <fileset dir="${lib.dir}"/>
     </path>
 
     <target name="clean">
