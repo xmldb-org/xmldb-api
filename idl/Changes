@@ -54,4 +54,7 @@ Added a resourceType parameter to Collection.createResource()
 -- 2004-jun-12
 Added XQueryService and CompiledExpression
 
+-- 2004-jul-17
+Added first initial version of DatabaseInstanceManagerService and UserManagementService
+
 
