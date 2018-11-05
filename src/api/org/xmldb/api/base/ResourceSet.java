@@ -74,7 +74,7 @@ public interface ResourceSet {
      *                        {@link ErrorCodes#NO_SUCH_RESOURCE} if the index is out of range for the
      *                        set.
      */
-    Resource getResource(int index) throws XMLDBException;
+    Resource getResource(long index) throws XMLDBException;
 
     /**
      * Adds a <code>Resource</code> instance to the set.
@@ -107,7 +107,7 @@ public interface ResourceSet {
      *                        {@link ErrorCodes#VENDOR_ERROR} for any vendor
      *                        specific errors that occur.
      */
-    void removeResource(int index) throws XMLDBException;
+    void removeResource(long index) throws XMLDBException;
 
     /**
      * Returns an iterator over all <code>Resource</code> instances stored in the set.
@@ -145,7 +145,7 @@ public interface ResourceSet {
      *                        {@link ErrorCodes#VENDOR_ERROR} for any vendor
      *                        specific errors that occur.
      */
-    int getSize() throws XMLDBException;
+    long getSize() throws XMLDBException;
 
     /**
      * Removes all <code>Resource</code> instances from the set.
