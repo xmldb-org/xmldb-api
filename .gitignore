@@ -1,3 +1,8 @@
+# IntelliJ ignores
+.idea/
+*.iml
+# Maven ignores
+target/
 # CVS default ignores begin
 tags
 TAGS
