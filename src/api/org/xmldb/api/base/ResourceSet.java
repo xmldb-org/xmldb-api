@@ -61,17 +61,17 @@ public interface ResourceSet {
     /**
      * Returns the <code>Resource</code> instance stored at the index specified
      * by index.
-     * <p />
+     *
      * If the underlying implementation uses a paging or streaming optimization
      * for retrieving Resource instances. Calling this method MAY result in a
      * block until the requested Resource has been downloaded.
      *
      * @param index the index of the resource to retrieve.
      * @return The <code>Resource</code> instance
-     * @throws XMLDBException with expected error codes.<br />
-     *                        <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *                        specific errors that occur.<br />
-     *                        <code>ErrorCodes.NO_SUCH_RESOURCE if the index is out of range for the
+     * @throws XMLDBException with expected error codes.
+     *                        {@link ErrorCodes#VENDOR_ERROR} for any vendor
+     *                        specific errors that occur.
+     *                        {@link ErrorCodes#NO_SUCH_RESOURCE} if the index is out of range for the
      *                        set.
      */
     Resource getResource(int index) throws XMLDBException;
@@ -80,9 +80,9 @@ public interface ResourceSet {
      * Adds a <code>Resource</code> instance to the set.
      *
      * @param res The <code>Resource</code> to add to the set.
-     * @throws XMLDBException with expected error codes.<br />
-     *                        <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *                        specific errors that occur.<br />
+     * @throws XMLDBException with expected error codes.
+     *                        {@link ErrorCodes#VENDOR_ERROR} for any vendor
+     *                        specific errors that occur.
      */
     void addResource(Resource res) throws XMLDBException;
 
@@ -92,9 +92,9 @@ public interface ResourceSet {
      *
      * @param rSet The <code>ResourceSet</code> containing all the <code>Resource</code>'s
      *             to add to the set.
-     * @throws XMLDBException with expected error codes.<br />
-     *                        <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *                        specific errors that occur.<br />
+     * @throws XMLDBException with expected error codes.
+     *                        {@link ErrorCodes#VENDOR_ERROR} for any vendor
+     *                        specific errors that occur.
      */
     void addAll(ResourceSet rSet) throws XMLDBException;
 
@@ -103,9 +103,9 @@ public interface ResourceSet {
      * Removes the Resource located at <code>index</code> from the set.
      *
      * @param index The index of the <code>Resource</code> instance to remove.
-     * @throws XMLDBException with expected error codes.<br />
-     *                        <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *                        specific errors that occur.<br />
+     * @throws XMLDBException with expected error codes.
+     *                        {@link ErrorCodes#VENDOR_ERROR} for any vendor
+     *                        specific errors that occur.
      */
     void removeResource(int index) throws XMLDBException;
 
@@ -114,45 +114,45 @@ public interface ResourceSet {
      *
      * @return a <code>ResourceIterator</code> over all <code>Resource</code>
      *         instances in the set.
-     * @throws XMLDBException with expected error codes.<br />
-     *                        <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *                        specific errors that occur.<br />
+     * @throws XMLDBException with expected error codes.
+     *                        {@link ErrorCodes#VENDOR_ERROR} for any vendor
+     *                        specific errors that occur.
      */
     ResourceIterator getIterator() throws XMLDBException;
 
     /**
      * Returns a Resource containing an XML representation of all resources
-     * stored in the set. <p />
+     * stored in the set.
      * TODO: Specify the schema used for this
      *
      * @return A <code>Resource</code> instance containing an XML representation
      *         of all set members.
-     * @throws XMLDBException with expected error codes.<br />
-     *                        <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *                        specific errors that occur.<br />
+     * @throws XMLDBException with expected error codes.
+     *                        {@link ErrorCodes#VENDOR_ERROR} for any vendor
+     *                        specific errors that occur.
      */
     Resource getMembersAsResource() throws XMLDBException;
 
     /**
      * Returns the number of resources contained in the set.
-     * <p />
+     *
      * If the underlying implementation uses a paging or streaming optimization
      * for retrieving <code>Resource</code> instances. Calling this method MAY
      * force the downloading of all set members before the size can be determined.
      *
      * @return The number of <code>Resource</code> instances in the set.
-     * @throws XMLDBException with expected error codes.<br />
-     *                        <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *                        specific errors that occur.<br />
+     * @throws XMLDBException with expected error codes.
+     *                        {@link ErrorCodes#VENDOR_ERROR} for any vendor
+     *                        specific errors that occur.
      */
     int getSize() throws XMLDBException;
 
     /**
      * Removes all <code>Resource</code> instances from the set.
      *
-     * @throws XMLDBException with expected error codes.<br />
-     *                        <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *                        specific errors that occur.<br />
+     * @throws XMLDBException with expected error codes.
+     *                        {@link ErrorCodes#VENDOR_ERROR} for any vendor
+     *                        specific errors that occur.
      */
     void clear() throws XMLDBException;
 }

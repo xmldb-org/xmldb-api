@@ -149,6 +149,20 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <sourceFileExcludes>
+                        <exclude>org/xmldb/api/reference/*.java</exclude>
+                        <exclude>org/xmldb/api/reference/modules/*.java</exclude>
+                        <exclude>org/xmldb/api/sdk/*.java</exclude>
+                        <exclude>org/xmldb/api/sdk/modules/*.java</exclude>
+                        <exclude>org/xmldb/api/tests/*.java</exclude>
+                    </sourceFileExcludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>1.6</version>
                 <configuration>

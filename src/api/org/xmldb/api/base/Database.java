@@ -60,7 +60,7 @@ package org.xmldb.api.base;
  * implmentation of the <code>Database</code> interface. The implementation 
  * is registered with the
  * <code>DatabaseManager</code> to provide access to the resources of the XML database.
- * <p />
+ *
  * In general usage client applications should only access <code>Database</code>
  * implementations directly during initialization.
  */
@@ -70,9 +70,9 @@ public interface Database extends Configurable {
     *
     * @deprecated Replaced by String[] getNames().
     * @return the name of the object.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    String getName() throws XMLDBException;
    
@@ -80,16 +80,16 @@ public interface Database extends Configurable {
     * Returns an array of names associated with the Database instance.
     *
     * @return the array of name of the object.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    String[] getNames() throws XMLDBException;
    
    /**
     * Retrieves a <code>Collection</code> instance based on the URI provided 
     * in the <code>uri</code> parameter. The format of the URI is defined in the
-    * documentation for DatabaseManager.getCollection().<p/>
+    * documentation for DatabaseManager.getCollection().
     *
     * Authentication is handled via username and password however it is not
     * required that the database support authentication. Databases that do not
@@ -98,15 +98,17 @@ public interface Database extends Configurable {
     * null. 
     *
     * @param uri the URI to use to locate the collection.
+    * @param username The username to use for authentication to the database or
+    *    null if the database does not support authentication.
     * @param password The password to use for authentication to the database or
     *    null if the database does not support authentication.
     * @return A <code>Collection</code> instance for the requested collection or
     *  null if the collection could not be found.
     * @return The <code>Collection</code> instance
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
-    *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format. <br />
+    *  specific errors that occur.
+    *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format.
     *  <code>ErrroCodes.PERMISSION_DENIED</code> If the <code>username</code>
     *    and <code>password</code> were not accepted by the database.
     */
@@ -120,10 +122,10 @@ public interface Database extends Configurable {
     *
     * @param uri the URI to check for.
     * @return true if the URI can be handled, false otherwise.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
-    *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format. <br />
+    *  specific errors that occur.
+    *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format.
     */
    boolean acceptsURI(String uri) throws XMLDBException;
 
@@ -133,9 +135,9 @@ public interface Database extends Configurable {
     * them.
     *
     * @return the XML:DB API conformance level for this implementation.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    String getConformanceLevel() throws XMLDBException;
 }

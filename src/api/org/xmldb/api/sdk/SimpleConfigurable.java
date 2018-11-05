@@ -72,9 +72,9 @@ public abstract class SimpleConfigurable implements Configurable {
     *
     * @param name the name of the property to retrieve.
     * @return the property value or null if no property exists.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public String getProperty(String name) throws XMLDBException {
       return (String) properties.get(name);
@@ -86,9 +86,9 @@ public abstract class SimpleConfigurable implements Configurable {
     *
     * @param name the name of the property to set.
     * @param value the value to set for the property.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public void setProperty(String name, String value) throws XMLDBException {      
       properties.put(name, value);

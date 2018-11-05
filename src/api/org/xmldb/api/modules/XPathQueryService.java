@@ -74,9 +74,9 @@ public interface XPathQueryService extends Service {
     *  <code>prefix</code> is empty or null the
     *  default namespace will be associated with the provided URI.
     * @param uri The URI for the namespace to be associated with prefix.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     *  TODO: probably need some special error here.
     */
    void setNamespace( String prefix, String uri ) throws XMLDBException; 
@@ -89,9 +89,9 @@ public interface XPathQueryService extends Service {
     *
     * @param prefix The prefix to retrieve from the namespace map. 
     * @return The URI associated with <code>prefix</code>
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    String getNamespace( String prefix ) throws XMLDBException;
    
@@ -103,18 +103,18 @@ public interface XPathQueryService extends Service {
     * @param prefix The prefix to remove from the namespace map. If 
     *  <code>prefix</code> is null or empty the mapping for the default
     *  namespace will be removed.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    void removeNamespace( String prefix ) throws XMLDBException;
 
    /**
     * Removes all namespace mappings stored in the internal namespace map.
     *
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    void clearNamespaces() throws XMLDBException;
    
@@ -128,9 +128,9 @@ public interface XPathQueryService extends Service {
     *
     * @param query The XPath query string to use.
     * @return A <code>ResourceSet</code> containing the results of the query.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    ResourceSet query( String query ) throws XMLDBException;
 
@@ -144,9 +144,9 @@ public interface XPathQueryService extends Service {
     * @param query The XPath query string to use.
     * @param id The id of the document to run the query against.
     * @return A <code>ResourceSet</code> containing the results of the query.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */   
    ResourceSet queryResource( String id, String query ) throws XMLDBException;
 }

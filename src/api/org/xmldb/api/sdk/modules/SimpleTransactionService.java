@@ -60,7 +60,7 @@ import org.xmldb.api.sdk.*;
 /**
  * Provides the ability to bundle <code>Collection</code> operations into a
  * transaction.
- * <p />
+ *
  * <b>Note: This interface needs much better definition</b>
  */
 public class SimpleTransactionService extends SimpleConfigurable 
@@ -69,9 +69,9 @@ public class SimpleTransactionService extends SimpleConfigurable
     * Returns the name associated with the Configurable object.
     *
     * @return the name of the object.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public String getName() throws XMLDBException {
       return null;
@@ -81,9 +81,9 @@ public class SimpleTransactionService extends SimpleConfigurable
     * Gets the Version attribute of the Service object
     *
     * @return The Version value
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br /> 
+    *  specific errors that occur.
     */
    public String getVersion() throws XMLDBException {
       return null;
@@ -93,9 +93,9 @@ public class SimpleTransactionService extends SimpleConfigurable
     * Sets the Collection attribute of the Service object
     *
     * @param col The new Collection value
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public void setCollection(Collection col) throws XMLDBException {
    }
@@ -103,27 +103,27 @@ public class SimpleTransactionService extends SimpleConfigurable
    /**
     * Begin the transaction
     *
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br /> 
+    *  specific errors that occur.
     */
    public void begin() throws XMLDBException {}
 
    /**
     * Commit the transaction
     *
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public void commit() throws XMLDBException {}
 
    /**
     * Rollback the transaction
     *
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public void rollback() throws XMLDBException {}
 }

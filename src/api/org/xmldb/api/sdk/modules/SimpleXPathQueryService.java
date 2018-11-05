@@ -92,9 +92,9 @@ public abstract class SimpleXPathQueryService extends SimpleConfigurable
     * Sets the Collection attribute of the Service object
     *
     * @param col The new Collection value
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public void setCollection( Collection col ) throws XMLDBException {
       this.collection = col;
@@ -137,9 +137,9 @@ public abstract class SimpleXPathQueryService extends SimpleConfigurable
    /**
     * Removes all namespace mappings stored in the internal namespace map.
     *
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public void clearNamespaces() throws XMLDBException {
       namespaces = new Hashtable();

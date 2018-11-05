@@ -91,7 +91,7 @@ public abstract class SimpleResourceSet implements ResourceSet {
    
    /**
     * Returns the <code>Resource</code> instance stored at the index specified
-    * by <code>index</code>.<p />
+    * by <code>index</code>.
     *
     * @param index the index of the resource to retrieve.
     * @return the <code>Resource</code> instance.
@@ -102,7 +102,7 @@ public abstract class SimpleResourceSet implements ResourceSet {
    }
 
    /**
-    * Returns the number of resources contained in the set.<p /> 
+    * Returns the number of resources contained in the set.
     *
     * @return the number of <code>Resource</code> instances in the set.
     * @exception XMLDBException     
@@ -127,9 +127,9 @@ public abstract class SimpleResourceSet implements ResourceSet {
      * @param rSet The <code>ResourceSet</code> containing all the <code>Resource</code>'s
      *             to add to the set.
      * @throws org.xmldb.api.base.XMLDBException
-     *          with expected error codes.<br />
+     *          with expected error codes.
      *          <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *          specific errors that occur.<br />
+     *          specific errors that occur.
      */
     public void addAll(ResourceSet rSet) throws XMLDBException {
         ResourceIterator it = rSet.getIterator();
@@ -160,14 +160,14 @@ public abstract class SimpleResourceSet implements ResourceSet {
    
    /**
     * Returns a Resource containing an XML representation of all resources 
-    * stored in the set. <p />
+    * stored in the set.
     * TODO: Specify the schema used for this
     *
     * @return A <code>Resource</code> instance containing an XML representation 
     *   of all set members.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     * <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    * specific errors that occur.<br />
+    * specific errors that occur.
     */
    public Resource getMembersAsResource() throws XMLDBException {
       return null;

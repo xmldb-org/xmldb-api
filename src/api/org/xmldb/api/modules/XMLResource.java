@@ -60,7 +60,7 @@ import org.xml.sax.*;
 
 /**
  * Provides access to XML resources stored in the database. An XMLResource can
- * be accessed either as text XML or via the DOM or SAX APIs.<p />
+ * be accessed either as text XML or via the DOM or SAX APIs.
  *
  * The default behavior for getContent and setContent is to work with XML data
  * as text so these methods work on <code>String</code> content.
@@ -81,9 +81,9 @@ public interface XMLResource extends Resource {
      *
      * @return the id for the parent document of this <code>Resource</code> or
      *  null if there is no parent document for this <code>Resource</code>.
-     * @exception XMLDBException with expected error codes.<br />
+     * @exception XMLDBException with expected error codes.
      *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *  specific errors that occur.<br />
+     *  specific errors that occur.
      */
     String getDocumentId() throws XMLDBException;
 
@@ -91,9 +91,9 @@ public interface XMLResource extends Resource {
      * Returns the content of the <code>Resource</code> as a DOM Node.
      *
      * @return The XML content as a DOM <code>Node</code>
-     * @exception XMLDBException with expected error codes.<br />
+     * @exception XMLDBException with expected error codes.
      *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *  specific errors that occur.<br />
+     *  specific errors that occur.
      */
     Node getContentAsDOM() throws XMLDBException;
 
@@ -102,11 +102,11 @@ public interface XMLResource extends Resource {
      * source.
      *
      * @param content The new content value
-     * @exception XMLDBException with expected error codes.<br />
+     * @exception XMLDBException with expected error codes.
      *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *  specific errors that occur.<br />
+     *  specific errors that occur.
      *  <code>ErrorCodes.INVALID_RESOURCE</code> if the content value provided is
-     *  null.<br />
+     *  null.
      *  <code>ErrorCodes.WRONG_CONTENT_TYPE</code> if the content provided in not
      *  a valid DOM <code>Node</code>.
      */
@@ -118,11 +118,11 @@ public interface XMLResource extends Resource {
      *
      * @param handler the SAX <code>ContentHandler</code> to use to handle the
      *  <code>Resource</code> content.
-     * @exception XMLDBException with expected error codes.<br />
+     * @exception XMLDBException with expected error codes.
      *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *  specific errors that occur.<br />
+     *  specific errors that occur.
      *  <code>ErrorCodes.INVALID_RESOURCE</code> if the
-     *  <code>ContentHandler</code> provided is null.<br />
+     *  <code>ContentHandler</code> provided is null.
      */
     void getContentAsSAX(ContentHandler handler) throws XMLDBException;
 
@@ -132,9 +132,9 @@ public interface XMLResource extends Resource {
      *
      * @return a SAX <code>ContentHandler</code> that can be used to add content
      *  into the <code>Resource</code>.
-     * @exception XMLDBException with expected error codes.<br />
+     * @exception XMLDBException with expected error codes.
      *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-     *  specific errors that occur.<br />
+     *  specific errors that occur.
      */
     ContentHandler setContentAsSAX() throws XMLDBException;
 
@@ -145,6 +145,8 @@ public interface XMLResource extends Resource {
      * @param feature Feature name. Standard SAX feature names are documented at
      * <a href="http://sax.sourceforge.net/">http://sax.sourceforge.net/</a>.
      * @param value Set or unset feature
+     * @throws SAXNotRecognizedException if the feature is not recognized.
+     * @throws SAXNotSupportedException if the feature is not supported.
      */
     void setSAXFeature(String feature, boolean value)
             throws SAXNotRecognizedException, SAXNotSupportedException;
@@ -157,6 +159,8 @@ public interface XMLResource extends Resource {
      * @param feature Feature name. Standard SAX feature names are documented at
      * <a href="http://sax.sourceforge.net/">http://sax.sourceforge.net/</a>.
      * @return whether the feature is set
+     * @throws SAXNotRecognizedException if the feature is not recognized.
+     * @throws SAXNotSupportedException if the feature is not supported.
      */
     boolean getSAXFeature(String feature)
             throws SAXNotRecognizedException, SAXNotSupportedException;

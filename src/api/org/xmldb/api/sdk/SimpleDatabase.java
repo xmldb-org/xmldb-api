@@ -57,7 +57,7 @@ import org.xmldb.api.base.*;
  
 /**
  * Simple <code>Database</code> implementation intended to be used as a base
- * class for a specific implementation.<p />
+ * class for a specific implementation.
  *
  * Extending classes MUST set INSTANCE_NAME and SHOULD set CONFORMANCE_LEVEL to
  * values appropriate for their specific implementation.

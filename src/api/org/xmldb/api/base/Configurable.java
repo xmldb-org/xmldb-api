@@ -63,9 +63,9 @@ public interface Configurable {
     *
     * @param name the name of the property to retrieve.
     * @return the property value or null if no property exists.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    String getProperty(String name) throws XMLDBException;
 
@@ -75,9 +75,9 @@ public interface Configurable {
     *
     * @param name the name of the property to set.
     * @param value the value to set for the property.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    void setProperty(String name, String value) throws XMLDBException;
 }

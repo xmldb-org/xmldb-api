@@ -169,9 +169,9 @@ public abstract class SimpleCollection extends SimpleConfigurable
     * if the collection is empty.
     *
     * @return the number of resource in the collection.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public int getResourceCount() throws XMLDBException {
       return 0;
@@ -182,9 +182,9 @@ public abstract class SimpleCollection extends SimpleConfigurable
     *
     * @return a string array containing the names for all 
     *  <code>Resource</code>s in the collection.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public String[] listResources() throws XMLDBException {
       return null;
@@ -205,9 +205,9 @@ public abstract class SimpleCollection extends SimpleConfigurable
     * @param id the unique id to associate with the created <code>Resource</code>.
     * @param type the <code>Resource</code> type to create.
     * @return an empty <code>Resource</code> instance.    
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     *  <code>ErrorCodes.UNKNOWN_RESOURCE_TYPE</code> if the <code>type</code>
     *   parameter is not a known <code>Resource</code> type.
     */
@@ -219,11 +219,11 @@ public abstract class SimpleCollection extends SimpleConfigurable
     * Removes the <code>Resource</code> from the database.
     *
     * @param res the resource to remove.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     *  <code>ErrorCodes.INVALID_RESOURCE</code> if the <code>Resource</code> is
-    *   not valid.<br />
+    *   not valid.
     *  <code>ErrorCodes.NO_SUCH_RESOURCE</code> if the <code>Resource</code> is
     *   not known to this <code>Collection</code>.
     */
@@ -236,9 +236,9 @@ public abstract class SimpleCollection extends SimpleConfigurable
     * updated.
     *
     * @param res the resource to store in the database.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     *  <code>ErrorCodes.INVALID_RESOURCE</code> if the <code>Resource</code> is
     *   not valid.
     */
@@ -252,9 +252,9 @@ public abstract class SimpleCollection extends SimpleConfigurable
     *
     * @param id the unique id for the requested resource.
     * @return The retrieved <code>Resource</code> instance.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />    
+    *  specific errors that occur.
     */
    public Resource getResource(String id) throws XMLDBException {
       return null;
@@ -264,9 +264,9 @@ public abstract class SimpleCollection extends SimpleConfigurable
     * Creates a new unique ID within the context of the <code>Collection</code>
     *
     * @return the created id as a string.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public String createId() throws XMLDBException {
       return null;
@@ -281,9 +281,9 @@ public abstract class SimpleCollection extends SimpleConfigurable
     * The <code>close</code> method must
     * always be called when use of a <code>Collection</code> is complete.
     *
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    public void close() throws XMLDBException {
       isOpen = false;

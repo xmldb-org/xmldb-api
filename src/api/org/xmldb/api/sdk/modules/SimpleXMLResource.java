@@ -66,7 +66,7 @@ import java.io.*;
 
 /**
  * Provides access to XML resources stored in the database. An XMLResource can
- * be accessed either as text XML or via the DOM or SAX APIs.<p />
+ * be accessed either as text XML or via the DOM or SAX APIs.
  *
  * The default behavior for getContent and setContent is to work with XML data
  * as text so these methods work on <code>String</code> content.

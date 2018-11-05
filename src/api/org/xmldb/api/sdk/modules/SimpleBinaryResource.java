@@ -58,7 +58,7 @@ import org.xmldb.api.modules.*;
 
 /**
  * Resource for encapsulation of binary data that is stored in the data base.
- * Support for BinaryResources is optional.<p />
+ * Support for BinaryResources is optional.
  *
  */
 public abstract class SimpleBinaryResource extends BaseResource 

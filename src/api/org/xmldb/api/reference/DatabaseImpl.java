@@ -61,7 +61,7 @@ import java.io.*;
 /**
  * Reference Database implmentation. The reference Database simply resides on
  * the file system. It isn't speedy but it serves the purpose of illustrating 
- * how a driver should work..<p />
+ * how a driver should work..
  *
  * The path where the data files are located is specified through the property
  * xmldb.data.dir. If this property is not specified it defaults to a directory

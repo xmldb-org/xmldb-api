@@ -67,9 +67,9 @@ public interface Service extends Configurable {
     * Returns the name associated with the Service instance.
     *
     * @return the name of the object.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    String getName() throws XMLDBException;
    
@@ -77,9 +77,9 @@ public interface Service extends Configurable {
     * Gets the Version attribute of the Service object
     *
     * @return The Version value
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br /> 
+    *  specific errors that occur.
     */
    String getVersion() throws XMLDBException;
 
@@ -87,9 +87,9 @@ public interface Service extends Configurable {
     * Sets the Collection attribute of the Service object
     *
     * @param col The new Collection value
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    void setCollection(Collection col) throws XMLDBException;
 }

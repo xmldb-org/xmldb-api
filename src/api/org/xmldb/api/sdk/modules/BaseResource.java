@@ -58,10 +58,10 @@ import org.xmldb.api.modules.*;
 
 /**
  * Resource for encapsulation of binary data that is stored in the data base.
- * Support for BinaryResources is optional.<p />
+ * Support for BinaryResources is optional.
  *
  * The standard <code>getContent</code> method returns a <code>OutputStream
- * </code> and the standard setContent expects an <code>InputStream</code>.<p />
+ * </code> and the standard setContent expects an <code>InputStream</code>.
  * <b>The stream types should be better clarified</b>
  */
 public abstract class BaseResource implements Resource {

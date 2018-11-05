@@ -61,9 +61,9 @@ public interface ResourceIterator {
     * Returns true as long as there are still more resources to be iterated.
     *
     * @return true if there are more resources to iterate, false otherwise.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    boolean hasMoreResources() throws XMLDBException;
 
@@ -72,9 +72,9 @@ public interface ResourceIterator {
     * Returns the next <code>Resource</code> instance in the iterator.
     *
     * @return the next <code>Resource</code> instance in the iterator.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     *  <code>ErrorCodes.NO_SUCH_RESOURCE</code> if the resource iterator is 
     *  empty or all resources have already been retrieved.
     */

@@ -73,9 +73,9 @@ public interface CollectionManagementService extends Service {
     *
     * @param name The name of the collection to create.
     * @return The created <code>Collection</code> instance.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    Collection createCollection(String name) throws XMLDBException;
 
@@ -86,9 +86,9 @@ public interface CollectionManagementService extends Service {
     * was retrieved.
     *
     * @param name The name of the collection to remove.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    void removeCollection(String name) throws XMLDBException;
 }

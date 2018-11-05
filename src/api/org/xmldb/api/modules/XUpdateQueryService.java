@@ -70,9 +70,9 @@ public interface XUpdateQueryService extends Service {
     *
     * @param commands The XUpdate commands to use.
     * @return the number of modified nodes.    
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    long update(String commands) throws XMLDBException;
    
@@ -80,11 +80,12 @@ public interface XUpdateQueryService extends Service {
     * Runs a set of XUpdate operations against a resource stored in a 
     * collection. The resource will be updated in place in the collection.
     *
-    * @param commands The XUpdate commands to use.    
+    * @param id the id of the resource to update
+    * @param commands The XUpdate commands to use.
     * @return the number of modified nodes.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     */
    long updateResource(String id, String commands) throws XMLDBException;
 }

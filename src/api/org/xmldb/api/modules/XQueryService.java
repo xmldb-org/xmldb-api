@@ -70,7 +70,7 @@ public interface XQueryService  extends Service {
   	*  <code>prefix</code> is empty or null the
   	*  default namespace will be associated with the provided URI.
   	* @param uri The URI for the namespace to be associated with prefix.
-  	*
+    * @throws XMLDBException if an error occurs whilst setting the namespace.
   	*/
   void setNamespace (String prefix, String uri) throws XMLDBException;
 
@@ -82,70 +82,80 @@ public interface XQueryService  extends Service {
   	*
   	* @param prefix The prefix to retrieve from the namespace map.
   	* @return The URI associated with <code>prefix</code>
-  	* @exception org.xmldb.api.base.XMLDBException with expected error codes.<br />
+  	* @exception org.xmldb.api.base.XMLDBException with expected error codes.
   	*  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-  	*  specific errors that occur.<br />
+  	*  specific errors that occur.
+    * @throws XMLDBException if an error occurs whilst getting the namespace.
   	*/
   String getNamespace (String prefix) throws XMLDBException;
 
   /**
-          * Removes the namespace mapping associated with <code>prefix</code> from
-          * the internal namespace map. If <code>prefix</code> is null or empty the
-          * mapping for the default namespace will be removed.
-          *
-          * @param prefix The prefix to remove from the namespace map. If
-          *  <code>prefix</code> is null or empty the mapping for the default
-          *  namespace will be removed.
-          * @exception org.xmldb.api.base.XMLDBException with expected error codes.<br />
-          *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-          *  specific errors that occur.<br />
-          */
+   * Removes the namespace mapping associated with <code>prefix</code> from
+   * the internal namespace map. If <code>prefix</code> is null or empty the
+   * mapping for the default namespace will be removed.
+   *
+   * @param prefix The prefix to remove from the namespace map. If
+   *  <code>prefix</code> is null or empty the mapping for the default
+   *  namespace will be removed.
+   * @exception org.xmldb.api.base.XMLDBException with expected error codes.
+   *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
+   *  specific errors that occur.
+   */
   void removeNamespace (String prefix) throws XMLDBException;
   void clearNamespaces () throws XMLDBException;
   org.xmldb.api.base.ResourceSet query (String query) throws XMLDBException;
   org.xmldb.api.base.ResourceSet queryResource (String id, String query) throws XMLDBException;
 
   /**
-  	 * Compiles the specified XQuery and returns a handle to the compiled
-  	 * code, which can then be passed to {@link #execute(org.xmldb.api.base.CompiledExpression)}.
-  	 */
+   * Compiles the specified XQuery and returns a handle to the compiled
+   * code, which can then be passed to {@link #execute(org.xmldb.api.base.CompiledExpression)}.
+   *
+   * @param query the query to compile.
+   * @return the compiled query expression
+   * @throws XMLDBException if an error occurs whilst compiling the query.
+   */
   org.xmldb.api.base.CompiledExpression compile (String query) throws XMLDBException;
 
   /**
-  	 * Execute a compiled XQuery.
-  	 *
-  	 * The implementation should pass all namespaces and variables declared through
-  	 * {@link XQueryService} to the compiled XQuery code.
-  	 */
+   * Execute a compiled XQuery.
+   *
+   * The implementation should pass all namespaces and variables declared through
+   * {@link XQueryService} to the compiled XQuery code.
+   *
+   * @param expression the compiled query expression
+   * @return the result of the query
+   * @throws XMLDBException if an error occurs whilst executing the query.
+   */
   org.xmldb.api.base.ResourceSet execute (CompiledExpression expression) throws XMLDBException;
 
   /**
-  	 * Declare a global, external XQuery variable and assign a value to it. The variable
-  	 * has the same status as a variable declare through the <code>declare variable</code>
-  	 * statement in the XQuery prolog.
-  	 *
-  	 * The variable can be referenced inside the XQuery expression as
-  	 * <code>$variable</code>. For example, if you declare a variable with
-  	 *
-  	 * <pre>
-  	 * 	declareVariable("name", "HAMLET");
-  	 * </pre>
-  	 *
-  	 * you may use the variable in an XQuery expression as follows:
-  	 *
-  	 * <pre>
-  	 * 	//SPEECH[SPEAKER=$name]
-  	 * </pre>
-  	 *
-  	 *
-  	 * @param qname a valid QName by which the variable is identified. Any
-  	 * prefix should have been mapped to a namespace, using {@link #setNamespace(String, String)}.
-  	 * For example, if a variable is called <b>x:name</b>, a prefix/namespace mapping should have
-  	 * been defined for prefix <code>x</code> before calling this method.
-  	 *
-  	 * @param initialValue the initial value, which is assigned to the variable
-  	 *
-  	 */
+   * Declare a global, external XQuery variable and assign a value to it. The variable
+   * has the same status as a variable declare through the <code>declare variable</code>
+   * statement in the XQuery prolog.
+   *
+   * The variable can be referenced inside the XQuery expression as
+   * <code>$variable</code>. For example, if you declare a variable with
+   *
+   * <pre>
+   * 	declareVariable("name", "HAMLET");
+   * </pre>
+   *
+   * you may use the variable in an XQuery expression as follows:
+   *
+   * <pre>
+   * 	//SPEECH[SPEAKER=$name]
+   * </pre>
+   *
+   *
+   * @param qname a valid QName by which the variable is identified. Any
+   * prefix should have been mapped to a namespace, using {@link #setNamespace(String, String)}.
+   * For example, if a variable is called <b>x:name</b>, a prefix/namespace mapping should have
+   * been defined for prefix <code>x</code> before calling this method.
+   *
+   * @param initialValue the initial value, which is assigned to the variable
+   *
+   * @throws XMLDBException if an error occurs whilst declaring the variable.
+   */
   void declareVariable (String qname, Object initialValue) throws XMLDBException;
 
   /**
@@ -154,7 +164,7 @@ public interface XQueryService  extends Service {
   	 * In particular, additional automatic type conversions will be applied
   	 * to the operands of numeric operators.
   	 *
-  	 * @param backwardsCompatible
+  	 * @param backwardsCompatible true it XPath 1.0 compatibility mode should be enabled.
   	 */
   void setXPathCompatibility (boolean backwardsCompatible);
   void setModuleLoadPath (String path);

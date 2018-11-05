@@ -98,9 +98,9 @@ public class DatabaseManager
     * <code>DatabaseManager</code>. 
     *
     * @param database The database instance to register.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
+    *  specific errors that occur.
     *  <code>ErrorCodes.INVALID_DATABASE</code> if the provided <code>Database
     *  </code> instance is invalid.
     */
@@ -126,7 +126,7 @@ public class DatabaseManager
     * requests.
     *
     * @param database The <code>Database</code> instance to deregister.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -149,7 +149,7 @@ public class DatabaseManager
     * handed to getCollection would look something like the following.
     * <code>xmldb:vendordb://host:port/path/to/collection</code>. The xmldb:
     * prefix will be removed from the URI prior to handing the URI to the
-    * <code>Database</code> instance for handling. <p/>
+    * <code>Database</code> instance for handling.
     *
     * This method is called when no authentication is necessary for the
     * database.
@@ -157,10 +157,10 @@ public class DatabaseManager
     * @param uri The database specific URI to use to locate the collection.
     * @return A <code>Collection</code> instance for the requested collection or
     *  null if the collection could not be found.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
-    *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format. <br />
+    *  specific errors that occur.
+    *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format. 
     *  <code>ErrroCodes.NO_SUCH_DATABASE</code> If a <code>Database</code>
     *    instance could not be found to handle the provided URI.
     */
@@ -188,10 +188,10 @@ public class DatabaseManager
     *    null if the database does not support authentication.
     * @return A <code>Collection</code> instance for the requested collection or
     *  null if the collection could not be found.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.<br />
-    *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format. <br />
+    *  specific errors that occur.
+    *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format. 
     *  <code>ErrroCodes.NO_SUCH_DATABASE</code> If a <code>Database</code>
     *    instance could not be found to handle the provided URI.
     *  <code>ErrroCodes.PERMISSION_DENIED</code> If the <code>username</code>
@@ -214,10 +214,10 @@ public class DatabaseManager
     *
     * @param uri The database specific URI to use to locate the collection.
     * @return The XML:DB Core Level conformance for the uri.
-    * @exception XMLDBException with expected error codes.<br />
+    * @exception XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
-    *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format. <br />
+    *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format. 
     *  <code>ErrroCodes.NO_SUCH_DATABASE</code> If a <code>Database</code>
     *    instance could not be found to handle the provided URI.
     */
@@ -252,6 +252,7 @@ public class DatabaseManager
     *
     * @param uri The uri containing the database reference.
     * @return the requested <code>Database</code> instance.
+    * @throws XMLDBException if an error occurs whilst getting the database
     */
    protected static Database getDatabase(String uri) throws XMLDBException {
       if (!uri.startsWith(URI_PREFIX)) {
@@ -279,6 +280,7 @@ public class DatabaseManager
     *
     * @param uri The full URI to strip.
     * @return The database specific portion of the URI.
+    * @throws XMLDBException if an error occurs whilst stripping the URI prefix
     */
    protected static String stripURIPrefix(String uri) throws XMLDBException {
       if (!uri.startsWith(URI_PREFIX)) {
