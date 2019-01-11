@@ -12,8 +12,8 @@ The XML:DB API can be built as a Jar file. This is also used by eXist-db's imple
 Java 8 and Apache Maven 3.5.3+ is required to build the JAR file.
 
 ```
-$ git clone https://github.com/exist-db/xmldb-repo.git
-$ cd xmldb-repo
+$ git clone https://github.com/exist-db/xmldb-org.git
+$ cd xmldb-org
 $ mvn clean compile package
 ```
 
