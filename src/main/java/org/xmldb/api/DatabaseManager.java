@@ -1,5 +1,3 @@
-package org.xmldb.api;
-
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -53,9 +51,16 @@ package org.xmldb.api;
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
 
-import org.xmldb.api.base.*;
+package org.xmldb.api;
 
-import java.util.*;
+import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.Database;
+import org.xmldb.api.base.ErrorCodes;
+import org.xmldb.api.base.XMLDBException;
 
 /**
  * <code>DatabaseManager</code> is the entry point for the API and enables you to get the 
@@ -65,12 +70,13 @@ import java.util.*;
  * language. Individual language mappings should define the exact syntax and
  * semantics of its use. 
  */
-public class DatabaseManager    
+public class DatabaseManager
 {
    protected static final String URI_PREFIX = "xmldb:"; 
-   static Properties properties = new Properties();
-   static Hashtable databases = new Hashtable(); 
- 
+
+   static final Properties properties = new Properties();
+   static final ConcurrentMap<String, Database> databases = new ConcurrentHashMap<>();
+
    /**
     * Returns a list of all available <code>Database</code> implementations 
     * that have been registered with this <code>DatabaseManager</code>.
@@ -81,62 +87,69 @@ public class DatabaseManager
     *  instances exist then an empty array is returned.
     */ 
    public static Database[] getDatabases () {
-      Enumeration e = databases.elements();
-      Database[] result = new Database[databases.size()];
-      
-      int i = 0;
-      while (e.hasMoreElements()) {
-         result[i] = (Database) e.nextElement();
-         i++;
-      }
-      
-      return result;
+      return databases.values().toArray(new Database[0]);
    }
-   
+
    /**
     * Registers a new <code>Database</code> implementation with the
     * <code>DatabaseManager</code>. 
     *
     * @param database The database instance to register.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     *  <code>ErrorCodes.INVALID_DATABASE</code> if the provided <code>Database
     *  </code> instance is invalid.
     */
    public static void registerDatabase (Database database) throws XMLDBException {
-      //System.out.println( "trying to register database" );
-      if ((database.getName() == null) || (database.getName().equals(""))) {
+      @SuppressWarnings("deprecation")
+      String name = database.getName();
+      if ((name == null) || (name.equals(""))) {
          throw new XMLDBException(ErrorCodes.INVALID_DATABASE);
       }
+      
       String[] databaseNames = database.getNames();
       // we need at least one suitable name for this instance
       if ((databaseNames == null) || (databaseNames.length == 0) || (databaseNames[0].equals(""))) {
          throw new XMLDBException(ErrorCodes.INVALID_DATABASE);
       }
-      // put all names of this instance into the hashtable
-      for (int i=0; i<databaseNames.length; i++) {
-         databases.put(databaseNames[i], database);
+      // put all names of this instance into the databases map
+      updateDatabases(name, database);
+      for (String databaseName : databaseNames) {
+          updateDatabases(databaseName, database);
       }
    }
-   
-   /**
+
+   private static void updateDatabases(String databaseName, Database database) throws XMLDBException {
+      Database existing = databases.putIfAbsent(databaseName, database);
+      if (existing !=null && existing != database) {
+          throw new XMLDBException(ErrorCodes.INVALID_DATABASE);
+      }
+   }
+
+/**
     * Deregisters a <code>Database</code> implementation from the <code>DatabaseManager</code>. Once a
     * <code>Database</code> has been deregistered it can no longer be used to handle
     * requests.
     *
     * @param database The <code>Database</code> instance to deregister.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
-   public static void deregisterDatabase (Database database) 
+   public static void deregisterDatabase (Database database)
          throws XMLDBException {
+      @SuppressWarnings("deprecation")
+      String name = database.getName();
+      if (name !=null) {
+         databases.remove(name);
+      }
       String[] databaseNames = database.getNames();
-      if (databaseNames != null)
-          // remove all names of this instance from the hashtable
-          for (int i=0; i<databaseNames.length; i++)
-              databases.remove(databaseNames[i]);
+      if (databaseNames != null) {
+        for (String databaseName : databaseNames) {
+          databases.remove(databaseName);
+        }
+      }
    }
    
    /**
@@ -157,18 +170,18 @@ public class DatabaseManager
     * @param uri The database specific URI to use to locate the collection.
     * @return A <code>Collection</code> instance for the requested collection or
     *  null if the collection could not be found.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format. 
     *  <code>ErrroCodes.NO_SUCH_DATABASE</code> If a <code>Database</code>
     *    instance could not be found to handle the provided URI.
     */
-   public static org.xmldb.api.base.Collection getCollection (String uri) 
+   public static Collection getCollection (String uri) 
          throws XMLDBException {
-      return getCollection(uri, null, null);         
+      return getCollection(uri, null, null);
    }
-   
+
       /**
     * Retrieves a <code>Collection</code> instance from the database for the 
     * given URI. The format of the majority of the URI is database 
@@ -188,7 +201,7 @@ public class DatabaseManager
     *    null if the database does not support authentication.
     * @return A <code>Collection</code> instance for the requested collection or
     *  null if the collection could not be found.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format. 
@@ -197,16 +210,12 @@ public class DatabaseManager
     *  <code>ErrroCodes.PERMISSION_DENIED</code> If the <code>username</code>
     *    and <code>password</code> were not accepted by the database.
     */
-   public static org.xmldb.api.base.Collection getCollection (String uri,
+   public static Collection getCollection (String uri,
          String username, String password) throws XMLDBException {
       Database db = getDatabase(uri);
-     
-      uri = stripURIPrefix(uri);
-      
-      return (org.xmldb.api.base.Collection) db.getCollection(uri, username, 
-         password);   
+      return db.getCollection(stripURIPrefix(uri), username, password);
    }
-   
+
    /**
     * Returns the Core Level conformance value for the provided URI. The current
     * API defines valid resuls of "0" or "1" as defined in the XML:DB API
@@ -214,7 +223,7 @@ public class DatabaseManager
     *
     * @param uri The database specific URI to use to locate the collection.
     * @return The XML:DB Core Level conformance for the uri.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format. 
@@ -225,7 +234,7 @@ public class DatabaseManager
       Database database = getDatabase(uri);
       return database.getConformanceLevel();
    }
-   
+
    /**
     * Retrieves a property that has been set for the <code>DatabaseManager</code>.
     *
@@ -245,7 +254,7 @@ public class DatabaseManager
    public static void setProperty (String name, String value) {
       properties.put(name, value);
    }
-   
+
    /**
     * Retrieves the registered <code>Database</code> instance associated with the provided 
     * URI.
@@ -258,19 +267,19 @@ public class DatabaseManager
       if (!uri.startsWith(URI_PREFIX)) {
          throw new XMLDBException(ErrorCodes.INVALID_URI);
       }
-      
-      int end = uri.indexOf(":", URI_PREFIX.length());      
+
+      int end = uri.indexOf(":", URI_PREFIX.length());
       if (end == -1) {
          throw new XMLDBException(ErrorCodes.INVALID_URI);
       }
-      
+
       String databaseName = uri.substring(URI_PREFIX.length(), end);
       
-      Database db = (Database) databases.get(databaseName); 
+      Database db = databases.get(databaseName); 
       if (db == null) {
-         throw new XMLDBException(ErrorCodes.NO_SUCH_DATABASE);         
+         throw new XMLDBException(ErrorCodes.NO_SUCH_DATABASE);
       }
-      
+
       return db;
    }
    
@@ -286,8 +295,7 @@ public class DatabaseManager
       if (!uri.startsWith(URI_PREFIX)) {
          throw new XMLDBException(ErrorCodes.INVALID_URI);
       }
-                  
-      String dbURI = uri.substring(URI_PREFIX.length(), uri.length());
-      return dbURI;
+
+      return uri.substring(URI_PREFIX.length(), uri.length());
    }
 }

@@ -19,6 +19,10 @@ defaultTasks 'build'
 group = 'net.sf.xmldb-org'
 version = '1.5.0-SNAPSHOT'
 
+repositories {
+    jcenter()
+    mavenCentral()
+}
 dependencies {
     testCompile 'org.hamcrest:hamcrest:2.1'
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.2'
