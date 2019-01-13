@@ -67,7 +67,7 @@ package org.xmldb.api.base;
  * provides the ability to extend the functionality of a <code>Collection</code>
  * in ways that allows optional functionality to be enabled for the <code>Collection</code>. 
  */
-public interface Collection extends Configurable {
+public interface Collection extends Configurable, AutoCloseable {
    /**
     * Returns the name associated with the Collection instance.
     *
@@ -296,6 +296,7 @@ public interface Collection extends Configurable {
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
+   @Override
    void close() throws XMLDBException;
 }
 
