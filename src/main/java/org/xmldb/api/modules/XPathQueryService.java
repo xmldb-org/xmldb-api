@@ -1,5 +1,3 @@
-package org.xmldb.api.modules;
-
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -52,12 +50,16 @@ package org.xmldb.api.modules;
  * individuals on behalf of the XML:DB Initiative. For more information
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
- 
-import org.xmldb.api.base.*;
+
+package org.xmldb.api.modules;
+
+import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.Service;
+import org.xmldb.api.base.XMLDBException;
 
 /**
  * XPathQueryService is a <code>Service</code> that enables the execution of
- * XPath queries within the context of a <code>Collection</code> or against a 
+ * XPath queries within the context of a <code>Collection</code> or against a
  * single XML <code>Resource</code> stored in the <code>Collection</code>.
  */
 public interface XPathQueryService extends Service {
@@ -74,12 +76,12 @@ public interface XPathQueryService extends Service {
     *  <code>prefix</code> is empty or null the
     *  default namespace will be associated with the provided URI.
     * @param uri The URI for the namespace to be associated with prefix.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     *  TODO: probably need some special error here.
     */
-   void setNamespace( String prefix, String uri ) throws XMLDBException; 
+   void setNamespace( String prefix, String uri ) throws XMLDBException;
 
    /**   
     * Returns the URI string associated with <code>prefix</code> from
@@ -89,7 +91,7 @@ public interface XPathQueryService extends Service {
     *
     * @param prefix The prefix to retrieve from the namespace map. 
     * @return The URI associated with <code>prefix</code>
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -103,7 +105,7 @@ public interface XPathQueryService extends Service {
     * @param prefix The prefix to remove from the namespace map. If 
     *  <code>prefix</code> is null or empty the mapping for the default
     *  namespace will be removed.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -112,7 +114,7 @@ public interface XPathQueryService extends Service {
    /**
     * Removes all namespace mappings stored in the internal namespace map.
     *
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -128,15 +130,15 @@ public interface XPathQueryService extends Service {
     *
     * @param query The XPath query string to use.
     * @return A <code>ResourceSet</code> containing the results of the query.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
    ResourceSet query( String query ) throws XMLDBException;
 
    /**
-    * Run an XPath query against an XML resource stored in the 
-    * <code>Collection</code> associated with this service. The result is a 
+    * Run an XPath query against an XML resource stored in the
+    * <code>Collection</code> associated with this service. The result is a
     * <code>ResourceSet</code> containing the results of the query. Any
     * namespaces used in the <code>query</code> string will be evaluated using
     * the mappings setup using <code>setNamespace</code>.
@@ -144,7 +146,7 @@ public interface XPathQueryService extends Service {
     * @param query The XPath query string to use.
     * @param id The id of the document to run the query against.
     * @return A <code>ResourceSet</code> containing the results of the query.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */   

@@ -1,5 +1,3 @@
-package org.xmldb.api.base;
-
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -53,6 +51,8 @@ package org.xmldb.api.base;
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
 
+package org.xmldb.api.base;
+
 /**
  * Provides the ability to configure properties about an object.
  */
@@ -63,7 +63,7 @@ public interface Configurable {
     *
     * @param name the name of the property to retrieve.
     * @return the property value or null if no property exists.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -75,7 +75,7 @@ public interface Configurable {
     *
     * @param name the name of the property to set.
     * @param value the value to set for the property.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */

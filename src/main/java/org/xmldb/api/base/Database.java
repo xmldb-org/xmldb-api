@@ -1,5 +1,3 @@
-package org.xmldb.api.base;
-
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -53,6 +51,8 @@ package org.xmldb.api.base;
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
 
+package org.xmldb.api.base;
+
 /**
  * <code>Database</code> is an encapsulation of the database driver 
  * functionality that is
@@ -70,17 +70,18 @@ public interface Database extends Configurable {
     *
     * @deprecated Replaced by String[] getNames().
     * @return the name of the object.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
-   String getName() throws XMLDBException;
+   @Deprecated
+String getName() throws XMLDBException;
    
    /**
     * Returns an array of names associated with the Database instance.
     *
     * @return the array of name of the object.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -105,7 +106,7 @@ public interface Database extends Configurable {
     * @return A <code>Collection</code> instance for the requested collection or
     *  null if the collection could not be found.
     * @return The <code>Collection</code> instance
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format.
@@ -122,7 +123,7 @@ public interface Database extends Configurable {
     *
     * @param uri the URI to check for.
     * @return true if the URI can be handled, false otherwise.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     *  <code>ErrroCodes.INVALID_URI</code> If the URI is not in a valid format.
@@ -135,7 +136,7 @@ public interface Database extends Configurable {
     * them.
     *
     * @return the XML:DB API conformance level for this implementation.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */

@@ -1,5 +1,3 @@
-package org.xmldb.api.modules;
-
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -53,7 +51,9 @@ package org.xmldb.api.modules;
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
 
-import org.xmldb.api.base.*;
+package org.xmldb.api.modules;
+
+import org.xmldb.api.base.Resource;
 
 /**
  * Resource for encapsulation of binary data that is stored in the data base.

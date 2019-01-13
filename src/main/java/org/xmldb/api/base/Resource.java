@@ -1,5 +1,3 @@
-package org.xmldb.api.base;
-
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -53,20 +51,22 @@ package org.xmldb.api.base;
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
 
+package org.xmldb.api.base;
+
 /**
  * <code>Resource</code> is a container for data stored within the database. Raw resources
  * are not particulary useful. It is necessary to have a resource implementation
  * that provides handling for a specific content type before anything useful can
  * be done.
  */
-public interface Resource {      
+public interface Resource {
    /**
     * Returns the <code>Collection</code> instance that this resource is 
     * associated with. All resources must exist within the context of a 
     * <code>collection</code>.
     *
     * @return the collection associated with the resource.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -78,7 +78,7 @@ public interface Resource {
     * anonymous if it is obtained as the result of a query.
     *
     * @return the id for the Resource or null if no id exists.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -92,7 +92,7 @@ public interface Resource {
     * BinaryResource - Binary blob data stored in the database
     * 
     * @return the resource type for the Resource.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -103,7 +103,7 @@ public interface Resource {
     * depending what type of resource is being used.
     *
     * @return the content of the resource.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -114,7 +114,7 @@ public interface Resource {
     * depends on the type of resource being used.
     *
     * @param value the content value to set for the resource.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */

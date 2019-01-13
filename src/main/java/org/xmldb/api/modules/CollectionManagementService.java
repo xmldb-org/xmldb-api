@@ -1,5 +1,3 @@
-package org.xmldb.api.modules;
-
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -52,7 +50,12 @@ package org.xmldb.api.modules;
  * individuals on behalf of the XML:DB Initiative. For more information
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
-import org.xmldb.api.base.*;
+
+package org.xmldb.api.modules;
+
+import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.Service;
+import org.xmldb.api.base.XMLDBException;
 
 /**
  * CollectionManagementService is a <code>Service</code> that enables the basic
@@ -73,7 +76,7 @@ public interface CollectionManagementService extends Service {
     *
     * @param name The name of the collection to create.
     * @return The created <code>Collection</code> instance.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -86,7 +89,7 @@ public interface CollectionManagementService extends Service {
     * was retrieved.
     *
     * @param name The name of the collection to remove.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */

@@ -1,5 +1,3 @@
-package org.xmldb.api.modules;
-
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -52,7 +50,11 @@ package org.xmldb.api.modules;
  * individuals on behalf of the XML:DB Initiative. For more information
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
-import org.xmldb.api.base.*;
+
+package org.xmldb.api.modules;
+
+import org.xmldb.api.base.Service;
+import org.xmldb.api.base.XMLDBException;
 
 /**
  * Provides the ability to bundle <code>Collection</code> operations into a
@@ -62,7 +64,7 @@ import org.xmldb.api.base.*;
  */
 public interface TransactionService extends Service {
 
-    public static final String SERVICE_NAME = "TransactionService"; 
+    public static final String SERVICE_NAME = "TransactionService";
    /**
     * Begin the transaction
     *

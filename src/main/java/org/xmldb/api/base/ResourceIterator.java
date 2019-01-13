@@ -1,5 +1,3 @@
-package org.xmldb.api.base;
-
 /*
  * The XML:DB Initiative Software License, Version 1.0
  *
@@ -53,31 +51,33 @@ package org.xmldb.api.base;
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
 
+package org.xmldb.api.base;
+
 /**
  * ResourceIterator is used to iterate over a set of resources.
  */
 public interface ResourceIterator {
-   /**
-    * Returns true as long as there are still more resources to be iterated.
-    *
-    * @return true if there are more resources to iterate, false otherwise.
-    * @exception XMLDBException with expected error codes.
-    *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.
-    */
-   boolean hasMoreResources() throws XMLDBException;
+    /**
+     * Returns true as long as there are still more resources to be iterated.
+     *
+     * @return true if there are more resources to iterate, false otherwise.
+     * @throws XMLDBException
+     *             with expected error codes.
+     *             <code>ErrorCodes.VENDOR_ERROR</code> for any vendor specific
+     *             errors that occur.
+     */
+    boolean hasMoreResources() throws XMLDBException;
 
-
-   /**
-    * Returns the next <code>Resource</code> instance in the iterator.
-    *
-    * @return the next <code>Resource</code> instance in the iterator.
-    * @exception XMLDBException with expected error codes.
-    *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
-    *  specific errors that occur.
-    *  <code>ErrorCodes.NO_SUCH_RESOURCE</code> if the resource iterator is 
-    *  empty or all resources have already been retrieved.
-    */
-   Resource nextResource() throws XMLDBException;
+    /**
+     * Returns the next <code>Resource</code> instance in the iterator.
+     *
+     * @return the next <code>Resource</code> instance in the iterator.
+     * @throws XMLDBException
+     *             with expected error codes.
+     *             <code>ErrorCodes.VENDOR_ERROR</code> for any vendor specific
+     *             errors that occur. <code>ErrorCodes.NO_SUCH_RESOURCE</code>
+     *             if the resource iterator is empty or all resources have
+     *             already been retrieved.
+     */
+    Resource nextResource() throws XMLDBException;
 }
-

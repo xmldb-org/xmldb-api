@@ -1,5 +1,3 @@
-package org.xmldb.api.base;
-
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -53,9 +51,12 @@ package org.xmldb.api.base;
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
 
+package org.xmldb.api.base;
+
+
 /**
  * The <code>Service</code> interface provides an extension mechanism for 
- * <code>Collection</code> implementations. It is to be implented by Service
+ * <code>Collection</code> implementations. It is to be implemented by Service
  * instances that define their own set of methods to perform the necessary
  * action. For an example of what a functional <code>Service</code> interface
  * should look like look at XPathQueryService.
@@ -67,7 +68,7 @@ public interface Service extends Configurable {
     * Returns the name associated with the Service instance.
     *
     * @return the name of the object.
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -77,7 +78,7 @@ public interface Service extends Configurable {
     * Gets the Version attribute of the Service object
     *
     * @return The Version value
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
@@ -87,7 +88,7 @@ public interface Service extends Configurable {
     * Sets the Collection attribute of the Service object
     *
     * @param col The new Collection value
-    * @exception XMLDBException with expected error codes.
+    * @throws XMLDBException with expected error codes.
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */

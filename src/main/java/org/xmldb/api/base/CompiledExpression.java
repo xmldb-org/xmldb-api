@@ -1,4 +1,3 @@
-package org.xmldb.api.base;
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -51,6 +50,8 @@ package org.xmldb.api.base;
  * individuals on behalf of the XML:DB Initiative. For more information
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
+
+package org.xmldb.api.base;
 
 public interface CompiledExpression {
 

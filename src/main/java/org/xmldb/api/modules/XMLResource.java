@@ -1,5 +1,3 @@
-package org.xmldb.api.modules;
-
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -53,10 +51,14 @@ package org.xmldb.api.modules;
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
 
-import org.xmldb.api.base.*;
+package org.xmldb.api.modules;
 
-import org.w3c.dom.*;
-import org.xml.sax.*;
+import org.w3c.dom.Node;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.XMLDBException;
 
 /**
  * Provides access to XML resources stored in the database. An XMLResource can
@@ -81,7 +83,7 @@ public interface XMLResource extends Resource {
      *
      * @return the id for the parent document of this <code>Resource</code> or
      *  null if there is no parent document for this <code>Resource</code>.
-     * @exception XMLDBException with expected error codes.
+     * @throws XMLDBException with expected error codes.
      *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
      *  specific errors that occur.
      */
@@ -91,7 +93,7 @@ public interface XMLResource extends Resource {
      * Returns the content of the <code>Resource</code> as a DOM Node.
      *
      * @return The XML content as a DOM <code>Node</code>
-     * @exception XMLDBException with expected error codes.
+     * @throws XMLDBException with expected error codes.
      *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
      *  specific errors that occur.
      */
@@ -102,7 +104,7 @@ public interface XMLResource extends Resource {
      * source.
      *
      * @param content The new content value
-     * @exception XMLDBException with expected error codes.
+     * @throws XMLDBException with expected error codes.
      *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
      *  specific errors that occur.
      *  <code>ErrorCodes.INVALID_RESOURCE</code> if the content value provided is
@@ -118,7 +120,7 @@ public interface XMLResource extends Resource {
      *
      * @param handler the SAX <code>ContentHandler</code> to use to handle the
      *  <code>Resource</code> content.
-     * @exception XMLDBException with expected error codes.
+     * @throws XMLDBException with expected error codes.
      *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
      *  specific errors that occur.
      *  <code>ErrorCodes.INVALID_RESOURCE</code> if the
@@ -132,7 +134,7 @@ public interface XMLResource extends Resource {
      *
      * @return a SAX <code>ContentHandler</code> that can be used to add content
      *  into the <code>Resource</code>.
-     * @exception XMLDBException with expected error codes.
+     * @throws XMLDBException with expected error codes.
      *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
      *  specific errors that occur.
      */
