@@ -1,5 +1,3 @@
-package org.xmldb.api.base;
-
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -53,8 +51,7 @@ package org.xmldb.api.base;
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
 
-import java.io.PrintStream;
-import java.io.PrintWriter;
+package org.xmldb.api.base;
 
 /**
  * XMLDBException is thrown for all errors in the XML:DB API. It contains two
@@ -66,7 +63,8 @@ import java.io.PrintWriter;
  */ 
 public final class XMLDBException extends Exception 
 {
-   private Throwable cause = null;
+   private static final long serialVersionUID = 8841586061740517362L;
+
    public int errorCode = ErrorCodes.UNKNOWN_ERROR;
    public int vendorErrorCode = 0;
    
@@ -102,38 +100,8 @@ public final class XMLDBException extends Exception
    }
 
    public XMLDBException (int errorCode, int vendorErrorCode, String message, Throwable cause) {
-      super(message);
+      super(message, cause);
       this.errorCode = errorCode;
       this.vendorErrorCode = vendorErrorCode;
-      this.cause = cause;
    }
-
-   public Throwable getCause() {
-      return this.cause;
-   }
-
-   public void printStackTrace() {
-      super.printStackTrace();
-      if (this.cause != null) {
-         System.err.print("Caused by: ");
-         this.cause.printStackTrace();
-      }
-   }
-
-   public void printStackTrace(PrintStream s) {
-      super.printStackTrace(s);
-      if (this.cause != null) {
-         s.print("Caused by: ".getBytes());
-         this.cause.printStackTrace(s);
-      }
-   }
-
-   public void printStackTrace(PrintWriter s) {
-      super.printStackTrace(s);
-      if (this.cause != null) {
-         s.print("Caused by: ");
-         this.cause.printStackTrace(s);
-      }
-   }
-
 }
