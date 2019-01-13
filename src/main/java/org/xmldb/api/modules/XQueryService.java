@@ -1,4 +1,3 @@
-package org.xmldb.api.modules;
 /*
  *  The XML:DB Initiative Software License, Version 1.0
  *
@@ -52,9 +51,12 @@ package org.xmldb.api.modules;
  * on the XML:DB Initiative, please see <http://www.xmldb.org/>.
  */
 
+package org.xmldb.api.modules;
+
+import org.xmldb.api.base.CompiledExpression;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
-import org.xmldb.api.base.CompiledExpression;
 
 public interface XQueryService  extends Service {
 
@@ -82,7 +84,7 @@ public interface XQueryService  extends Service {
   	*
   	* @param prefix The prefix to retrieve from the namespace map.
   	* @return The URI associated with <code>prefix</code>
-  	* @exception org.xmldb.api.base.XMLDBException with expected error codes.
+  	* @throws org.xmldb.api.base.XMLDBException with expected error codes.
   	*  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
   	*  specific errors that occur.
     * @throws XMLDBException if an error occurs whilst getting the namespace.
@@ -97,14 +99,43 @@ public interface XQueryService  extends Service {
    * @param prefix The prefix to remove from the namespace map. If
    *  <code>prefix</code> is null or empty the mapping for the default
    *  namespace will be removed.
-   * @exception org.xmldb.api.base.XMLDBException with expected error codes.
+   * @throws org.xmldb.api.base.XMLDBException with expected error codes.
    *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
    *  specific errors that occur.
    */
   void removeNamespace (String prefix) throws XMLDBException;
+
+  /**
+   * Clears all namespace mappings defined.
+   * 
+   * @throws XMLDBException with expected error codes.
+   *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
+   *  specific errors that occur.
+   */
   void clearNamespaces () throws XMLDBException;
-  org.xmldb.api.base.ResourceSet query (String query) throws XMLDBException;
-  org.xmldb.api.base.ResourceSet queryResource (String id, String query) throws XMLDBException;
+
+  /**
+   * Executes the given query and returns the result as a resource set.
+   * 
+   * @param query The query to be executed
+   * @return The query result
+   * @throws XMLDBException with expected error codes.
+   *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
+   *  specific errors that occur.
+   */
+  ResourceSet query (String query) throws XMLDBException;
+  
+  /**
+   * Executes the given query and returns the result as a resource set.
+   * 
+   * @param id The id of a resource
+   * @param query The query to be executed
+   * @return The query result
+   * @throws XMLDBException with expected error codes.
+   *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
+   *  specific errors that occur.
+   */
+  ResourceSet queryResource (String id, String query) throws XMLDBException;
 
   /**
    * Compiles the specified XQuery and returns a handle to the compiled
@@ -114,7 +145,7 @@ public interface XQueryService  extends Service {
    * @return the compiled query expression
    * @throws XMLDBException if an error occurs whilst compiling the query.
    */
-  org.xmldb.api.base.CompiledExpression compile (String query) throws XMLDBException;
+  CompiledExpression compile (String query) throws XMLDBException;
 
   /**
    * Execute a compiled XQuery.
@@ -126,7 +157,7 @@ public interface XQueryService  extends Service {
    * @return the result of the query
    * @throws XMLDBException if an error occurs whilst executing the query.
    */
-  org.xmldb.api.base.ResourceSet execute (CompiledExpression expression) throws XMLDBException;
+  ResourceSet execute (CompiledExpression expression) throws XMLDBException;
 
   /**
    * Declare a global, external XQuery variable and assign a value to it. The variable
@@ -151,9 +182,7 @@ public interface XQueryService  extends Service {
    * prefix should have been mapped to a namespace, using {@link #setNamespace(String, String)}.
    * For example, if a variable is called <b>x:name</b>, a prefix/namespace mapping should have
    * been defined for prefix <code>x</code> before calling this method.
-   *
    * @param initialValue the initial value, which is assigned to the variable
-   *
    * @throws XMLDBException if an error occurs whilst declaring the variable.
    */
   void declareVariable (String qname, Object initialValue) throws XMLDBException;
@@ -167,5 +196,11 @@ public interface XQueryService  extends Service {
   	 * @param backwardsCompatible true it XPath 1.0 compatibility mode should be enabled.
   	 */
   void setXPathCompatibility (boolean backwardsCompatible);
+
+  /**
+   * Sets the new module load path.
+   * 
+   * @param path The module load path to be set.
+   */
   void setModuleLoadPath (String path);
 }
