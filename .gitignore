@@ -1,8 +1,14 @@
 # IntelliJ ignores
 .idea/
 *.iml
-# Maven ignores
-target/
+# Eclipse ignoers
+.project
+.classpath
+.settings/
+bin/
+# Gradle ignores
+.gradle/
+build/
 # CVS default ignores begin
 tags
 TAGS
