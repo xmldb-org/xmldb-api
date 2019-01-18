@@ -138,4 +138,9 @@ public class ErrorCodes {
      * Set if the <code>Database</code> instance being registered is invalid.
      */
     public static final int INVALID_DATABASE = 401;
+    
+    /**
+     * Set if the <code>Database</code> instance name being registered is already registered.
+     */
+    public static final int INSTANCE_NAME_ALREADY_REGISTERED = 402;
 }

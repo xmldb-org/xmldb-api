@@ -74,6 +74,7 @@ public class DatabaseManager
 {
    protected static final String URI_PREFIX = "xmldb:"; 
 
+   static boolean strictRegistrationBehavior = Boolean.getBoolean("org.xmldb.api.strictRegistrationBehavior");
    static final Properties properties = new Properties();
    static final ConcurrentMap<String, Database> databases = new ConcurrentHashMap<>();
 
@@ -122,8 +123,8 @@ public class DatabaseManager
 
    private static void updateDatabases(String databaseName, Database database) throws XMLDBException {
       Database existing = databases.putIfAbsent(databaseName, database);
-      if (existing !=null && existing != database) {
-          throw new XMLDBException(ErrorCodes.INVALID_DATABASE);
+      if (existing !=null && existing != database && strictRegistrationBehavior) {
+          throw new XMLDBException(ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED);
       }
    }
 

@@ -14,6 +14,7 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -29,6 +30,11 @@ class DatabaseManagerTest {
     Database dbOne;
     @Mock
     Database dbTwo;
+
+    @BeforeEach
+    void setUp() {
+        DatabaseManager.strictRegistrationBehavior = false;
+    }
 
     @AfterEach
     void tearDown() throws Exception {
@@ -178,6 +184,24 @@ class DatabaseManagerTest {
         DatabaseManager.setProperty("key", "value");
 
         assertEquals(DatabaseManager.properties.getProperty("key"), "value");
+    }
+
+    @SuppressWarnings("deprecation")
+    @Test
+    void testRegisterDatabase_using_strict_check() throws XMLDBException {
+        DatabaseManager.strictRegistrationBehavior = true;
+
+        when(dbOne.getName()).thenReturn("one");
+        when(dbOne.getNames()).thenReturn(new String[] { "databaseNameOne" });
+        when(dbTwo.getName()).thenReturn("one");
+        when(dbTwo.getNames()).thenReturn(new String[] { "databaseNameOne" });
+
+        DatabaseManager.registerDatabase(dbOne);
+        XMLDBException failure = assertThrows(XMLDBException.class, () -> {
+            DatabaseManager.registerDatabase(dbTwo);
+        });
+        assertEquals(ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED,
+                failure.errorCode);
     }
 
     private static Entry<String, Database> entry(String key, Database value) {
