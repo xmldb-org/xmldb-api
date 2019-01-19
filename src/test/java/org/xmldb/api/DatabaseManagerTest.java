@@ -2,6 +2,7 @@ package org.xmldb.api;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -51,7 +52,7 @@ class DatabaseManagerTest {
 
         DatabaseManager.databases.put("2", dbTwo);
         assertThat(DatabaseManager.getDatabases(),
-                arrayContaining(dbOne, dbTwo));
+                arrayContainingInAnyOrder(dbOne, dbTwo));
     }
 
     @SuppressWarnings("deprecation")

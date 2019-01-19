@@ -53,9 +53,10 @@
 
 package org.xmldb.api;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.locks.StampedLock;
 
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -74,9 +75,11 @@ public class DatabaseManager
 {
    protected static final String URI_PREFIX = "xmldb:"; 
 
-   static boolean strictRegistrationBehavior = Boolean.getBoolean("org.xmldb.api.strictRegistrationBehavior");
    static final Properties properties = new Properties();
-   static final ConcurrentMap<String, Database> databases = new ConcurrentHashMap<>();
+   static final StampedLock dbLock = new StampedLock();
+   static final Map<String, Database> databases = new HashMap<>(5);
+
+   static boolean strictRegistrationBehavior = Boolean.getBoolean("org.xmldb.api.strictRegistrationBehavior");
 
    /**
     * Returns a list of all available <code>Database</code> implementations 
@@ -88,7 +91,12 @@ public class DatabaseManager
     *  instances exist then an empty array is returned.
     */ 
    public static Database[] getDatabases () {
-      return databases.values().toArray(new Database[0]);
+      long stamp = dbLock.readLock();
+      try {
+          return databases.values().toArray(new Database[0]);
+      } finally {
+          dbLock.unlock(stamp);
+      }
    }
 
    /**
@@ -114,11 +122,17 @@ public class DatabaseManager
       if ((databaseNames == null) || (databaseNames.length == 0) || (databaseNames[0].equals(""))) {
          throw new XMLDBException(ErrorCodes.INVALID_DATABASE);
       }
-      // put all names of this instance into the databases map
-      updateDatabases(name, database);
-      for (String databaseName : databaseNames) {
-          updateDatabases(databaseName, database);
+      long stamp = dbLock.writeLock();
+      try {
+          // put all names of this instance into the databases map
+          updateDatabases(name, database);
+          for (String databaseName : databaseNames) {
+              updateDatabases(databaseName, database);
+          }
+      } finally {
+          dbLock.unlock(stamp);
       }
+
    }
 
    private static void updateDatabases(String databaseName, Database database) throws XMLDBException {
@@ -140,17 +154,22 @@ public class DatabaseManager
     */
    public static void deregisterDatabase (Database database)
          throws XMLDBException {
-      @SuppressWarnings("deprecation")
-      String name = database.getName();
-      if (name !=null) {
-         databases.remove(name);
-      }
-      String[] databaseNames = database.getNames();
-      if (databaseNames != null) {
-        for (String databaseName : databaseNames) {
-          databases.remove(databaseName);
-        }
-      }
+       long stamp = dbLock.writeLock();
+       try {
+           @SuppressWarnings("deprecation")
+           String name = database.getName();
+           if (name !=null) {
+               databases.remove(name);
+           }
+           String[] databaseNames = database.getNames();
+           if (databaseNames != null) {
+               for (String databaseName : databaseNames) {
+                   databases.remove(databaseName);
+               }
+           }
+       } finally {
+           dbLock.unlock(stamp);
+       }
    }
    
    /**
@@ -276,7 +295,14 @@ public class DatabaseManager
 
       String databaseName = uri.substring(URI_PREFIX.length(), end);
       
-      Database db = databases.get(databaseName); 
+      Database db;
+
+      long stamp = dbLock.readLock();
+      try {
+          db = databases.get(databaseName); 
+      } finally {
+          dbLock.unlock(stamp);
+      }
       if (db == null) {
          throw new XMLDBException(ErrorCodes.NO_SUCH_DATABASE);
       }
