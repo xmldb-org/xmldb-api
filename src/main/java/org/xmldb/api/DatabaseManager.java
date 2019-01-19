@@ -90,10 +90,20 @@ public class DatabaseManager
     *  with the <code>DatabaseManager</code>. If no <code>Database</code>
     *  instances exist then an empty array is returned.
     */ 
-   public static Database[] getDatabases () {
-      long stamp = dbLock.readLock();
+   public static Database[] getDatabases() {
+      // try optimistic read first
+      long stamp = dbLock.tryOptimisticRead();
+      if (stamp > 0) {
+          final Database[] result = databases.values().toArray(new Database[0]);
+          if (dbLock.validate(stamp)) {
+              return result;
+          }
+      }
+
+      // fallback to locking read
+      stamp = dbLock.readLock();
       try {
-          return databases.values().toArray(new Database[0]);
+         return databases.values().toArray(new Database[0]);
       } finally {
          dbLock.unlockRead(stamp);
       }
@@ -282,11 +292,23 @@ public class DatabaseManager
          throw new XMLDBException(ErrorCodes.INVALID_URI);
       }
 
-      String databaseName = uri.substring(URI_PREFIX.length(), end);
-      
-      Database db;
+      final String databaseName = uri.substring(URI_PREFIX.length(), end);
 
-      long stamp = dbLock.readLock();
+      // try optimistic read first
+      long stamp = dbLock.tryOptimisticRead();
+      if (stamp > 0) {
+          final Database db = databases.get(databaseName);
+          if (dbLock.validate(stamp)) {
+              if (db == null) {
+                  throw new XMLDBException(ErrorCodes.NO_SUCH_DATABASE);
+              }
+              return db;
+          }
+      }
+
+      // fallback to locking read
+      final Database db;
+      stamp = dbLock.readLock();
       try {
           db = databases.get(databaseName); 
       } finally {

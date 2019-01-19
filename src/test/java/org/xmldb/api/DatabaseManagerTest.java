@@ -55,10 +55,9 @@ class DatabaseManagerTest {
                 arrayContainingInAnyOrder(dbOne, dbTwo));
     }
 
-    @SuppressWarnings("deprecation")
     @Test
     void testRegisterDatabase_no_or_empty_name() throws XMLDBException {
-        when(dbOne.getName()).thenReturn(null);
+        when(dbOne.getNames()).thenReturn(null);
 
         XMLDBException xmldbEx1 = assertThrows(XMLDBException.class, () -> {
             DatabaseManager.registerDatabase(dbOne);
@@ -66,7 +65,7 @@ class DatabaseManagerTest {
         assertEquals(ErrorCodes.INVALID_DATABASE, xmldbEx1.errorCode);
         assertEquals(0, DatabaseManager.databases.size());
 
-        when(dbOne.getName()).thenReturn("");
+        when(dbOne.getNames()).thenReturn(new String[]{""});
 
         XMLDBException xmldbEx2 = assertThrows(XMLDBException.class, () -> {
             DatabaseManager.registerDatabase(dbOne);
@@ -75,11 +74,8 @@ class DatabaseManagerTest {
         assertEquals(0, DatabaseManager.databases.size());
     }
 
-    @SuppressWarnings("deprecation")
     @Test
     void testRegisterDatabase_no_or_empty_names() throws XMLDBException {
-        when(dbOne.getName()).thenReturn("databaseName");
-
         when(dbOne.getNames()).thenReturn(null);
 
         XMLDBException xmldbEx1 = assertThrows(XMLDBException.class, () -> {
@@ -96,12 +92,10 @@ class DatabaseManagerTest {
         assertEquals(0, DatabaseManager.databases.size());
     }
 
-    @SuppressWarnings("deprecation")
     @Test
     void testRegisterDatabase() throws XMLDBException {
-        when(dbOne.getName()).thenReturn("one");
         when(dbOne.getNames()).thenReturn(
-                new String[] { "databaseNameOne", "databaseAliasNameOne" });
+                new String[] { "one", "databaseNameOne", "databaseAliasNameOne" });
 
         DatabaseManager.registerDatabase(dbOne);
         assertThat(DatabaseManager.databases.entrySet(),
@@ -109,7 +103,6 @@ class DatabaseManagerTest {
                         entry("databaseNameOne", dbOne),
                         entry("databaseAliasNameOne", dbOne)));
 
-        when(dbTwo.getName()).thenReturn("databaseNameTwo");
         when(dbTwo.getNames()).thenReturn(
                 new String[] { "databaseNameTwo", "databaseAliasNameTwo" });
 
@@ -122,16 +115,14 @@ class DatabaseManagerTest {
                         entry("databaseAliasNameTwo", dbTwo)));
     }
 
-    @SuppressWarnings("deprecation")
     @Test
     void testDeregisterDatabase() throws XMLDBException {
         DatabaseManager.databases.put("one", dbOne);
         DatabaseManager.databases.put("databaseNameOne", dbOne);
         DatabaseManager.databases.put("databaseAliasNameOne", dbOne);
 
-        when(dbOne.getName()).thenReturn("one");
         when(dbOne.getNames()).thenReturn(
-                new String[] { "databaseNameOne", "databaseAliasNameOne" });
+                new String[] { "one", "databaseNameOne", "databaseAliasNameOne" });
 
         DatabaseManager.deregisterDatabase(dbOne);
 
@@ -187,15 +178,12 @@ class DatabaseManagerTest {
         assertEquals(DatabaseManager.properties.getProperty("key"), "value");
     }
 
-    @SuppressWarnings("deprecation")
     @Test
     void testRegisterDatabase_using_strict_check() throws XMLDBException {
         DatabaseManager.strictRegistrationBehavior = true;
 
-        when(dbOne.getName()).thenReturn("one");
-        when(dbOne.getNames()).thenReturn(new String[] { "databaseNameOne" });
-        when(dbTwo.getName()).thenReturn("one");
-        when(dbTwo.getNames()).thenReturn(new String[] { "databaseNameOne" });
+        when(dbOne.getNames()).thenReturn(new String[] { "one", "databaseNameOne" });
+        when(dbTwo.getNames()).thenReturn(new String[] { "one", "databaseNameOne" });
 
         DatabaseManager.registerDatabase(dbOne);
         XMLDBException failure = assertThrows(XMLDBException.class, () -> {
