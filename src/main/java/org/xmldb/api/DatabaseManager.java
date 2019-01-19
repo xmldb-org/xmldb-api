@@ -90,12 +90,22 @@ public class DatabaseManager
     *  with the <code>DatabaseManager</code>. If no <code>Database</code>
     *  instances exist then an empty array is returned.
     */ 
-   public static Database[] getDatabases () {
-      long stamp = dbLock.readLock();
+   public static Database[] getDatabases() {
+      // try optimistic read first
+      long stamp = dbLock.tryOptimisticRead();
+      if (stamp > 0) {
+          final Database[] result = databases.values().toArray(new Database[0]);
+          if (dbLock.validate(stamp)) {
+              return result;
+          }
+      }
+
+      // fallback to locking read
+      stamp = dbLock.readLock();
       try {
-          return databases.values().toArray(new Database[0]);
+         return databases.values().toArray(new Database[0]);
       } finally {
-          dbLock.unlock(stamp);
+         dbLock.unlockRead(stamp);
       }
    }
 
@@ -110,34 +120,28 @@ public class DatabaseManager
     *  <code>ErrorCodes.INVALID_DATABASE</code> if the provided <code>Database
     *  </code> instance is invalid.
     */
-   public static void registerDatabase (Database database) throws XMLDBException {
-      @SuppressWarnings("deprecation")
-      String name = database.getName();
-      if ((name == null) || (name.equals(""))) {
-         throw new XMLDBException(ErrorCodes.INVALID_DATABASE);
-      }
-      
-      String[] databaseNames = database.getNames();
+   public static void registerDatabase(final Database database) throws XMLDBException {
+      final String[] databaseNames = database.getNames();
       // we need at least one suitable name for this instance
-      if ((databaseNames == null) || (databaseNames.length == 0) || (databaseNames[0].equals(""))) {
+      if (databaseNames == null || databaseNames.length == 0 || databaseNames[0].isEmpty()) {
          throw new XMLDBException(ErrorCodes.INVALID_DATABASE);
       }
-      long stamp = dbLock.writeLock();
+
+      final long stamp = dbLock.writeLock();
       try {
           // put all names of this instance into the databases map
-          updateDatabases(name, database);
-          for (String databaseName : databaseNames) {
+          for (final String databaseName : databaseNames) {
               updateDatabases(databaseName, database);
           }
       } finally {
-          dbLock.unlock(stamp);
+          dbLock.unlockWrite(stamp);
       }
 
    }
 
-   private static void updateDatabases(String databaseName, Database database) throws XMLDBException {
-      Database existing = databases.putIfAbsent(databaseName, database);
-      if (existing !=null && existing != database && strictRegistrationBehavior) {
+   private static void updateDatabases(final String databaseName, final Database database) throws XMLDBException {
+      final Database existing = databases.putIfAbsent(databaseName, database);
+      if (existing != null && existing != database && strictRegistrationBehavior) {
           throw new XMLDBException(ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED);
       }
    }
@@ -152,23 +156,18 @@ public class DatabaseManager
     *  <code>ErrorCodes.VENDOR_ERROR</code> for any vendor
     *  specific errors that occur.
     */
-   public static void deregisterDatabase (Database database)
+   public static void deregisterDatabase(final Database database)
          throws XMLDBException {
-       long stamp = dbLock.writeLock();
+       final long stamp = dbLock.writeLock();
        try {
-           @SuppressWarnings("deprecation")
-           String name = database.getName();
-           if (name !=null) {
-               databases.remove(name);
-           }
-           String[] databaseNames = database.getNames();
+           final String[] databaseNames = database.getNames();
            if (databaseNames != null) {
-               for (String databaseName : databaseNames) {
+               for (final String databaseName : databaseNames) {
                    databases.remove(databaseName);
                }
            }
        } finally {
-           dbLock.unlock(stamp);
+           dbLock.unlockWrite(stamp);
        }
    }
    
@@ -197,7 +196,7 @@ public class DatabaseManager
     *  <code>ErrroCodes.NO_SUCH_DATABASE</code> If a <code>Database</code>
     *    instance could not be found to handle the provided URI.
     */
-   public static Collection getCollection (String uri) 
+   public static Collection getCollection(final String uri)
          throws XMLDBException {
       return getCollection(uri, null, null);
    }
@@ -230,9 +229,9 @@ public class DatabaseManager
     *  <code>ErrroCodes.PERMISSION_DENIED</code> If the <code>username</code>
     *    and <code>password</code> were not accepted by the database.
     */
-   public static Collection getCollection (String uri,
-         String username, String password) throws XMLDBException {
-      Database db = getDatabase(uri);
+   public static Collection getCollection(final String uri,
+         final String username, final String password) throws XMLDBException {
+      final Database db = getDatabase(uri);
       return db.getCollection(stripURIPrefix(uri), username, password);
    }
 
@@ -250,8 +249,8 @@ public class DatabaseManager
     *  <code>ErrroCodes.NO_SUCH_DATABASE</code> If a <code>Database</code>
     *    instance could not be found to handle the provided URI.
     */
-   public static String getConformanceLevel (String uri) throws XMLDBException {
-      Database database = getDatabase(uri);
+   public static String getConformanceLevel(final String uri) throws XMLDBException {
+      final Database database = getDatabase(uri);
       return database.getConformanceLevel();
    }
 
@@ -261,7 +260,7 @@ public class DatabaseManager
     * @param name The property name
     * @return The property value
     */
-   public static String getProperty (String name) {
+   public static String getProperty(final String name) {
       return properties.getProperty(name);
    }
 
@@ -271,7 +270,7 @@ public class DatabaseManager
     * @param name The property name
     * @param value The value to set.
     */   
-   public static void setProperty (String name, String value) {
+   public static void setProperty(final String name, final String value) {
       properties.put(name, value);
    }
 
@@ -283,26 +282,39 @@ public class DatabaseManager
     * @return the requested <code>Database</code> instance.
     * @throws XMLDBException if an error occurs whilst getting the database
     */
-   protected static Database getDatabase(String uri) throws XMLDBException {
+   protected static Database getDatabase(final String uri) throws XMLDBException {
       if (!uri.startsWith(URI_PREFIX)) {
          throw new XMLDBException(ErrorCodes.INVALID_URI);
       }
 
-      int end = uri.indexOf(":", URI_PREFIX.length());
+      final int end = uri.indexOf(":", URI_PREFIX.length());
       if (end == -1) {
          throw new XMLDBException(ErrorCodes.INVALID_URI);
       }
 
-      String databaseName = uri.substring(URI_PREFIX.length(), end);
-      
-      Database db;
+      final String databaseName = uri.substring(URI_PREFIX.length(), end);
 
-      long stamp = dbLock.readLock();
+      // try optimistic read first
+      long stamp = dbLock.tryOptimisticRead();
+      if (stamp > 0) {
+          final Database db = databases.get(databaseName);
+          if (dbLock.validate(stamp)) {
+              if (db == null) {
+                  throw new XMLDBException(ErrorCodes.NO_SUCH_DATABASE);
+              }
+              return db;
+          }
+      }
+
+      // fallback to locking read
+      final Database db;
+      stamp = dbLock.readLock();
       try {
           db = databases.get(databaseName); 
       } finally {
-          dbLock.unlock(stamp);
+          dbLock.unlockRead(stamp);
       }
+
       if (db == null) {
          throw new XMLDBException(ErrorCodes.NO_SUCH_DATABASE);
       }
@@ -318,11 +330,11 @@ public class DatabaseManager
     * @return The database specific portion of the URI.
     * @throws XMLDBException if an error occurs whilst stripping the URI prefix
     */
-   protected static String stripURIPrefix(String uri) throws XMLDBException {
+   protected static String stripURIPrefix(final String uri) throws XMLDBException {
       if (!uri.startsWith(URI_PREFIX)) {
          throw new XMLDBException(ErrorCodes.INVALID_URI);
       }
 
-      return uri.substring(URI_PREFIX.length(), uri.length());
+      return uri.substring(URI_PREFIX.length());
    }
 }
