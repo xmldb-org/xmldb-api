@@ -7,11 +7,12 @@ import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
 import org.xmldb.api.base.XMLDBException;
 
-public final class TestDatabase implements Database {
-    private static final String[] DETAULT_NAMES = new String[] { "testdatabase" };
+public class TestDatabase extends ConfigurableImpl implements Database {
+    private static final String[] DETAULT_NAMES = new String[] {
+            "testdatabase" };
 
     private final String[] names;
-    private final Map<String,String> properties;
+    private final Map<String, TestCollection> collections;
 
     public TestDatabase(String... names) {
         if (names.length == 0) {
@@ -19,33 +20,27 @@ public final class TestDatabase implements Database {
         } else {
             this.names = names;
         }
-        properties = new HashMap<>();
+        collections= new HashMap<>();
     }
 
     @Override
-    public String getName() throws XMLDBException {
+    public final String getName() throws XMLDBException {
         return names[0];
     }
 
     @Override
-    public String[] getNames() throws XMLDBException {
+    public final String[] getNames() throws XMLDBException {
         return names;
     }
 
-    @Override
-    public String getProperty(String name) throws XMLDBException {
-        return properties.get(name);
-    }
-
-    @Override
-    public void setProperty(String name, String value) throws XMLDBException {
-        properties.put(name, value);
+    public TestCollection addCollection(String collectionName) {
+        return collections.computeIfAbsent(collectionName, TestCollection::new);
     }
 
     @Override
     public Collection getCollection(String uri, String username,
             String password) throws XMLDBException {
-        return null;
+        return collections.get(uri);
     }
 
     @Override

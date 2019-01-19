@@ -54,6 +54,7 @@
 package org.xmldb.api;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.locks.StampedLock;
@@ -158,18 +159,17 @@ public class DatabaseManager
     */
    public static void deregisterDatabase(final Database database)
          throws XMLDBException {
-       final long stamp = dbLock.writeLock();
-       try {
-           final String[] databaseNames = database.getNames();
-           if (databaseNames != null) {
-               for (final String databaseName : databaseNames) {
-                   databases.remove(databaseName);
-               }
-           }
-       } finally {
-           dbLock.unlockWrite(stamp);
-       }
-   }
+      final long stamp = dbLock.writeLock();
+      try {
+        for (Iterator<Database> dbIterator = databases.values().iterator(); dbIterator.hasNext();) {
+          if (database.equals(dbIterator.next())) {
+            dbIterator.remove();
+          }
+        }
+      } finally {
+        dbLock.unlockWrite(stamp);
+      }
+    }
    
    /**
     * Retrieves a <code>Collection</code> instance from the database for the 

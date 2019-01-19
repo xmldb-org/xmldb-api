@@ -121,9 +121,6 @@ class DatabaseManagerTest {
         DatabaseManager.databases.put("databaseNameOne", dbOne);
         DatabaseManager.databases.put("databaseAliasNameOne", dbOne);
 
-        when(dbOne.getNames()).thenReturn(
-                new String[] { "one", "databaseNameOne", "databaseAliasNameOne" });
-
         DatabaseManager.deregisterDatabase(dbOne);
 
         assertEquals(0, DatabaseManager.databases.size());
