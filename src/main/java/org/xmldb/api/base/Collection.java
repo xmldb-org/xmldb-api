@@ -245,6 +245,10 @@ public interface Collection extends Configurable, AutoCloseable {
 
   /**
    * Returns the time of creation of the collection.
+   * 
+   * @return the creation date of the current collection
+   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   *         vendor specific errors that occur.
    */
   Date getCreationTime() throws XMLDBException;
 

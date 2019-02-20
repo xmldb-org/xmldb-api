@@ -49,7 +49,7 @@ import org.xmldb.api.base.XMLDBException;
  * A service to manage the database instance. The service defines a single method shutdown() to shut
  * down the database instance used by the current driver.
  */
-public interface DatabaseInstanceManager extends Service {
+public interface DatabaseInstanceService extends Service {
 
   /**
    * Immediately shutdown the current database instance.
@@ -58,7 +58,8 @@ public interface DatabaseInstanceManager extends Service {
    *
    * This operation is synchronous and will not return until the database is shutdown
    *
-   * @throws XMLDBException
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   *         vendor specific errors that occur.
    */
   void shutdown() throws XMLDBException;
 
@@ -69,15 +70,17 @@ public interface DatabaseInstanceManager extends Service {
    *
    * This operation is asynchronous and the delay is scheduled with the database scheduler.
    *
-   * @throws XMLDBException
+   * @param delay the delay in milliseconds to wait before shutdown
+   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   *         vendor specific errors that occur.
    */
   void shutdown(long delay) throws XMLDBException;
 
   /**
-   * Returns true if the database instance is running local, i.e. in the same thread as this
+   * Returns {@code true} if the database instance is running local, i.e. in the same thread as this
    * service.
-   *
-   * @return true if the database instance is running local
+   * 
+   * @return {@code true} on a local instance, {@code false} otherwise
    */
   boolean isLocalInstance();
 }
