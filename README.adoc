@@ -43,7 +43,7 @@ The latest versions of the API are available at https://search.maven.org/search?
 
 
 == Contribute
-Contributions are always welcome.
+Contributions are always welcome. Use https://google.github.io/styleguide/javaguide.html[Google code style format] for your changes. 
 
 
 == License
