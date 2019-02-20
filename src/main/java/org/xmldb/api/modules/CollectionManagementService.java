@@ -79,5 +79,46 @@ public interface CollectionManagementService extends Service {
    *         vendor specific errors that occur.
    */
   void removeCollection(String name) throws XMLDBException;
+
+  /**
+   * Moves either a {@code collection} or {@code }
+   * 
+   * @param collection The source collection
+   * @param destination The destination collection
+   * @param newName The new name of the moved collection in the destination collection
+   */
+  void move(String collection, String destination, String newName) throws XMLDBException;
+
+  /**
+   * Moves the resource specified by the {@code resourcePath} to the given {@code destinationPath}
+   * and {@code newName}.
+   * 
+   * @param resourcePath The source document
+   * @param destinationPath The destination collection
+   * @param newName The new name of the moved source in the destination collection
+   */
+  void moveResource(String resourcePath, String destinationPath, String newName)
+      throws XMLDBException;
+
+  /**
+   * Copy the resource specified by the {@code resourcePath} to the given {@code destinationPath}
+   * and {@code newName}.
+   * 
+   * @param resourcePath The source document
+   * @param destinationPath The destination collection
+   * @param newName The new name of the copied source in the destination collection
+   */
+  void copyResource(String resourcePath, String destinationPath, String newName)
+      throws XMLDBException;
+
+  /**
+   * Copy the collection specified by {@code collection} to the given {@code destination} and
+   * {@code newName}.
+   * 
+   * @param collection The source collection
+   * @param destination The destination collection
+   * @param newName The new name of the copied collection in the destination collection
+   */
+  void copy(String collection, String destination, String newName) throws XMLDBException;
 }
 

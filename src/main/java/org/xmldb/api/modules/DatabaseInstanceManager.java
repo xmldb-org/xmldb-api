@@ -40,57 +40,44 @@
  * <http://www.xmldb.org/>.
  */
 
-package org.xmldb.api;
+package org.xmldb.api.modules;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.Database;
+import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
 
-public class TestDatabase extends ConfigurableImpl implements Database {
-  private static final String[] DETAULT_NAMES = new String[] {"testdatabase"};
+/**
+ * A service to manage the database instance. The service defines a single method shutdown() to shut
+ * down the database instance used by the current driver.
+ */
+public interface DatabaseInstanceManager extends Service {
 
-  private final String[] names;
-  private final Map<String, TestCollection> collections;
+  /**
+   * Immediately shutdown the current database instance.
+   *
+   * The current user must be a member of the "dba" group or an exception will be thrown.
+   *
+   * This operation is synchronous and will not return until the database is shutdown
+   *
+   * @throws XMLDBException
+   */
+  void shutdown() throws XMLDBException;
 
-  public TestDatabase(String... names) {
-    if (names.length == 0) {
-      this.names = DETAULT_NAMES;
-    } else {
-      this.names = names;
-    }
-    collections = new HashMap<>();
-  }
+  /**
+   * Shutdown the current database instance after the specified delay (in milliseconds).
+   *
+   * The current user must be a member of the "dba" group or an exception will be thrown.
+   *
+   * This operation is asynchronous and the delay is scheduled with the database scheduler.
+   *
+   * @throws XMLDBException
+   */
+  void shutdown(long delay) throws XMLDBException;
 
-  @Override
-  public final String getName() throws XMLDBException {
-    return names[0];
-  }
-
-  @Override
-  public final String[] getNames() throws XMLDBException {
-    return names;
-  }
-
-  public TestCollection addCollection(String collectionName) {
-    return collections.computeIfAbsent(collectionName, TestCollection::new);
-  }
-
-  @Override
-  public Collection getCollection(String uri, String username, String password)
-      throws XMLDBException {
-    return collections.get(uri);
-  }
-
-  @Override
-  public boolean acceptsURI(String uri) throws XMLDBException {
-    return false;
-  }
-
-  @Override
-  public String getConformanceLevel() throws XMLDBException {
-    return "0";
-  }
+  /**
+   * Returns true if the database instance is running local, i.e. in the same thread as this
+   * service.
+   *
+   * @return true if the database instance is running local
+   */
+  boolean isLocalInstance();
 }

@@ -42,6 +42,8 @@
 
 package org.xmldb.api.base;
 
+import java.util.Date;
+
 /**
  * A <code>Collection</code> represents a collection of <code>Resource</code>s stored within an XML
  * database. An XML database MAY expose collections as a hierarchical set of parent and child
@@ -239,5 +241,12 @@ public interface Collection extends Configurable, AutoCloseable {
    */
   @Override
   void close() throws XMLDBException;
+
+
+  /**
+   * Returns the time of creation of the collection.
+   */
+  Date getCreationTime() throws XMLDBException;
+
 }
 
