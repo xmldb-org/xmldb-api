@@ -44,9 +44,9 @@ package org.xmldb.api.base;
 
 
 /**
- * The <code>Service</code> interface provides an extension mechanism for <code>Collection</code>
+ * The {@code Service} interface provides an extension mechanism for {@code Collection}
  * implementations. It is to be implemented by Service instances that define their own set of
- * methods to perform the necessary action. For an example of what a functional <code>Service</code>
+ * methods to perform the necessary action. For an example of what a functional {@code Service}
  * interface should look like look at XPathQueryService.
  *
  * @see org.xmldb.api.modules.XPathQueryService
@@ -56,7 +56,7 @@ public interface Service extends Configurable {
    * Returns the name associated with the Service instance.
    *
    * @return the name of the object.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   String getName() throws XMLDBException;
@@ -65,7 +65,7 @@ public interface Service extends Configurable {
    * Gets the Version attribute of the Service object
    *
    * @return The Version value
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   String getVersion() throws XMLDBException;
@@ -74,7 +74,7 @@ public interface Service extends Configurable {
    * Sets the Collection attribute of the Service object
    *
    * @param col The new Collection value
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void setCollection(Collection col) throws XMLDBException;

@@ -46,7 +46,7 @@ import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
 
 /**
- * Provides the ability to bundle <code>Collection</code> operations into a transaction.
+ * Provides the ability to bundle {@code Collection} operations into a transaction.
  *
  * <b>Note: This interface needs much better definition</b>
  */
@@ -57,24 +57,24 @@ public interface TransactionService extends Service {
   /**
    * Begin the transaction
    *
-   * @exception XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for
-   *            any vendor specific errors that occur.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   *         vendor specific errors that occur.
    */
   void begin() throws XMLDBException;
 
   /**
    * Commit the transaction
    *
-   * @exception XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for
-   *            any vendor specific errors that occur.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   *         vendor specific errors that occur.
    */
   void commit() throws XMLDBException;
 
   /**
    * Rollback the transaction
    *
-   * @exception XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for
-   *            any vendor specific errors that occur.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   *         vendor specific errors that occur.
    */
   void rollback() throws XMLDBException;
 }

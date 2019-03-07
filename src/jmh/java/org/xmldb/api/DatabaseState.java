@@ -9,16 +9,16 @@ import org.xmldb.api.base.XMLDBException;
 
 @State(Scope.Benchmark)
 public class DatabaseState {
-    TestDatabase database;
+  TestDatabase database;
 
-    @Setup(Level.Trial)
-    public void up() throws XMLDBException {
-        database = new TestDatabase();
-        DatabaseManager.registerDatabase(database);
-    }
+  @Setup(Level.Trial)
+  public void up() throws XMLDBException {
+    database = new TestDatabase();
+    DatabaseManager.registerDatabase(database);
+  }
 
-    @TearDown(Level.Trial)
-    public void down() throws XMLDBException {
-        DatabaseManager.deregisterDatabase(database);
-    }
+  @TearDown(Level.Trial)
+  public void down() throws XMLDBException {
+    DatabaseManager.deregisterDatabase(database);
+  }
 }

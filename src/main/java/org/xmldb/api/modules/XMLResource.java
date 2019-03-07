@@ -54,71 +54,69 @@ import org.xmldb.api.base.XMLDBException;
  * text XML or via the DOM or SAX APIs.
  *
  * The default behavior for getContent and setContent is to work with XML data as text so these
- * methods work on <code>String</code> content.
+ * methods work on {@code String} content.
  */
 public interface XMLResource extends Resource {
 
   public static final String RESOURCE_TYPE = "XMLResource";
 
   /**
-   * Returns the unique id for the parent document to this <code>Resource</code> or null if the
-   * <code>Resource</code> does not have a parent document. <code>getDocumentId()</code> is
-   * typically used with <code>Resource</code> instances retrieved using a query. It enables
-   * accessing the parent document of the <code>Resource</code> even if the <code>Resource</code> is
-   * a child node of the document. If the <code>Resource</code> was not obtained through a query
-   * then <code>getId()</code> and <code>getDocumentId()</code> will return the same id.
+   * Returns the unique id for the parent document to this {@code Resource} or null if the
+   * {@code Resource} does not have a parent document. {@code getDocumentId()} is typically used
+   * with {@code Resource} instances retrieved using a query. It enables accessing the parent
+   * document of the {@code Resource} even if the {@code Resource} is a child node of the document.
+   * If the {@code Resource} was not obtained through a query then {@code getId()} and
+   * {@code getDocumentId()} will return the same id.
    *
-   * @return the id for the parent document of this <code>Resource</code> or null if there is no
-   *         parent document for this <code>Resource</code>.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @return the id for the parent document of this {@code Resource} or null if there is no parent
+   *         document for this {@code Resource}.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   String getDocumentId() throws XMLDBException;
 
   /**
-   * Returns the content of the <code>Resource</code> as a DOM Node.
+   * Returns the content of the {@code Resource} as a DOM Node.
    *
-   * @return The XML content as a DOM <code>Node</code>
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @return The XML content as a DOM {@code Node}
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   Node getContentAsDOM() throws XMLDBException;
 
   /**
-   * Sets the content of the <code>Resource</code> using a DOM Node as the source.
+   * Sets the content of the {@code Resource} using a DOM Node as the source.
    *
    * @param content The new content value
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
-   *         vendor specific errors that occur. <code>ErrorCodes.INVALID_RESOURCE</code> if the
-   *         content value provided is null. <code>ErrorCodes.WRONG_CONTENT_TYPE</code> if the
-   *         content provided in not a valid DOM <code>Node</code>.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@code ErrorCodes.INVALID_RESOURCE} if the content
+   *         value provided is null. {@code ErrorCodes.WRONG_CONTENT_TYPE} if the content provided
+   *         in not a valid DOM {@code Node}.
    */
   void setContentAsDOM(Node content) throws XMLDBException;
 
   /**
-   * Allows you to use a <code>ContentHandler</code> to parse the XML data from the database for use
-   * in an application.
+   * Allows you to use a {@code ContentHandler} to parse the XML data from the database for use in
+   * an application.
    *
-   * @param handler the SAX <code>ContentHandler</code> to use to handle the <code>Resource</code>
-   *        content.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
-   *         vendor specific errors that occur. <code>ErrorCodes.INVALID_RESOURCE</code> if the
-   *         <code>ContentHandler</code> provided is null.
+   * @param handler the SAX {@code ContentHandler} to use to handle the {@code Resource} content.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@code ErrorCodes.INVALID_RESOURCE} if the
+   *         {@code ContentHandler} provided is null.
    */
   void getContentAsSAX(ContentHandler handler) throws XMLDBException;
 
   /**
-   * Sets the content of the <code>Resource</code> using a SAX <code>ContentHandler</code>.
+   * Sets the content of the {@code Resource} using a SAX {@code ContentHandler}.
    *
-   * @return a SAX <code>ContentHandler</code> that can be used to add content into the
-   *         <code>Resource</code>.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @return a SAX {@code ContentHandler} that can be used to add content into the {@code Resource}.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   ContentHandler setContentAsSAX() throws XMLDBException;
 
   /**
-   * Sets a SAX feature that will be used when this <code>XMLResource</code> is used to produce SAX
+   * Sets a SAX feature that will be used when this {@code XMLResource} is used to produce SAX
    * events (through the getContentAsSAX() method)
    *
    * @param feature Feature name. Standard SAX feature names are documented at
@@ -131,8 +129,8 @@ public interface XMLResource extends Resource {
       throws SAXNotRecognizedException, SAXNotSupportedException;
 
   /**
-   * Returns current setting of a SAX feature that will be used when this <code>XMLResource</code>
-   * is used to produce SAX events (through the getContentAsSAX() method)
+   * Returns current setting of a SAX feature that will be used when this {@code XMLResource} is
+   * used to produce SAX events (through the getContentAsSAX() method)
    *
    * @param feature Feature name. Standard SAX feature names are documented at
    *        <a href="http://sax.sourceforge.net/">http://sax.sourceforge.net/</a>.

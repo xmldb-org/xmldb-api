@@ -47,46 +47,45 @@ import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
 
 /**
- * CollectionManagementService is a <code>Service</code> that enables the basic management of
- * collections within a database. The functionality provided is very basic because collection
- * management varies widely among databases. This service simply provides functionality for those
- * databases that are able to implement this basic functionality.
+ * CollectionManagementService is a {@code Service} that enables the basic management of collections
+ * within a database. The functionality provided is very basic because collection management varies
+ * widely among databases. This service simply provides functionality for those databases that are
+ * able to implement this basic functionality.
  */
 public interface CollectionManagementService extends Service {
 
   public static final String SERVICE_NAME = "CollectionManagementService";
 
   /**
-   * Creates a new <code>Collection</code> in the database. The default configuration of the
-   * database is determined by the implementer. The new <code>Collection</code> will be created
-   * relative to the <code>
-   * Collection</code> from which the <code>CollectionManagementService</code> was retrieved.
+   * Creates a new {@code Collection} in the database. The default configuration of the database is
+   * determined by the implementer. The new {@code Collection} will be created relative to the
+   * {@code Collection} from which the {@code CollectionManagementService} was retrieved.
    *
    * @param name The name of the collection to create.
-   * @return The created <code>Collection</code> instance.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @return The created {@code Collection} instance.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   Collection createCollection(String name) throws XMLDBException;
 
   /**
-   * Removes a named <code>Collection</code> from the system. The name for the
-   * <code>Collection</code> to remove is relative to the <code>
-   * Collection</code> from which the <code>CollectionManagementService</code> was retrieved.
+   * Removes a named {@code Collection} from the system. The name for the {@code Collection} to
+   * remove is relative to the {@code Collection} from which the {@code CollectionManagementService}
+   * was retrieved.
    *
    * @param name The name of the collection to remove.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void removeCollection(String name) throws XMLDBException;
 
   /**
    * Moves either a {@code collection} or {@code }
-   * 
+   *
    * @param collection The source collection
    * @param destination The destination collection
    * @param newName The new name of the moved collection in the destination collection
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void move(String collection, String destination, String newName) throws XMLDBException;
@@ -94,11 +93,11 @@ public interface CollectionManagementService extends Service {
   /**
    * Moves the resource specified by the {@code resourcePath} to the given {@code destinationPath}
    * and {@code newName}.
-   * 
+   *
    * @param resourcePath The source document
    * @param destinationPath The destination collection
    * @param newName The new name of the moved source in the destination collection
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void moveResource(String resourcePath, String destinationPath, String newName)
@@ -107,11 +106,11 @@ public interface CollectionManagementService extends Service {
   /**
    * Copy the resource specified by the {@code resourcePath} to the given {@code destinationPath}
    * and {@code newName}.
-   * 
+   *
    * @param resourcePath The source document
    * @param destinationPath The destination collection
    * @param newName The new name of the copied source in the destination collection
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void copyResource(String resourcePath, String destinationPath, String newName)
@@ -120,11 +119,11 @@ public interface CollectionManagementService extends Service {
   /**
    * Copy the collection specified by {@code collection} to the given {@code destination} and
    * {@code newName}.
-   * 
+   *
    * @param collection The source collection
    * @param destination The destination collection
    * @param newName The new name of the copied collection in the destination collection
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void copy(String collection, String destination, String newName) throws XMLDBException;

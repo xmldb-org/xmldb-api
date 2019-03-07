@@ -47,9 +47,9 @@ import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
 
 /**
- * XPathQueryService is a <code>Service</code> that enables the execution of XPath queries within
- * the context of a <code>Collection</code> or against a single XML <code>Resource</code> stored in
- * the <code>Collection</code>.
+ * XPathQueryService is a {@code Service} that enables the execution of XPath queries within the
+ * context of a {@code Collection} or against a single XML {@code Resource} stored in the
+ * {@code Collection}.
  */
 public interface XPathQueryService extends Service {
 
@@ -57,37 +57,36 @@ public interface XPathQueryService extends Service {
 
   /**
    * Sets a namespace mapping in the internal namespace map used to evaluate queries. If
-   * <code>prefix</code> is null or empty the default namespace is associated with the provided URI.
-   * A null or empty <code>uri</code> results in an exception being thrown.
+   * {@code prefix} is null or empty the default namespace is associated with the provided URI. A
+   * null or empty {@code uri} results in an exception being thrown.
    *
-   * @param prefix The prefix to set in the map. If <code>prefix</code> is empty or null the default
+   * @param prefix The prefix to set in the map. If {@code prefix} is empty or null the default
    *        namespace will be associated with the provided URI.
    * @param uri The URI for the namespace to be associated with prefix.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur. TODO: probably need some special error here.
    */
   void setNamespace(String prefix, String uri) throws XMLDBException;
 
   /**
-   * Returns the URI string associated with <code>prefix</code> from the internal namespace map. If
-   * <code>prefix</code> is null or empty the URI for the default namespace will be returned. If a
-   * mapping for the <code>prefix</code> can not be found null is returned.
+   * Returns the URI string associated with {@code prefix} from the internal namespace map. If
+   * {@code prefix} is null or empty the URI for the default namespace will be returned. If a
+   * mapping for the {@code prefix} can not be found null is returned.
    *
    * @param prefix The prefix to retrieve from the namespace map.
-   * @return The URI associated with <code>prefix</code>
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @return The URI associated with {@code prefix}
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   String getNamespace(String prefix) throws XMLDBException;
 
   /**
-   * Removes the namespace mapping associated with <code>prefix</code> from the internal namespace
-   * map. If <code>prefix</code> is null or empty the mapping for the default namespace will be
-   * removed.
+   * Removes the namespace mapping associated with {@code prefix} from the internal namespace map.
+   * If {@code prefix} is null or empty the mapping for the default namespace will be removed.
    *
-   * @param prefix The prefix to remove from the namespace map. If <code>prefix</code> is null or
-   *        empty the mapping for the default namespace will be removed.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @param prefix The prefix to remove from the namespace map. If {@code prefix} is null or empty
+   *        the mapping for the default namespace will be removed.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void removeNamespace(String prefix) throws XMLDBException;
@@ -95,34 +94,34 @@ public interface XPathQueryService extends Service {
   /**
    * Removes all namespace mappings stored in the internal namespace map.
    *
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void clearNamespaces() throws XMLDBException;
 
   /**
-   * Run an XPath query against the <code>Collection</code>. The XPath will be applied to all XML
-   * resources stored in the <code>Collection</code>. The result is a <code>ResourceSet</code>
-   * containing the results of the query. Any namespaces used in the <code>query</code> string will
-   * be evaluated using the mappings setup using <code>setNamespace</code>.
+   * Run an XPath query against the {@code Collection}. The XPath will be applied to all XML
+   * resources stored in the {@code Collection}. The result is a {@code ResourceSet} containing the
+   * results of the query. Any namespaces used in the {@code query} string will be evaluated using
+   * the mappings setup using {@code setNamespace}.
    *
    * @param query The XPath query string to use.
-   * @return A <code>ResourceSet</code> containing the results of the query.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @return A {@code ResourceSet} containing the results of the query.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   ResourceSet query(String query) throws XMLDBException;
 
   /**
-   * Run an XPath query against an XML resource stored in the <code>Collection</code> associated
-   * with this service. The result is a <code>ResourceSet</code> containing the results of the
-   * query. Any namespaces used in the <code>query</code> string will be evaluated using the
-   * mappings setup using <code>setNamespace</code>.
+   * Run an XPath query against an XML resource stored in the {@code Collection} associated with
+   * this service. The result is a {@code ResourceSet} containing the results of the query. Any
+   * namespaces used in the {@code query} string will be evaluated using the mappings setup using
+   * {@code setNamespace}.
    *
    * @param query The XPath query string to use.
    * @param id The id of the document to run the query against.
-   * @return A <code>ResourceSet</code> containing the results of the query.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @return A {@code ResourceSet} containing the results of the query.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   ResourceSet queryResource(String id, String query) throws XMLDBException;

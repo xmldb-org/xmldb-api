@@ -53,10 +53,10 @@ public interface XQueryService extends Service {
 
   /**
    * Sets a namespace mapping in the internal namespace map used to evaluate queries. If
-   * <code>prefix</code> is null or empty the default namespace is associated with the provided URI.
-   * A null or empty <code>uri</code> results in an exception being thrown.
+   * {@code prefix} is null or empty the default namespace is associated with the provided URI. A
+   * null or empty {@code uri} results in an exception being thrown.
    *
-   * @param prefix The prefix to set in the map. If <code>prefix</code> is empty or null the default
+   * @param prefix The prefix to set in the map. If {@code prefix} is empty or null the default
    *        namespace will be associated with the provided URI.
    * @param uri The URI for the namespace to be associated with prefix.
    * @throws XMLDBException if an error occurs whilst setting the namespace.
@@ -64,55 +64,54 @@ public interface XQueryService extends Service {
   void setNamespace(String prefix, String uri) throws XMLDBException;
 
   /**
-   * Returns the URI string associated with <code>prefix</code> from the internal namespace map. If
-   * <code>prefix</code> is null or empty the URI for the default namespace will be returned. If a
-   * mapping for the <code>prefix</code> can not be found null is returned.
+   * Returns the URI string associated with {@code prefix} from the internal namespace map. If
+   * {@code prefix} is null or empty the URI for the default namespace will be returned. If a
+   * mapping for the {@code prefix} can not be found null is returned.
    *
    * @param prefix The prefix to retrieve from the namespace map.
-   * @return The URI associated with <code>prefix</code>
+   * @return The URI associated with {@code prefix}
    * @throws org.xmldb.api.base.XMLDBException with expected error codes.
-   *         <code>ErrorCodes.VENDOR_ERROR</code> for any vendor specific errors that occur.
+   *         {@code ErrorCodes.VENDOR_ERROR} for any vendor specific errors that occur.
    * @throws XMLDBException if an error occurs whilst getting the namespace.
    */
   String getNamespace(String prefix) throws XMLDBException;
 
   /**
-   * Removes the namespace mapping associated with <code>prefix</code> from the internal namespace
-   * map. If <code>prefix</code> is null or empty the mapping for the default namespace will be
-   * removed.
+   * Removes the namespace mapping associated with {@code prefix} from the internal namespace map.
+   * If {@code prefix} is null or empty the mapping for the default namespace will be removed.
    *
-   * @param prefix The prefix to remove from the namespace map. If <code>prefix</code> is null or
-   *        empty the mapping for the default namespace will be removed.
+   * @param prefix The prefix to remove from the namespace map. If {@code prefix} is null or empty
+   *        the mapping for the default namespace will be removed.
    * @throws org.xmldb.api.base.XMLDBException with expected error codes.
-   *         <code>ErrorCodes.VENDOR_ERROR</code> for any vendor specific errors that occur.
+   *         {@code ErrorCodes.VENDOR_ERROR} for any vendor specific errors that occur.
    */
   void removeNamespace(String prefix) throws XMLDBException;
 
   /**
    * Clears all namespace mappings defined.
-   * 
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   *
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void clearNamespaces() throws XMLDBException;
 
   /**
    * Executes the given query and returns the result as a resource set.
-   * 
+   *
    * @param query The query to be executed
    * @return The query result
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   ResourceSet query(String query) throws XMLDBException;
 
   /**
    * Executes the given query and returns the result as a resource set.
-   * 
+   *
    * @param id The id of a resource
    * @param query The query to be executed
    * @return The query result
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   ResourceSet queryResource(String id, String query) throws XMLDBException;
@@ -141,11 +140,11 @@ public interface XQueryService extends Service {
 
   /**
    * Declare a global, external XQuery variable and assign a value to it. The variable has the same
-   * status as a variable declare through the <code>declare variable</code> statement in the XQuery
+   * status as a variable declare through the {@code declare variable} statement in the XQuery
    * prolog.
    *
-   * The variable can be referenced inside the XQuery expression as <code>$variable</code>. For
-   * example, if you declare a variable with
+   * The variable can be referenced inside the XQuery expression as {@code $variable}. For example,
+   * if you declare a variable with
    *
    * <pre>
    * declareVariable("name", "HAMLET");
@@ -161,7 +160,7 @@ public interface XQueryService extends Service {
    * @param qname a valid QName by which the variable is identified. Any prefix should have been
    *        mapped to a namespace, using {@link #setNamespace(String, String)}. For example, if a
    *        variable is called <b>x:name</b>, a prefix/namespace mapping should have been defined
-   *        for prefix <code>x</code> before calling this method.
+   *        for prefix {@code x} before calling this method.
    * @param initialValue the initial value, which is assigned to the variable
    * @throws XMLDBException if an error occurs whilst declaring the variable.
    */
@@ -178,7 +177,7 @@ public interface XQueryService extends Service {
 
   /**
    * Sets the new module load path.
-   * 
+   *
    * @param path The module load path to be set.
    */
   void setModuleLoadPath(String path);

@@ -43,8 +43,8 @@
 package org.xmldb.api.base;
 
 /**
- * ErrorCodes defines XML:DB error codes that can be used to set the <code>errorCodes</code>
- * attribute of an <code>XMLDBException</code>
+ * ErrorCodes defines XML:DB error codes that can be used to set the {@code errorCodes} attribute of
+ * an {@code XMLDBException}
  */
 public class ErrorCodes {
   /**
@@ -63,14 +63,14 @@ public class ErrorCodes {
   public static final int NOT_IMPLEMENTED = 2;
 
   /**
-   * Set if the content of a <code>Resource</code> is set to a content type different then that for
-   * which the <code>Resource</code> was intended to support.
+   * Set if the content of a {@code Resource} is set to a content type different then that for which
+   * the {@code Resource} was intended to support.
    */
   public static final int WRONG_CONTENT_TYPE = 3;
 
   /**
-   * Set if access to the requested <code>Collection</code> can not be granted due to the lack of
-   * proper credentials.
+   * Set if access to the requested {@code Collection} can not be granted due to the lack of proper
+   * credentials.
    */
   public static final int PERMISSION_DENIED = 4;
 
@@ -80,12 +80,12 @@ public class ErrorCodes {
   public static final int INVALID_URI = 5;
 
   /**
-   * Set if the requested <code>Service</code> could not be located.
+   * Set if the requested {@code Service} could not be located.
    */
   public static final int NO_SUCH_SERVICE = 100;
 
   /**
-   * Set if the requested <code>Collection</code> could not be located.
+   * Set if the requested {@code Collection} could not be located.
    */
   public static final int NO_SUCH_COLLECTION = 200;
 
@@ -95,18 +95,17 @@ public class ErrorCodes {
   public static final int INVALID_COLLECTION = 201;
 
   /**
-   * Set when an operation is invoked against a <code>Collection</code> instance that has been
-   * closed.
+   * Set when an operation is invoked against a {@code Collection} instance that has been closed.
    */
   public static final int COLLECTION_CLOSED = 202;
 
   /**
-   * Set if the requested <code>Resource</code> could not be located.
+   * Set if the requested {@code Resource} could not be located.
    */
   public static final int NO_SUCH_RESOURCE = 300;
 
   /**
-   * Set if the <code>Resource</code> provided to an operation is invalid.
+   * Set if the {@code Resource} provided to an operation is invalid.
    */
   public static final int INVALID_RESOURCE = 301;
 
@@ -116,17 +115,17 @@ public class ErrorCodes {
   public static final int UNKNOWN_RESOURCE_TYPE = 302;
 
   /**
-   * Set if a <code>Database</code> instance can not be located for the provided URI.
+   * Set if a {@code Database} instance can not be located for the provided URI.
    */
   public static final int NO_SUCH_DATABASE = 400;
 
   /**
-   * Set if the <code>Database</code> instance being registered is invalid.
+   * Set if the {@code Database} instance being registered is invalid.
    */
   public static final int INVALID_DATABASE = 401;
 
   /**
-   * Set if the <code>Database</code> instance name being registered is already registered.
+   * Set if the {@code Database} instance name being registered is already registered.
    */
   public static final int INSTANCE_NAME_ALREADY_REGISTERED = 402;
 }

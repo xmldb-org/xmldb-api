@@ -54,11 +54,11 @@ import org.xmldb.api.base.ErrorCodes;
 import org.xmldb.api.base.XMLDBException;
 
 /**
- * <code>DatabaseManager</code> is the entry point for the API and enables you to get the initial
- * <code>Collection</code> references necessary to do anything useful with the API.
- * <code>DatabaseManager</code> is intended to be provided as a concrete implementation in a
- * particular programming language. Individual language mappings should define the exact syntax and
- * semantics of its use.
+ * {@code DatabaseManager} is the entry point for the API and enables you to get the initial
+ * {@code Collection} references necessary to do anything useful with the API.
+ * {@code DatabaseManager} is intended to be provided as a concrete implementation in a particular
+ * programming language. Individual language mappings should define the exact syntax and semantics
+ * of its use.
  */
 public class DatabaseManager {
   protected static final String URI_PREFIX = "xmldb:";
@@ -71,12 +71,12 @@ public class DatabaseManager {
       Boolean.getBoolean("org.xmldb.api.strictRegistrationBehavior");
 
   /**
-   * Returns a list of all available <code>Database</code> implementations that have been registered
-   * with this <code>DatabaseManager</code>.
+   * Returns a list of all available {@code Database} implementations that have been registered with
+   * this {@code DatabaseManager}.
    *
-   * @return An array of <code>Database</code> instances. One for each <code>Database</code>
-   *         registered with the <code>DatabaseManager</code>. If no <code>Database</code> instances
-   *         exist then an empty array is returned.
+   * @return An array of {@code Database} instances. One for each {@code Database} registered with
+   *         the {@code DatabaseManager}. If no {@code Database} instances exist then an empty array
+   *         is returned.
    */
   public static Database[] getDatabases() {
     // try optimistic read first
@@ -98,13 +98,12 @@ public class DatabaseManager {
   }
 
   /**
-   * Registers a new <code>Database</code> implementation with the <code>DatabaseManager</code>.
+   * Registers a new {@code Database} implementation with the {@code DatabaseManager}.
    *
    * @param database The database instance to register.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
-   *         vendor specific errors that occur. <code>ErrorCodes.INVALID_DATABASE</code> if the
-   *         provided <code>Database
-   *  </code> instance is invalid.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@code ErrorCodes.INVALID_DATABASE} if the provided
+   *         {@code Database} instance is invalid.
    */
   public static void registerDatabase(final Database database) throws XMLDBException {
     final String[] databaseNames = database.getNames();
@@ -134,11 +133,11 @@ public class DatabaseManager {
   }
 
   /**
-   * Deregisters a <code>Database</code> implementation from the <code>DatabaseManager</code>. Once
-   * a <code>Database</code> has been deregistered it can no longer be used to handle requests.
+   * Deregisters a {@code Database} implementation from the {@code DatabaseManager}. Once a
+   * {@code Database} has been deregistered it can no longer be used to handle requests.
    *
-   * @param database The <code>Database</code> instance to deregister.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @param database The {@code Database} instance to deregister.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   public static void deregisterDatabase(final Database database) throws XMLDBException {
@@ -155,50 +154,49 @@ public class DatabaseManager {
   }
 
   /**
-   * Retrieves a <code>Collection</code> instance from the database for the given URI. The format of
-   * the majority of the URI is database implementation specific however the uri must begin with
+   * Retrieves a {@code Collection} instance from the database for the given URI. The format of the
+   * majority of the URI is database implementation specific however the uri must begin with
    * characters xmldb: and be followed by the name of the database instance as returned by
-   * <code>Database.getName()</code> and a colon character. An example would be for the database
-   * named "vendordb" the URI handed to getCollection would look something like the following.
-   * <code>xmldb:vendordb://host:port/path/to/collection</code>. The xmldb: prefix will be removed
-   * from the URI prior to handing the URI to the <code>Database</code> instance for handling.
+   * {@code Database.getName()} and a colon character. An example would be for the database named
+   * "vendordb" the URI handed to getCollection would look something like the following.
+   * {@code xmldb:vendordb://host:port/path/to/collection}. The xmldb: prefix will be removed from
+   * the URI prior to handing the URI to the {@code Database} instance for handling.
    *
    * This method is called when no authentication is necessary for the database.
    *
    * @param uri The database specific URI to use to locate the collection.
-   * @return A <code>Collection</code> instance for the requested collection or null if the
-   *         collection could not be found.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
-   *         vendor specific errors that occur. <code>ErrroCodes.INVALID_URI</code> If the URI is
-   *         not in a valid format. <code>ErrroCodes.NO_SUCH_DATABASE</code> If a
-   *         <code>Database</code> instance could not be found to handle the provided URI.
+   * @return A {@code Collection} instance for the requested collection or null if the collection
+   *         could not be found.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@code ErrroCodes.INVALID_URI} If the URI is not in
+   *         a valid format. {@code ErrroCodes.NO_SUCH_DATABASE} If a {@code Database} instance
+   *         could not be found to handle the provided URI.
    */
   public static Collection getCollection(final String uri) throws XMLDBException {
     return getCollection(uri, null, null);
   }
 
   /**
-   * Retrieves a <code>Collection</code> instance from the database for the given URI. The format of
-   * the majority of the URI is database implementation specific however the uri must begin with
+   * Retrieves a {@code Collection} instance from the database for the given URI. The format of the
+   * majority of the URI is database implementation specific however the uri must begin with
    * characters xmldb: and be followed by the name of the database instance as returned by
-   * <code>Database.getName()</code> and a colon character. An example would be for the database
-   * named "vendordb" the URI handed to getCollection would look something like the following.
-   * <code>xmldb:vendordb://host:port/path/to/collection</code>. The xmldb: prefix will be removed
-   * from the URI prior to handing the URI to the <code>Database</code> instance for handling.
+   * {@code Database.getName()} and a colon character. An example would be for the database named
+   * "vendordb" the URI handed to getCollection would look something like the following.
+   * {@code xmldb:vendordb://host:port/path/to/collection}. The xmldb: prefix will be removed from
+   * the URI prior to handing the URI to the {@code Database} instance for handling.
    *
    * @param uri The database specific URI to use to locate the collection.
    * @param username The username to use for authentication to the database or null if the database
    *        does not support authentication.
    * @param password The password to use for authentication to the database or null if the database
    *        does not support authentication.
-   * @return A <code>Collection</code> instance for the requested collection or null if the
-   *         collection could not be found.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
-   *         vendor specific errors that occur. <code>ErrroCodes.INVALID_URI</code> If the URI is
-   *         not in a valid format. <code>ErrroCodes.NO_SUCH_DATABASE</code> If a
-   *         <code>Database</code> instance could not be found to handle the provided URI.
-   *         <code>ErrroCodes.PERMISSION_DENIED</code> If the <code>username</code> and
-   *         <code>password</code> were not accepted by the database.
+   * @return A {@code Collection} instance for the requested collection or null if the collection
+   *         could not be found.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@code ErrroCodes.INVALID_URI} If the URI is not in
+   *         a valid format. {@code ErrroCodes.NO_SUCH_DATABASE} If a {@code Database} instance
+   *         could not be found to handle the provided URI. {@code ErrroCodes.PERMISSION_DENIED} If
+   *         the {@code username} and {@code password} were not accepted by the database.
    */
   public static Collection getCollection(final String uri, final String username,
       final String password) throws XMLDBException {
@@ -212,10 +210,10 @@ public class DatabaseManager {
    *
    * @param uri The database specific URI to use to locate the collection.
    * @return The XML:DB Core Level conformance for the uri.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
-   *         vendor specific errors that occur. <code>ErrroCodes.INVALID_URI</code> If the URI is
-   *         not in a valid format. <code>ErrroCodes.NO_SUCH_DATABASE</code> If a
-   *         <code>Database</code> instance could not be found to handle the provided URI.
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@code ErrroCodes.INVALID_URI} If the URI is not in
+   *         a valid format. {@code ErrroCodes.NO_SUCH_DATABASE} If a {@code Database} instance
+   *         could not be found to handle the provided URI.
    */
   public static String getConformanceLevel(final String uri) throws XMLDBException {
     final Database database = getDatabase(uri);
@@ -223,7 +221,7 @@ public class DatabaseManager {
   }
 
   /**
-   * Retrieves a property that has been set for the <code>DatabaseManager</code>.
+   * Retrieves a property that has been set for the {@code DatabaseManager}.
    *
    * @param name The property name
    * @return The property value
@@ -233,7 +231,7 @@ public class DatabaseManager {
   }
 
   /**
-   * Sets a property for the <code>DatabaseManager</code>.
+   * Sets a property for the {@code DatabaseManager}.
    *
    * @param name The property name
    * @param value The value to set.
@@ -243,10 +241,10 @@ public class DatabaseManager {
   }
 
   /**
-   * Retrieves the registered <code>Database</code> instance associated with the provided URI.
+   * Retrieves the registered {@code Database} instance associated with the provided URI.
    *
    * @param uri The uri containing the database reference.
-   * @return the requested <code>Database</code> instance.
+   * @return the requested {@code Database} instance.
    * @throws XMLDBException if an error occurs whilst getting the database
    */
   protected static Database getDatabase(final String uri) throws XMLDBException {

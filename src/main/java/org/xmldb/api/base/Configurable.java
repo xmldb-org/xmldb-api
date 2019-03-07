@@ -48,21 +48,21 @@ package org.xmldb.api.base;
 public interface Configurable {
 
   /**
-   * Returns the value of the property identified by <code>name</code>.
+   * Returns the value of the property identified by {@code name}.
    *
    * @param name the name of the property to retrieve.
    * @return the property value or null if no property exists.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   String getProperty(String name) throws XMLDBException;
 
   /**
-   * Sets the property <code>name</code> to have the value provided in <code>value</code>.
+   * Sets the property {@code name} to have the value provided in {@code value}.
    *
    * @param name the name of the property to set.
    * @param value the value to set for the property.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void setProperty(String name, String value) throws XMLDBException;

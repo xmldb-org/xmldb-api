@@ -71,7 +71,7 @@ public interface DatabaseInstanceService extends Service {
    * This operation is asynchronous and the delay is scheduled with the database scheduler.
    *
    * @param delay the delay in milliseconds to wait before shutdown
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void shutdown(long delay) throws XMLDBException;
@@ -79,7 +79,7 @@ public interface DatabaseInstanceService extends Service {
   /**
    * Returns {@code true} if the database instance is running local, i.e. in the same thread as this
    * service.
-   * 
+   *
    * @return {@code true} on a local instance, {@code false} otherwise
    */
   boolean isLocalInstance();

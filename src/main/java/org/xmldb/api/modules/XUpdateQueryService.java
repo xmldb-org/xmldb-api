@@ -46,9 +46,8 @@ import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
 
 /**
- * XUpdateQueryService is a <code>Service</code> that enables the execution of XUpdate queries
- * within the context of a <code>Collection</code> or against a single document stored in a
- * collection.
+ * XUpdateQueryService is a {@code Service} that enables the execution of XUpdate queries within the
+ * context of a {@code Collection} or against a single document stored in a collection.
  */
 public interface XUpdateQueryService extends Service {
 
@@ -60,7 +59,7 @@ public interface XUpdateQueryService extends Service {
    *
    * @param commands The XUpdate commands to use.
    * @return the number of modified nodes.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   long update(String commands) throws XMLDBException;
@@ -72,7 +71,7 @@ public interface XUpdateQueryService extends Service {
    * @param id the id of the resource to update
    * @param commands The XUpdate commands to use.
    * @return the number of modified nodes.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   long updateResource(String id, String commands) throws XMLDBException;

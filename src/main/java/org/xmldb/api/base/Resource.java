@@ -43,28 +43,27 @@
 package org.xmldb.api.base;
 
 /**
- * <code>Resource</code> is a container for data stored within the database. Raw resources are not
+ * {@code Resource} is a container for data stored within the database. Raw resources are not
  * particulary useful. It is necessary to have a resource implementation that provides handling for
  * a specific content type before anything useful can be done.
  */
 public interface Resource {
   /**
-   * Returns the <code>Collection</code> instance that this resource is associated with. All
-   * resources must exist within the context of a <code>collection</code>.
+   * Returns the {@code Collection} instance that this resource is associated with. All resources
+   * must exist within the context of a {@code collection}.
    *
    * @return the collection associated with the resource.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   Collection getParentCollection() throws XMLDBException;
 
   /**
-   * Returns the unique id for this <code>Resource</code> or null if the <code>Resource</code> is
-   * anonymous. The <code>Resource</code> will be anonymous if it is obtained as the result of a
-   * query.
+   * Returns the unique id for this {@code Resource} or null if the {@code Resource} is anonymous.
+   * The {@code Resource} will be anonymous if it is obtained as the result of a query.
    *
    * @return the id for the Resource or null if no id exists.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   String getId() throws XMLDBException;
@@ -74,9 +73,9 @@ public interface Resource {
    *
    * XML:DB defined resource types are: XMLResource - all XML data stored in the database
    * BinaryResource - Binary blob data stored in the database
-   * 
+   *
    * @return the resource type for the Resource.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   String getResourceType() throws XMLDBException;
@@ -86,7 +85,7 @@ public interface Resource {
    * resource is being used.
    *
    * @return the content of the resource.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   Object getContent() throws XMLDBException;
@@ -96,7 +95,7 @@ public interface Resource {
    * resource being used.
    *
    * @param value the content value to set for the resource.
-   * @throws XMLDBException with expected error codes. <code>ErrorCodes.VENDOR_ERROR</code> for any
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   void setContent(Object value) throws XMLDBException;

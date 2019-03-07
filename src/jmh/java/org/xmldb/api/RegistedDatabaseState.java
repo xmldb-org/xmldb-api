@@ -7,13 +7,13 @@ import org.openjdk.jmh.annotations.State;
 import org.xmldb.api.base.XMLDBException;
 
 @State(Scope.Benchmark)
-public class RegistedDatabaseState extends DatabaseState{
-    TestCollection collection;
+public class RegistedDatabaseState extends DatabaseState {
+  TestCollection collection;
 
-    @Override
-    @Setup(Level.Trial)
-    public void up() throws XMLDBException {
-        super.up();
-        collection = database.addCollection("testdatabase:testcollection");
-    }
+  @Override
+  @Setup(Level.Trial)
+  public void up() throws XMLDBException {
+    super.up();
+    collection = database.addCollection("testdatabase:testcollection");
+  }
 }

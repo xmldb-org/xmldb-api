@@ -48,8 +48,8 @@ import org.xmldb.api.base.Resource;
  * Resource for encapsulation of binary data that is stored in the data base. Support for
  * BinaryResources is optional.
  *
- * The standard <code>getContent</code> method returns a <code>byte[]
- * </code> and the standard setContent expects an <code>byte[]</code>.
+ * The standard {@code getContent} method returns a {@code byte[]} and the standard setContent
+ * expects an {@code byte[]}.
  */
 public interface BinaryResource extends Resource {
   public static final String RESOURCE_TYPE = "BinaryResource";
