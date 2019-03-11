@@ -59,7 +59,7 @@ public interface Collection extends Configurable, AutoCloseable {
    * Returns the name associated with the Collection instance.
    *
    * @return the name of the object.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   String getName() throws XMLDBException;
@@ -69,31 +69,45 @@ public interface Collection extends Configurable, AutoCloseable {
    * is returned.
    *
    * @return An array of registered {@code Service} implementations.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.COLLECTION_CLOSED} if the
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
   Service[] getServices() throws XMLDBException;
 
   /**
    * Returns a {@code Service} instance for the requested service name and version. If no
-   * {@code Service} exists for those parameters a null value is returned.
+   * {@code Service} exists for those parameters a {@code null} value is returned.
    *
-   * @param name Description of Parameter
+   * @param serivceName Description of Parameter
    * @param version Description of Parameter
-   * @return the Service instance or null if no Service could be found.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.COLLECTION_CLOSED} if the
+   * @return the Service instance or {@code null} if no Service could be found.
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
-  Service getService(String name, String version) throws XMLDBException;
+  Service getService(String serivceName, String version) throws XMLDBException;
 
   /**
-   * Returns the parent collection for this collection or null if no parent collection exists.
+   * Returns a {@code Service} instance for the requested {@code serviceType}. If no {@code Service}
+   * exists a {@link XMLDBException} with {@link ErrorCodes#NO_SUCH_SERVICE} is thrown.
+   * 
+   * @param serviceType the type of service to return
+   * @return a instance of the given service type
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#NO_SUCH_SERVICE} if the
+   *         service does not exist, {@link ErrorCodes#VENDOR_ERROR} for any vendor specific errors
+   *         that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the {@code close} method has been
+   *         called on the {@code Collection}
+   */
+  <S extends Service> S getService(Class<S> serviceType) throws XMLDBException;
+
+  /**
+   * Returns the parent collection for this collection or {@code null} if no parent collection
+   * exists.
    *
    * @return the parent {@code Collection} instance.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.COLLECTION_CLOSED} if the
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
   Collection getParentCollection() throws XMLDBException;
@@ -103,8 +117,8 @@ public interface Collection extends Configurable, AutoCloseable {
    * collections exist.
    *
    * @return the number of child collections.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.COLLECTION_CLOSED} if the
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
   int getChildCollectionCount() throws XMLDBException;
@@ -114,8 +128,8 @@ public interface Collection extends Configurable, AutoCloseable {
    * no child collections exist an empty list is returned.
    *
    * @return an array containing collection names for all child collections.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.COLLECTION_CLOSED} if the
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
   String[] listChildCollections() throws XMLDBException;
@@ -123,21 +137,21 @@ public interface Collection extends Configurable, AutoCloseable {
   /**
    * Returns a {@code Collection} instance for the requested child collection if it exists.
    *
-   * @param name the name of the child collection to retrieve.
-   * @return the requested child collection or null if it couldn't be found.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.COLLECTION_CLOSED} if the
+   * @param collectionName the name of the child collection to retrieve.
+   * @return the requested child collection or {@code null} if it couldn't be found.
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
-  Collection getChildCollection(String name) throws XMLDBException;
+  Collection getChildCollection(String collectionName) throws XMLDBException;
 
   /**
    * Returns the number of resources currently stored in this collection or 0 if the collection is
    * empty.
    *
    * @return the number of resource in the collection.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.COLLECTION_CLOSED} if the
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
   int getResourceCount() throws XMLDBException;
@@ -146,8 +160,8 @@ public interface Collection extends Configurable, AutoCloseable {
    * Returns a list of the ids for all resources stored in the collection.
    *
    * @return a string array containing the names for all {@code Resource}s in the collection.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.COLLECTION_CLOSED} if the
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
   String[] listResources() throws XMLDBException;
@@ -156,17 +170,17 @@ public interface Collection extends Configurable, AutoCloseable {
    * Creates a new empty {@code Resource} with the provided id. The type of {@code Resource}
    * returned is determined by the {@code type} parameter. The XML:DB API currently defines
    * "XMLResource" and "BinaryResource" as valid resource types. The {@code id} provided must be
-   * unique within the scope of the collection. If {@code id} is null or its value is empty then an
-   * id is generated by calling {@code createId()}. The {@code Resource} created is not stored to
-   * the database until {@code storeResource()} is called.
+   * unique within the scope of the collection. If {@code id} is {@code null} or its value is empty
+   * then an id is generated by calling {@code createId()}. The {@code Resource} created is not
+   * stored to the database until {@code storeResource()} is called.
    *
    * @param id the unique id to associate with the created {@code Resource}.
    * @param type the {@code Resource} type to create.
    * @return an empty {@code Resource} instance.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.UNKNOWN_RESOURCE_TYPE} if the
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#UNKNOWN_RESOURCE_TYPE} if the
    *         {@code type} parameter is not a known {@code Resource} type.
-   *         {@code ErrorCodes.COLLECTION_CLOSED} if the {@code close} method has been called on the
+   *         {@link ErrorCodes#COLLECTION_CLOSED} if the {@code close} method has been called on the
    *         {@code Collection}
    */
   Resource createResource(String id, String type) throws XMLDBException;
@@ -175,11 +189,11 @@ public interface Collection extends Configurable, AutoCloseable {
    * Removes the {@code Resource} from the database.
    *
    * @param res the resource to remove.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.INVALID_RESOURCE} if the
-   *         {@code Resource} is not valid. {@code ErrorCodes.NO_SUCH_RESOURCE} if the
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#INVALID_RESOURCE} if the
+   *         {@code Resource} is not valid. {@link ErrorCodes#NO_SUCH_RESOURCE} if the
    *         {@code Resource} is not known to this {@code Collection}.
-   *         {@code ErrorCodes.COLLECTION_CLOSED} if the {@code close} method has been called on the
+   *         {@link ErrorCodes#COLLECTION_CLOSED} if the {@code close} method has been called on the
    *         {@code Collection}
    */
   void removeResource(Resource res) throws XMLDBException;
@@ -189,21 +203,21 @@ public interface Collection extends Configurable, AutoCloseable {
    * be created. If it does already exist it will be updated.
    *
    * @param res the resource to store in the database.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.INVALID_RESOURCE} if the
-   *         {@code Resource} is not valid. {@code ErrorCodes.COLLECTION_CLOSED} if the
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#INVALID_RESOURCE} if the
+   *         {@code Resource} is not valid. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
   void storeResource(Resource res) throws XMLDBException;
 
   /**
    * Retrieves a {@code Resource} from the database. If the {@code Resource} could not be located a
-   * null value will be returned.
+   * {@code null} value will be returned.
    *
    * @param id the unique id for the requested resource.
    * @return The retrieved {@code Resource} instance.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.COLLECTION_CLOSED} if the
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
   Resource getResource(String id) throws XMLDBException;
@@ -212,8 +226,8 @@ public interface Collection extends Configurable, AutoCloseable {
    * Creates a new unique ID within the context of the {@code Collection}
    *
    * @return the created id as a string.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.COLLECTION_CLOSED} if the
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
   String createId() throws XMLDBException;
@@ -224,7 +238,7 @@ public interface Collection extends Configurable, AutoCloseable {
    * use {@code Collection} instances that have been closed.
    *
    * @return true if the {@code Collection} is open, false otherwise.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   boolean isOpen() throws XMLDBException;
@@ -234,7 +248,7 @@ public interface Collection extends Configurable, AutoCloseable {
    * be called when use of a {@code Collection} is complete. It is not safe to use a
    * {@code Collection} after the {@code close} method has been called.
    *
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   @Override
@@ -245,7 +259,7 @@ public interface Collection extends Configurable, AutoCloseable {
    * Returns the time of creation of the collection.
    *
    * @return the creation date of the current collection
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   Date getCreationTime() throws XMLDBException;

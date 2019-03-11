@@ -42,12 +42,15 @@
 
 package org.xmldb.api.base;
 
+import java.io.OutputStream;
+import java.util.Date;
+
 /**
  * {@code Resource} is a container for data stored within the database. Raw resources are not
  * particulary useful. It is necessary to have a resource implementation that provides handling for
  * a specific content type before anything useful can be done.
  */
-public interface Resource {
+public interface Resource extends AutoCloseable {
   /**
    * Returns the {@code Collection} instance that this resource is associated with. All resources
    * must exist within the context of a {@code collection}.
@@ -91,6 +94,16 @@ public interface Resource {
   Object getContent() throws XMLDBException;
 
   /**
+   * Retrieves the content from the resource. The type of the content varies depending what type of
+   * resource is being used.
+   *
+   * @param stream the output stream to write the resource content to
+   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   *         vendor specific errors that occur.
+   */
+  void getContentAsStream(OutputStream stream) throws XMLDBException;
+
+  /**
    * Sets the content for this resource. The type of content that can be set depends on the type of
    * resource being used.
    *
@@ -99,5 +112,41 @@ public interface Resource {
    *         vendor specific errors that occur.
    */
   void setContent(Object value) throws XMLDBException;
+
+  /**
+   * Returns whenever the current resource has been closed or not.
+   * 
+   * @return {@code true} when the resource has been closed, {@code false} otherwise.
+   */
+  boolean isClosed();
+
+  /**
+   * Releases all resources consumed by the {@code Resource}. The {@code close} method must always
+   * be called when use of a {@code Resource} is complete. It is not safe to use a {@code Resource}
+   * after the {@code close} method has been called.
+   *
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur.
+   */
+  @Override
+  void close() throws XMLDBException;
+
+  /**
+   * Returns the time of creation of the resource.
+   *
+   * @return the creation date of the current resource
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur.
+   */
+  Date getCreationTime() throws XMLDBException;
+
+  /**
+   * Returns the time of last modification of the resource.
+   *
+   * @return the last modification date of the current resource
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur.
+   */
+  Date getLastModificationTime() throws XMLDBException;
 }
 

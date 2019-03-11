@@ -74,7 +74,12 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public Service getService(String name, String version) throws XMLDBException {
+  public Service getService(String serivceName, String version) throws XMLDBException {
+    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
+  }
+
+  @Override
+  public <S extends Service> S getService(Class<S> serviceType) throws XMLDBException {
     throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
   }
 
@@ -94,7 +99,7 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public Collection getChildCollection(String name) throws XMLDBException {
+  public Collection getChildCollection(String collectionName) throws XMLDBException {
     return null;
   }
 
