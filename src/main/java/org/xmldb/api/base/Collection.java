@@ -92,6 +92,7 @@ public interface Collection extends Configurable, AutoCloseable {
    * Returns a {@code Service} instance for the requested {@code serviceType}. If no {@code Service}
    * exists a {@link XMLDBException} with {@link ErrorCodes#NO_SUCH_SERVICE} is thrown.
    * 
+   * @param <S> the type of service
    * @param serviceType the type of service to return
    * @return a instance of the given service type
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#NO_SUCH_SERVICE} if the
