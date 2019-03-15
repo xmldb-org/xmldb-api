@@ -61,6 +61,11 @@ public class ConfigurableImpl implements Configurable {
   }
 
   @Override
+  public String getProperty(String name, String defaultValue) throws XMLDBException {
+    return properties.getOrDefault(name, defaultValue);
+  }
+
+  @Override
   public final void setProperty(String name, String value) throws XMLDBException {
     properties.put(name, value);
   }
