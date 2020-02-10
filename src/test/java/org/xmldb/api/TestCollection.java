@@ -44,11 +44,7 @@ package org.xmldb.api;
 
 import java.util.Date;
 
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.ErrorCodes;
-import org.xmldb.api.base.Resource;
-import org.xmldb.api.base.Service;
-import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.base.*;
 
 public class TestCollection extends ConfigurableImpl implements Collection {
   private static final String[] EMPTY = new String[0];
@@ -119,6 +115,11 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
+  public <R extends Resource> R createResource(String id, Class<R> type) throws XMLDBException {
+    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
+  }
+
+  @Override
   public void removeResource(Resource res) throws XMLDBException {
     throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
   }
@@ -135,6 +136,11 @@ public class TestCollection extends ConfigurableImpl implements Collection {
 
   @Override
   public String createId() throws XMLDBException {
+    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
+  }
+
+  @Override
+  public Identifier createIdentifier() throws XMLDBException {
     throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
   }
 
