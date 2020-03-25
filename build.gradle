@@ -1,7 +1,7 @@
 import java.text.SimpleDateFormat
 
 plugins {
-    id 'java'
+    id 'java-library'
     id 'signing'
     id 'jacoco'
     id 'maven-publish'
@@ -25,16 +25,16 @@ repositories {
 }
 
 dependencies {
-    testCompile 'org.hamcrest:hamcrest:2.2'
-    testCompile 'org.junit.jupiter:junit-jupiter-api:5.6.1'
-    testCompile 'org.junit.jupiter:junit-jupiter-params:5.6.1'
-    testCompile 'org.mockito:mockito-core:3.3.3'
-    testCompile 'org.mockito:mockito-junit-jupiter:3.3.3'
-    testCompile 'org.openjdk.jmh:jmh-core:1.23'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.6.1'
+    testImplementation 'org.mockito:mockito-core:3.3.3'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.3.3'
+    testImplementation 'org.openjdk.jmh:jmh-core:1.23'
     
-    testRuntime 'org.mockito:mockito-core:1.10.19'
-    testRuntime 'org.junit.platform:junit-platform-runner:1.6.1'
-    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.6.1'
+    testRuntimeOnly 'org.mockito:mockito-core:1.10.19'
+    testRuntimeOnly 'org.junit.platform:junit-platform-runner:1.6.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.1'
 }
 
 task sourcesJar(type: Jar) {
@@ -64,7 +64,7 @@ signing {
 jar {
     manifest {
         attributes 'Implementation-Title': 'XML:DB API specification',
-                   'Implementation-Version': version,
+                   'Implementation-Version': project.version,
                    'Build-Date': buildDate,
                    'Build-Time': buildTime,
                    'Build-Revision': versioning.info.commit,
