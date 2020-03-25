@@ -42,8 +42,6 @@
 
 package org.xmldb.api.base;
 
-import java.util.UUID;
-
 /**
  * Represents the unique identifications for a resource within a database.
  */
