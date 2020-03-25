@@ -46,6 +46,7 @@ import org.w3c.dom.Node;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
+import org.xml.sax.XMLReader;
 import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.XMLDBException;
 
@@ -140,5 +141,11 @@ public interface XMLResource extends Resource {
    */
   boolean getSAXFeature(String feature) throws SAXNotRecognizedException, SAXNotSupportedException;
 
+  /**
+   * Sets the external XMLReader to use when doing content handler operations.
+   *
+   * @param xmlReader the XMLReader
+   */
+  void setXMLReader(XMLReader xmlReader);
 }
 
