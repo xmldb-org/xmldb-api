@@ -99,6 +99,8 @@ public interface Collection extends Configurable, AutoCloseable {
    *         service does not exist, {@link ErrorCodes#VENDOR_ERROR} for any vendor specific errors
    *         that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the {@code close} method has been
    *         called on the {@code Collection}
+   *
+   * @since 2.0
    */
   <S extends Service> S getService(Class<S> serviceType) throws XMLDBException;
 
@@ -201,6 +203,8 @@ public interface Collection extends Configurable, AutoCloseable {
    *         {@code type} parameter is not a known {@code Resource} type.
    *         {@link ErrorCodes#COLLECTION_CLOSED} if the {@code close} method has been called on the
    *         {@code Collection}
+   *
+   * @since 2.0
    */
   <R extends Resource> R createResource(String id, Class<R> type) throws XMLDBException;
 
@@ -258,6 +262,8 @@ public interface Collection extends Configurable, AutoCloseable {
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
+   *
+   * @since 2.0
    */
   Identifier createIdentifier() throws XMLDBException;
 
@@ -290,6 +296,8 @@ public interface Collection extends Configurable, AutoCloseable {
    * @return the creation date of the current collection
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur.
+   *
+   * @since 2.0
    */
   Date getCreationTime() throws XMLDBException;
 

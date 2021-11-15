@@ -66,6 +66,8 @@ public interface Configurable {
    * @return the property value or null if no property exists.
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
+   *
+   * @since 2.0
    */
   String getProperty(String name, String defaultValue) throws XMLDBException;
 

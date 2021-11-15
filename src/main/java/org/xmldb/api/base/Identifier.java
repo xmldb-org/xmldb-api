@@ -44,6 +44,8 @@ package org.xmldb.api.base;
 
 /**
  * Represents the unique identifications for a resource within a database.
+ *
+ * @since 2.0
  */
 public interface Identifier extends java.io.Serializable, Comparable<Identifier> {
 }
