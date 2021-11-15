@@ -5,9 +5,9 @@ plugins {
     id 'signing'
     id 'jacoco'
     id 'maven-publish'
-    id 'com.github.ben-manes.versions' version '0.36.0'
+    id 'com.github.ben-manes.versions' version '0.39.0'
     id "me.champeau.gradle.jmh" version "0.5.3"
-    id 'net.nemerosa.versioning' version '2.14.0'
+    id 'net.nemerosa.versioning' version '2.15.1'
 }
 
 Date buildTimeAndDate = new Date()
@@ -19,21 +19,26 @@ ext {
 group = 'net.sf.xmldb-org'
 version = '2.0.0-SNAPSHOT'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
     testImplementation 'org.hamcrest:hamcrest:2.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.1'
-    testImplementation 'org.mockito:mockito-core:3.8.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:3.8.0'
-    testImplementation 'org.openjdk.jmh:jmh-core:1.27'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
+    testImplementation 'org.mockito:mockito-core:4.0.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'
+    testImplementation 'org.openjdk.jmh:jmh-core:1.33'
     
-    testRuntimeOnly 'org.mockito:mockito-core:3.8.0'
-    testRuntimeOnly 'org.junit.platform:junit-platform-runner:1.7.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
+    testRuntimeOnly 'org.mockito:mockito-core:4.0.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-runner:1.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 task sourcesJar(type: Jar) {
