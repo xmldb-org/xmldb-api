@@ -62,7 +62,7 @@ public interface PermissionManagementService extends Service {
     public static final String SERVICE_NAME = "PermissionManagementService";
 
     /**
-     * Returns a attribute view for the given collection.
+     * Returns an attribute view for the given collection.
      * 
      * @param collection the collection for getting the attributes
      * @return the basic permission attributes of the given collection
@@ -71,7 +71,7 @@ public interface PermissionManagementService extends Service {
     Attributes getAttributes(Collection collection) throws XMLDBException;
 
     /**
-     * Returns a attribute view for the given resource.
+     * Returns an attribute view for the given resource.
      * 
      * @param resource the resource for getting the attributes
      * @return the basic permission attributes of the given resource
