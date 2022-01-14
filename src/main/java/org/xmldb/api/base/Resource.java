@@ -43,7 +43,7 @@
 package org.xmldb.api.base;
 
 import java.io.OutputStream;
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * {@code Resource} is a container for data stored within the database. Raw resources are not
@@ -138,7 +138,7 @@ public interface Resource extends AutoCloseable {
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
-  Date getCreationTime() throws XMLDBException;
+  Instant getCreationTime() throws XMLDBException;
 
   /**
    * Returns the time of last modification of the resource.
@@ -147,6 +147,6 @@ public interface Resource extends AutoCloseable {
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
-  Date getLastModificationTime() throws XMLDBException;
+  Instant getLastModificationTime() throws XMLDBException;
 }
 

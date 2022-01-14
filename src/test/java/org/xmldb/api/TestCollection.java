@@ -42,21 +42,25 @@
 
 package org.xmldb.api;
 
-import java.util.Date;
+import java.time.Instant;
 
-import org.xmldb.api.base.*;
+import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.ErrorCodes;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.Service;
+import org.xmldb.api.base.XMLDBException;
 
 public class TestCollection extends ConfigurableImpl implements Collection {
   private static final String[] EMPTY = new String[0];
 
   private final String name;
-  private final Date creation;
+  private final Instant creation;
 
   private boolean closed;
 
   public TestCollection(String name) {
     this.name = name;
-    creation = new Date();
+    creation = Instant.now();
   }
 
   @Override
@@ -110,11 +114,6 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public Resource createResource(String id, String type) throws XMLDBException {
-    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
-  }
-
-  @Override
   public <R extends Resource> R createResource(String id, Class<R> type) throws XMLDBException {
     throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
   }
@@ -140,11 +139,6 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public Identifier createIdentifier() throws XMLDBException {
-    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
-  }
-
-  @Override
   public boolean isOpen() throws XMLDBException {
     return !closed;
   }
@@ -155,7 +149,7 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public Date getCreationTime() throws XMLDBException {
+  public Instant getCreationTime() throws XMLDBException {
     return creation;
   }
 }
