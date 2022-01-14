@@ -100,8 +100,9 @@ public interface ResourceSet {
   ResourceIterator getIterator() throws XMLDBException;
 
   /**
-   * Returns a Resource containing an XML representation of all resources stored in the set. TODO:
-   * Specify the schema used for this
+   * Returns a Resource containing an XML representation of all resources stored in the set. 
+   * 
+   * TODO: Specify the schema used for this
    *
    * @return A {@code Resource} instance containing an XML representation of all set members.
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
