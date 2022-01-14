@@ -42,64 +42,42 @@
 
 package org.xmldb.api.security;
 
-import org.xmldb.api.base.Service;
-import org.xmldb.api.base.XMLDBException;
-
 /**
- * An object to lookup user and group principals by name. A {@link UserPrincipal}
- * represents an identity that may be used to determine access rights to objects
- * in the XMLDB. A {@link GroupPrincipal} represents a <em>group identity</em>.
- * A {@code UserPrincipalLookupService} defines methods to lookup identities by
- * name or group name (which are typically user or account names). Whether names
- * and group names are case sensitive or not depends on the implementation.
- * The exact definition of a group is implementation specific but typically a
- * group represents an identity created for administrative purposes so as to
- * determine the access rights for the members of the group. In particular it is
- * implementation specific if the <em>namespace</em> for names and groups is the
- * same or is distinct. To ensure consistent and correct behavior across
- * platforms it is recommended that this API be used as if the namespaces are
- * distinct. In other words, the {@link #lookupPrincipalByName
- * lookupPrincipalByName} should be used to lookup users, and {@link
- * #lookupPrincipalByGroupName lookupPrincipalByGroupName} should be used to
- * lookup groups.
- *
- * @see org.xmldb.api.base.Collection#getService
- *
- * @since 2.0
+ * Any Security Principal such as a User or Group.
  */
-public interface UserPrincipalLookupService extends Service {
-
-    public static final String SERVICE_NAME = "UserPrincipalLookupService";
+public interface Principal {
 
     /**
-     * Lookup a user principal by name.
+     * Returns the name of this principal.
      *
-     * @param   name
-     *          the string representation of the user principal to lookup
-     *
-     * @return  a user principal
-     *
-     * @throws  XMLDBException
-     *          the principal does not exist
+     * @return the name of this principal.
      */
-    UserPrincipal lookupPrincipalByName(String name) throws XMLDBException;
+    String getName();
 
     /**
-     * Lookup a group principal by group name.
+     * Compares this principal to the specified object.
+     * Returns true if the object passed in matches the principal represented by the implementation of this interface.
      *
-     * <p> Where an implementation does not support any notion of group then
-     * this method always throws {@link UserPrincipalNotFoundException}. Where
-     * the namespace for user accounts and groups is the same, then this method
-     * is identical to invoking {@link #lookupPrincipalByName
-     * lookupPrincipalByName}.
+     * @param another - principal to compare with.
      *
-     * @param   group
-     *          the string representation of the group to lookup
-     *
-     * @return  a group principal
-     *
-     * @throws  XMLDBException
-     *          the principal does not exist or is not a group
+     * @return true if the principal passed in is the same as that encapsulated by this principal, and false otherwise.
      */
-    GroupPrincipal lookupPrincipalByGroupName(String group) throws XMLDBException;
+    @Override
+    boolean equals(Object another);
+
+    /**
+     * Returns a hashcode for this principal.
+     *
+     * @return a hashcode for this principal.
+     */
+    @Override
+    int hashCode();
+
+    /**
+     * Returns a string representation of this principal.
+     *
+     * @return a string representation of this principal.
+     */
+    @Override
+    String toString();
 }
