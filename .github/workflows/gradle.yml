@@ -38,6 +38,7 @@ jobs:
     - name: Run codecov analysis
       uses: codecov/codecov-action@v1
   deploy:
+    if: ${{ github.event_name != 'pull_request' }}
     needs: build
     runs-on: ubuntu-latest
     name: Deploy
