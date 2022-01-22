@@ -1,97 +1,68 @@
 import java.text.SimpleDateFormat
 
 plugins {
-    id 'java-library'
-    id 'signing'
-    id 'jacoco'
-    id 'maven-publish'
-    id 'com.github.ben-manes.versions' version '0.41.0'
-    id "me.champeau.gradle.jmh" version "0.5.3"
-    id 'net.nemerosa.versioning' version '2.15.1'
+  id 'java-library'
+  id 'com.github.ben-manes.versions' version '0.41.0'
+  id "me.champeau.gradle.jmh" version "0.5.3"
+  id 'org.kordamp.gradle.java-project' version '0.47.0'
 }
 
-Date buildTimeAndDate = new Date()
-ext {
-    buildDate = new SimpleDateFormat('yyyy-MM-dd').format(buildTimeAndDate)
-    buildTime = new SimpleDateFormat('HH:mm:ss.SSSZ').format(buildTimeAndDate)
-}
+if (!project.hasProperty('sonatypeUsername')) ext.sonatypeUsername = '**undefined**'
+if (!project.hasProperty('sonatypePassword')) ext.sonatypePassword = '**undefined**'
 
 group = 'net.sf.xmldb-org'
 version = '2.0.0-SNAPSHOT'
 
+defaultTasks 'build'
+
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.hamcrest:hamcrest:2.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
-    testImplementation 'org.mockito:mockito-core:4.2.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:4.2.0'
-    testImplementation 'org.openjdk.jmh:jmh-core:1.34'
-    
-    testRuntimeOnly 'org.mockito:mockito-core:4.2.0'
-    testRuntimeOnly 'org.junit.platform:junit-platform-runner:1.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-}
+  testImplementation 'org.hamcrest:hamcrest:2.2'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+  testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
+  testImplementation 'org.mockito:mockito-core:4.2.0'
+  testImplementation 'org.mockito:mockito-junit-jupiter:4.2.0'
+  testImplementation 'org.openjdk.jmh:jmh-core:1.34'
 
-task sourcesJar(type: Jar) {
-    classifier 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
+  testRuntimeOnly 'org.mockito:mockito-core:4.2.0'
+  testRuntimeOnly 'org.junit.platform:junit-platform-runner:1.8.2'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 
 compileJava {
-    options.compilerArgs << '-Xlint:unchecked'
+  options.compilerArgs << '-Xlint:unchecked'
 }
 
 signing {
-    required { project.hasProperty('signing.password') && !project.version.endsWith('-SNAPSHOT') }
-    sign publishing.publications
+  required { project.hasProperty('signing.password') && !project.version.endsWith('-SNAPSHOT') }
+  sign publishing.publications
 }
 
 jar {
-    manifest {
-        attributes 'Implementation-Title': 'XML:DB API specification',
-                   'Implementation-Version': project.version,
-                   'Build-Date': buildDate,
-                   'Build-Time': buildTime,
-                   'Build-Revision': versioning.info.commit,
-                   'Automatic-Module-Name': "org.xmldb.api"
-        metaInf {
-            from file('.')
-            include 'LICENSE'
-        }
-    }
+  manifest.attributes 'Implementation-Title': 'XML:DB API specification',
+                      'Implementation-Version': project.version,
+                      'Automatic-Module-Name': "org.xmldb.api"
 }
 
 jmh {
-//    include = 'org\\.openjdk\\.jmh\\.samples\\.JMHSample_01_HelloWorld.*'
-    humanOutputFile = null
-    warmupIterations = 1
-    iterations = 1
+  humanOutputFile = null
+  warmupIterations = 1
+  iterations = 1
 }
 
 test {
-    useJUnitPlatform()
-    testLogging {
-        events 'skipped'
-    }
+  useJUnitPlatform()
+  testLogging {
+    events 'skipped'
+  }
 }
 
 dependencyUpdates.resolutionStrategy {
@@ -107,59 +78,85 @@ dependencyUpdates.resolutionStrategy {
   }
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-            pom {
-                name  = 'XML:DB API specification'
-                description = 'XML:DB Initiative for XML Databases'
-                url = 'https://github.com/xmldb-org/xmldb-api.git'
-                scm {
-                    connection = 'scm:git@github.com:xmldb-org/xmldb-api.git'
-                    developerConnection = 'scm:git@github.com:xmldb-org/xmldb-api.git'
-                    url = 'https://github.com/xmldb-org/xmldb-api.git'
-                }
-                licenses {
-                    license {
-                        name = 'The XML:DB Initiative Software License, Version 1.0'
-                        url = 'https://github.com/xmldb-org/xmldb-api/raw/master/LICENSE'
-                        distribution = 'repo'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'reinhapa'
-                        name = 'Patrick Reinhart'
-                        email = 'patrick@reini.net'
-                    }
-                    developer {
-                        id = 'per_nyfelt'
-                        name = 'Per Nyfelt'
-                        email = 'per_nyfelt@users.sf.net'
-                    }
-                    developer {
-                        id = 'walkabout'
-                        name = 'Lars Martin'
-                        email = 'walkabout@users.sf.net'
-                    }
-                }
-            }
-        }
+config {
+  release = !project.version.endsWith('-SNAPSHOT')
+  info {
+    vendor = 'reinhapa'
+    name = 'XML:DB API specification'
+    description = 'XML:DB Initiative for XML Databases'
+    inceptionYear = '2000'
+    links {
+      website = 'https://github.com/xmldb-org/xmldb-api'
+      issueTracker = 'https://github.com/xmldb-org/xmldb-api/issues'
+      scm = 'https://github.com/xmldb-org/xmldb-api.git'
+    }
+    scm {
+      connection = 'scm:git://github.com/xmldb-org/xmldb-api.git'
+      developerConnection = 'scm:git://github.com/xmldb-org/xmldb-api.git'
+      url = 'https://github.com/xmldb-org/xmldb-api'
+    }
+    people {
+      person {
+        id = 'reinhapa'
+        name = 'Patrick Reinhart'
+        email = 'patrick@reini.net'
+        roles = [ 'developer' ]
+      }
+      person {
+        id = 'per_nyfelt'
+        name = 'Per Nyfelt'
+        email = 'per_nyfelt@users.sf.net'
+        roles = [ 'developer' ]
+      }
+      person {
+        id = 'walkabout'
+        name = 'Lars Martin'
+        email = 'walkabout@users.sf.net'
+        roles = [ 'developer' ]
+      }
     }
     repositories {
-        if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
-            maven {
-                def releasesRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-                def snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
-                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-                credentials {
-                    username = ossrhUsername
-                    password = ossrhPassword
-                }
-            }
+      repository {
+        name = 'sonatypeRelease'
+        url  = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+        credentials {
+          username = sonatypeUsername
+          password = sonatypePassword
         }
+      }
+      repository {
+        name = 'sonatypeSnapshot'
+        url  = 'https://oss.sonatype.org/content/repositories/snapshots/'
+        credentials {
+          username = sonatypeUsername
+          password = sonatypePassword
+        }
+      }
     }
+  }
+  licensing {
+    licenses {
+      license {
+        name = 'The XML:DB Initiative Software License'
+        url = 'https://github.com/xmldb-org/xmldb-api/raw/master/LICENSE'
+      }
+    }
+  }
+  docs {
+    javadoc.autoLinks.enabled = false
+  }
+  artifacts {
+    minpom.enabled = false
+  }
+  publishing {
+    signing.enabled = release
+    releasesRepository  = 'sonatypeRelease'
+    snapshotsRepository = 'sonatypeSnapshot'
+  }
+}
+
+normalization {
+  runtimeClasspath {
+    ignore('/META-INF/MANIFEST.MF')
+  }
 }
