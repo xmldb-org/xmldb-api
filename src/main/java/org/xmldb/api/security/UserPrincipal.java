@@ -42,8 +42,6 @@
 
 package org.xmldb.api.security;
 
-import java.security.Principal;
-
 /**
  * A {@code Principal} representing an identity used to determine access rights
  * to objects in the XMLDB.
@@ -57,6 +55,6 @@ import java.security.Principal;
  *
  * @since 2.0
  */
-public interface UserPrincipal extends Principal {
+public interface UserPrincipal extends AccountPrincipal {
 
 }

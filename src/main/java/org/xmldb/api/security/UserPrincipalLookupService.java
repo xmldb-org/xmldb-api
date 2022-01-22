@@ -42,10 +42,6 @@
 
 package org.xmldb.api.security;
 
-import java.nio.file.attribute.GroupPrincipal;
-import java.nio.file.attribute.UserPrincipal;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
-
 import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
 
@@ -92,7 +88,7 @@ public interface UserPrincipalLookupService extends Service {
      * Lookup a group principal by group name.
      *
      * <p> Where an implementation does not support any notion of group then
-     * this method always throws {@link UserPrincipalNotFoundException}. Where
+     * this method always throws {@link XMLDBException}. Where
      * the namespace for user accounts and groups is the same, then this method
      * is identical to invoking {@link #lookupPrincipalByName
      * lookupPrincipalByName}.
