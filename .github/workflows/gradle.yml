@@ -51,4 +51,4 @@ jobs:
         gpg-private-key: "${{ secrets.GPG_SIGNING_KEY }}"
         java-version: '8'
     - name: Deploy
-      run: ./gradlew publish -x test -PossrhUsername=${{ secrets.OSSRH_USERNAME }} -PossrhPassword=${{ secrets.OSSRH_PASSWORD }} -Psigning.password=${{ secrets.GPG_PASSPHRASE }}
+      run: ./gradlew publish -x test -PsonatypeUsername=${{ secrets.OSSRH_USERNAME }} -PsonatypePassword=${{ secrets.OSSRH_PASSWORD }} -Psigning.password=${{ secrets.GPG_PASSPHRASE }}
