@@ -92,5 +92,20 @@ public enum Permission {
     /**
      * Execute/search permission, others.
      */
-    OTHERS_EXECUTE;
+    OTHERS_EXECUTE,
+
+    /**
+     * Set User ID.
+     */
+    SET_UID,
+
+    /**
+     * Set Group ID.
+     */
+    SET_GID,
+
+    /**
+     * The Sticky bit.
+     */
+    STICKY_BIT;
 }

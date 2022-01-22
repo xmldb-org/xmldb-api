@@ -42,58 +42,62 @@
 
 package org.xmldb.api.security;
 
-import java.util.List;
 import java.util.Set;
 
-/**
- * Represents the basic attributes of either a {@link org.xmldb.api.base.Resource}
- * or {@link org.xmldb.api.base.Collection}.
- *
- * @since 2.0
-*/
-public interface Attributes {
+public interface AclEntry {
 
     /**
-     * Returns the owner of the collection or resource.
+     * Returns the principal component.
      *
-     * @return  the resource owner
-     *
-     * @see PermissionManagementService#setOwner
+     * @return the principal of the ACL entry.
      */
-    UserPrincipal owner();
+    AccountPrincipal principal();
 
     /**
-     * Returns the group owner of the collection or resource.
+     * Returns the ACL entry type.
      *
-     * @return  the resource group owner
-     *
-     * @see PermissionManagementService#setGroup
+     * @return the type of the ACL entry.
      */
-    GroupPrincipal group();
+    AclEntryType type();
 
     /**
-     * Returns the permissions of the collection or resource. The collection or resource permissions are returned
-     * as a set of {@link Permission} elements. The returned set is a
-     * copy of the collection or resource permissions and is modifiable. This allows the result
-     * to be modified and passed to the {@link PermissionManagementService#setPermissions}
-     * methods to update the collection's or resources's permissions.
+     * Returns a copy of the permissions component.
      *
-     * @return  the collection or resource permissions
-     *
-     * @see PermissionManagementService#setPermissions
+     * @return the permissions of the ACL entry.
      */
-    Set<Permission> permissions();
+    Set<AclEntryPermission> permissions();
 
     /**
-     * Returns the ACL of the collection or resource. The collection or resource permissions are returned
-     * as a list of {@link AclEntry} elements. The returned list is a
-     * copy of the collection or resource ACL and is modifiable. This allows the result
-     * to be modified and passed to the {@link PermissionManagementService#setAcl}
-     * methods to update the collection's or resources's Access Control List.
+     * Returns a copy of the flags component.
      *
-     * @return  the collection or resource ACL entries
-     *
-     * @see PermissionManagementService#setAcl
+     * @return the flags of the ACL entry.
      */
-    List<AclEntry> acl();
+    Set<AclEntryFlag> flags();
+
+    /**
+     * Compares the specified object with this ACL entry for equality.
+     * Returns true if the object passed in matches the ACL entry represented by the implementation of this interface.
+     *
+     * @param ob - the object to which this object is to be compared
+     *
+     * @return true if, and only if, the given object is an AclEntry that is identical to this AclEntry
+     */
+    @Override
+    boolean equals(Object ob);
+
+    /**
+     * Returns the hash-code value for this ACL entry.
+     *
+     * @return a hash code value for this object.
+     */
+    @Override
+    int hashCode();
+
+    /**
+     * Returns the string representation of this ACL entry.
+     *
+     * @return a string representation of the ACL entry.
+     */
+    @Override
+    String toString();
 }

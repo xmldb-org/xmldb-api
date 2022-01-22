@@ -42,6 +42,7 @@
 
 package org.xmldb.api.security;
 
+import java.util.List;
 import java.util.Set;
 
 import org.xmldb.api.base.Collection;
@@ -62,7 +63,7 @@ public interface PermissionManagementService extends Service {
     public static final String SERVICE_NAME = "PermissionManagementService";
 
     /**
-     * Returns a attribute view for the given collection.
+     * Returns an attribute view for the given collection.
      * 
      * @param collection the collection for getting the attributes
      * @return the basic permission attributes of the given collection
@@ -71,7 +72,7 @@ public interface PermissionManagementService extends Service {
     Attributes getAttributes(Collection collection) throws XMLDBException;
 
     /**
-     * Returns a attribute view for the given resource.
+     * Returns an attribute view for the given resource.
      * 
      * @param resource the resource for getting the attributes
      * @return the basic permission attributes of the given resource
@@ -116,6 +117,44 @@ public interface PermissionManagementService extends Service {
      * @throws XMLDBException if an error occurs whilst setting the permissions
      */
     void setPermissions(Resource resource, Set<Permission> perms) throws XMLDBException;
+
+    /**
+     * Returns a list of current ACL (Access Control List) entries for the given collection.
+     *
+     * @param collection the collection to get the ACL entries
+     * @return a list of the current ACL entries
+     * @throws XMLDBException if an error occurs whilst getting the ACL entries
+     */
+    List<AclEntry> getAcl(Collection collection) throws XMLDBException;
+
+    /**
+     * Replaces the current ACL (Access Control List) entries of the given collection
+     * with the given new ACL entries list.
+     *
+     * @param collection the collection to replace the ACL entries for
+     * @param aclEntries the new ACL entries to be set on the collection
+     * @throws XMLDBException if an error occurs whilst setting the ACL entries
+     */
+    void setAcl(Collection collection, List<AclEntry> aclEntries) throws XMLDBException;
+
+    /**
+     * Returns a list of current ACL (Access Control List) entries for the given resource.
+     *
+     * @param resource the resource to get the ACL entries
+     * @return a list of the current ACL entries
+     * @throws XMLDBException if an error occurs whilst getting the ACL entries
+     */
+    List<AclEntry> getAcl(Resource resource) throws XMLDBException;
+
+    /**
+     * Replaces the current ACL (Access Control List) entries of the given resource
+     * with the given new ACL entries list.
+     *
+     * @param resource the resource to replace the ACL entries for
+     * @param aclEntries the new ACL entries to be set on the resource
+     * @throws XMLDBException if an error occurs whilst setting the ACL entries
+     */
+    void setAcl(Resource resource, List<AclEntry> aclEntries) throws XMLDBException;
 
     /**
      * Returns the current owner of the given collection.
