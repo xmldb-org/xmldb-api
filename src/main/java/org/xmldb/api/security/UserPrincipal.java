@@ -55,6 +55,6 @@ package org.xmldb.api.security;
  *
  * @since 2.0
  */
-public interface UserPrincipal extends Principal {
+public interface UserPrincipal extends AccountPrincipal {
 
 }
