@@ -51,7 +51,7 @@ public interface AclEntry {
      *
      * @return the principal of the ACL entry.
      */
-    Principal principal();
+    AccountPrincipal principal();
 
     /**
      * Returns the ACL entry type.
