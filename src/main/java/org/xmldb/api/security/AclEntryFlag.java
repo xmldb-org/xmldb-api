@@ -42,5 +42,11 @@
 
 package org.xmldb.api.security;
 
-public interface AclEntryFlag {
+/**
+ * Defines the flags for used by the flags component of an ACL {@link AclEntry
+ * entry}.
+ *
+ * @since 2.0
+ */
+public enum AclEntryFlag {
 }

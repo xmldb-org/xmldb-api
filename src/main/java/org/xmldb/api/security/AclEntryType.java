@@ -42,6 +42,11 @@
 
 package org.xmldb.api.security;
 
+/**
+ * A typesafe enumeration of the access control entry types.
+ *
+ * @since 2.0
+ */
 public enum AclEntryType {
     ALLOW,
     DENY
