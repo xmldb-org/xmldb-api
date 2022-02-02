@@ -47,47 +47,46 @@ import org.xmldb.api.base.Database;
 import org.xmldb.api.base.XMLDBException;
 
 public class TestDatabase extends ConfigurableImpl implements Database {
-  private static final String[] DETAULT_NAMES = new String[] {"testdatabase"};
+    private static final String DETAULT_NAME = "testdatabase";
 
-  private final String[] names;
-  private final Map<String, TestCollection> collections;
+    private final String name;
+    private final Map<String, TestCollection> collections;
 
-  public TestDatabase(String... names) {
-    if (names.length == 0) {
-      this.names = DETAULT_NAMES;
-    } else {
-      this.names = names;
+    public TestDatabase() {
+        this(null);
     }
-    collections = new HashMap<>();
-  }
 
-  @Override
-  public final String getName() throws XMLDBException {
-    return names[0];
-  }
+    public TestDatabase(String name) {
+        if (name == null || name.isEmpty()) {
+            this.name = DETAULT_NAME;
+        } else {
+            this.name = name;
+        }
+        collections = new HashMap<>();
+    }
 
-  @Override
-  public final String[] getNames() throws XMLDBException {
-    return names;
-  }
+    @Override
+    public final String getName() throws XMLDBException {
+        return name;
+    }
 
-  public TestCollection addCollection(String collectionName) {
-    return collections.computeIfAbsent(collectionName, TestCollection::new);
-  }
+    public TestCollection addCollection(String collectionName) {
+        return collections.computeIfAbsent(collectionName, TestCollection::new);
+    }
 
-  @Override
-  public Collection getCollection(String uri, String username, String password)
-      throws XMLDBException {
-    return collections.get(uri);
-  }
+    @Override
+    public Collection getCollection(String uri, String username,
+            String password) throws XMLDBException {
+        return collections.get(uri);
+    }
 
-  @Override
-  public boolean acceptsURI(String uri) throws XMLDBException {
-    return false;
-  }
+    @Override
+    public boolean acceptsURI(String uri) throws XMLDBException {
+        return false;
+    }
 
-  @Override
-  public String getConformanceLevel() throws XMLDBException {
-    return "0";
-  }
+    @Override
+    public String getConformanceLevel() throws XMLDBException {
+        return "0";
+    }
 }

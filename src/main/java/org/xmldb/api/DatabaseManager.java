@@ -103,18 +103,13 @@ public class DatabaseManager {
    *         {@code Database} instance is invalid.
    */
   public static void registerDatabase(final Database database) throws XMLDBException {
-    final String[] databaseNames = database.getNames();
-    // we need at least one suitable name for this instance
-    if (databaseNames == null || databaseNames.length == 0 || databaseNames[0].isEmpty()) {
+    final String name = database.getName();
+    if (name == null || name.isEmpty()) {
       throw new XMLDBException(ErrorCodes.INVALID_DATABASE);
     }
-
     final long stamp = dbLock.writeLock();
     try {
-      // put all names of this instance into the databases map
-      for (final String databaseName : databaseNames) {
-        updateDatabases(databaseName, database);
-      }
+      updateDatabases(name, database);
     } finally {
       dbLock.unlockWrite(stamp);
     }

@@ -39,7 +39,10 @@
  */
 package org.xmldb.api;
 
+import static java.util.Collections.emptyList;
+
 import java.time.Instant;
+import java.util.List;
 
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.ErrorCodes;
@@ -48,8 +51,6 @@ import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
 
 public class TestCollection extends ConfigurableImpl implements Collection {
-  private static final String[] EMPTY = new String[0];
-
   private final String name;
   private final Instant creation;
 
@@ -66,13 +67,8 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public Service[] getServices() throws XMLDBException {
-    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
-  }
-
-  @Override
-  public Service getService(String serivceName, String version) throws XMLDBException {
-    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
+  public <S extends Service> boolean hasService(Class<S> serviceType) throws XMLDBException {
+    return false;
   }
 
   @Override
@@ -91,8 +87,8 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public String[] listChildCollections() throws XMLDBException {
-    return EMPTY;
+  public List<String> listChildCollections() throws XMLDBException {
+    return emptyList();
   }
 
   @Override
@@ -106,8 +102,8 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public String[] listResources() throws XMLDBException {
-    return EMPTY;
+  public List<String> listResources() throws XMLDBException {
+    return emptyList();
   }
 
   @Override

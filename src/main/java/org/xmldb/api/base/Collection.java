@@ -40,6 +40,7 @@
 package org.xmldb.api.base;
 
 import java.time.Instant;
+import java.util.List;
 
 /**
  * A {@code Collection} represents a collection of {@code Resource}s stored within an XML database.
@@ -62,30 +63,14 @@ public interface Collection extends Configurable, AutoCloseable {
   String getName() throws XMLDBException;
 
   /**
-   * Provides a list of all services known to the collection. If no services are known an empty list
-   * is returned.
+   * Checks if a service of the given serviceType is available or not.
    *
-   * @return An array of registered {@code Service} implementations.
+   * @return {@code true} if the given service type is supported, {@code false otherwise}
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
-  Service[] getServices() throws XMLDBException;
-
-  /**
-   * Returns a {@code Service} instance for the requested service name and version. If no
-   * {@code Service} exists for those parameters a {@code null} value is returned.
-   *
-   * @param serivceName Description of Parameter
-   * @param version Description of Parameter
-   * @return the Service instance or {@code null} if no Service could be found.
-   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
-   *         {@code close} method has been called on the {@code Collection}
-   * @deprecated use {@link #getService(Class)} instead
-   */
-  @Deprecated
-  Service getService(String serivceName, String version) throws XMLDBException;
+  <S extends Service> boolean hasService(Class<S> serviceType) throws XMLDBException;
 
   /**
    * Returns a {@code Service} instance for the requested {@code serviceType}. If no {@code Service}
@@ -133,8 +118,10 @@ public interface Collection extends Configurable, AutoCloseable {
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
+   *
+   * @since 2.0
    */
-  String[] listChildCollections() throws XMLDBException;
+  List<String> listChildCollections() throws XMLDBException;
 
   /**
    * Returns a {@code Collection} instance for the requested child collection if it exists.
@@ -165,8 +152,10 @@ public interface Collection extends Configurable, AutoCloseable {
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
+   *
+   * @since 2.0
    */
-  String[] listResources() throws XMLDBException;
+  List<String> listResources() throws XMLDBException;
 
   /**
    * Creates a new empty {@code Resource} with the provided id. The type of {@code Resource}

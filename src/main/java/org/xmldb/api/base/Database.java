@@ -52,22 +52,11 @@ public interface Database extends Configurable {
   /**
    * Returns the name associated with the Database instance.
    *
-   * @deprecated Replaced by String[] getNames().
    * @return the name of the object.
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
-  @Deprecated
   String getName() throws XMLDBException;
-
-  /**
-   * Returns an array of names associated with the Database instance.
-   *
-   * @return the array of name of the object.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
-   */
-  String[] getNames() throws XMLDBException;
 
   /**
    * Retrieves a {@code Collection} instance based on the URI provided in the {@code uri} parameter.

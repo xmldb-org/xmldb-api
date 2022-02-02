@@ -95,60 +95,39 @@ class DatabaseManagerTest {
 
   @Test
   void testRegisterDatabase_no_or_empty_name() throws XMLDBException {
-    when(dbOne.getNames()).thenReturn(null);
+    when(dbOne.getName()).thenReturn(null);
 
-    XMLDBException xmldbEx1 = assertThrows(XMLDBException.class, () -> {
-      DatabaseManager.registerDatabase(dbOne);
-    });
+    XMLDBException xmldbEx1 = assertThrows(XMLDBException.class, () ->
+      DatabaseManager.registerDatabase(dbOne)
+    );
     assertEquals(ErrorCodes.INVALID_DATABASE, xmldbEx1.errorCode);
     assertEquals(0, DatabaseManager.databases.size());
 
-    when(dbOne.getNames()).thenReturn(new String[] {""});
+    when(dbOne.getName()).thenReturn("");
 
-    XMLDBException xmldbEx2 = assertThrows(XMLDBException.class, () -> {
-      DatabaseManager.registerDatabase(dbOne);
-    });
-    assertEquals(ErrorCodes.INVALID_DATABASE, xmldbEx2.errorCode);
-    assertEquals(0, DatabaseManager.databases.size());
-  }
-
-  @Test
-  void testRegisterDatabase_no_or_empty_names() throws XMLDBException {
-    when(dbOne.getNames()).thenReturn(null);
-
-    XMLDBException xmldbEx1 = assertThrows(XMLDBException.class, () -> {
-      DatabaseManager.registerDatabase(dbOne);
-    });
-    assertEquals(ErrorCodes.INVALID_DATABASE, xmldbEx1.errorCode);
-    assertEquals(0, DatabaseManager.databases.size());
-
-    when(dbOne.getNames()).thenReturn(new String[0]);
-    XMLDBException xmldbEx2 = assertThrows(XMLDBException.class, () -> {
-      DatabaseManager.registerDatabase(dbOne);
-    });
+    XMLDBException xmldbEx2 = assertThrows(XMLDBException.class, () ->
+      DatabaseManager.registerDatabase(dbOne)
+    );
     assertEquals(ErrorCodes.INVALID_DATABASE, xmldbEx2.errorCode);
     assertEquals(0, DatabaseManager.databases.size());
   }
 
   @Test
   void testRegisterDatabase() throws XMLDBException {
-    when(dbOne.getNames())
-        .thenReturn(new String[] {"one", "databaseNameOne", "databaseAliasNameOne"});
+    when(dbOne.getName()).thenReturn("databaseNameOne");
 
     DatabaseManager.registerDatabase(dbOne);
-    assertThat(DatabaseManager.databases.entrySet(), containsInAnyOrder(entry("one", dbOne),
-        entry("databaseNameOne", dbOne), entry("databaseAliasNameOne", dbOne)));
+    assertThat(DatabaseManager.databases.entrySet(), 
+            containsInAnyOrder(entry("databaseNameOne", dbOne)));
 
-    when(dbTwo.getNames()).thenReturn(new String[] {"databaseNameTwo", "databaseAliasNameTwo"});
+    when(dbTwo.getName()).thenReturn("databaseNameTwo");
 
     DatabaseManager.registerDatabase(dbTwo);
     assertThat(DatabaseManager.databases.entrySet(),
-        containsInAnyOrder(entry("one", dbOne), entry("databaseNameOne", dbOne),
-            entry("databaseAliasNameOne", dbOne), entry("databaseNameTwo", dbTwo),
-            entry("databaseAliasNameTwo", dbTwo)));
+        containsInAnyOrder(entry("databaseNameOne", dbOne), entry("databaseNameTwo", dbTwo)));
   }
 
-  @Test
+@Test
   void testDeregisterDatabase() throws XMLDBException {
     DatabaseManager.databases.put("one", dbOne);
     DatabaseManager.databases.put("databaseNameOne", dbOne);
@@ -208,8 +187,8 @@ class DatabaseManagerTest {
   void testRegisterDatabase_using_strict_check() throws XMLDBException {
     DatabaseManager.strictRegistrationBehavior = true;
 
-    when(dbOne.getNames()).thenReturn(new String[] {"one", "databaseNameOne"});
-    when(dbTwo.getNames()).thenReturn(new String[] {"one", "databaseNameOne"});
+    when(dbOne.getName()).thenReturn("databaseNameOne");
+    when(dbTwo.getName()).thenReturn("databaseNameOne");
 
     DatabaseManager.registerDatabase(dbOne);
     XMLDBException failure = assertThrows(XMLDBException.class, () -> {

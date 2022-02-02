@@ -39,6 +39,9 @@
  */
 package org.xmldb.api.base;
 
+import java.util.Objects;
+import java.util.function.Consumer;
+
 /**
  * ResourceIterator is used to iterate over a set of resources.
  */
@@ -61,4 +64,18 @@ public interface ResourceIterator {
    *         iterator is empty or all resources have already been retrieved.
    */
   Resource nextResource() throws XMLDBException;
+
+
+  /**
+   * Calls the given action for each resource.
+   * 
+   * @param action the action being called with each resource found
+   * @throws XMLDBException
+   */
+  default void forEachRemaining(Consumer<? super Resource> action) throws XMLDBException {
+    Objects.requireNonNull(action);
+    while (hasMoreResources()) {
+      action.accept(nextResource());
+    }
+  }
 }
