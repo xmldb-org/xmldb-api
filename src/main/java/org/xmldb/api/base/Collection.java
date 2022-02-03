@@ -114,7 +114,7 @@ public interface Collection extends Configurable, AutoCloseable {
    * Returns a list of collection names naming all child collections of the current collection. If
    * no child collections exist an empty list is returned.
    *
-   * @return an array containing collection names for all child collections.
+   * @return an s containing collection names for all child collections.
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
@@ -146,9 +146,10 @@ public interface Collection extends Configurable, AutoCloseable {
   int getResourceCount() throws XMLDBException;
 
   /**
-   * Returns a list of the ids for all resources stored in the collection.
+   * Returns a list of the ids for all resources stored in the collection. If there are no 
+   * documents an empty list is being returned.
    *
-   * @return a string array containing the names for all {@code Resource}s in the collection.
+   * @return a string list containing the names for all {@code Resource}s in the collection.
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
