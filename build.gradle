@@ -41,9 +41,14 @@ import java.text.SimpleDateFormat
 
 plugins {
   id 'java-library'
-  id 'com.github.ben-manes.versions' version '0.41.0'
+  id 'com.github.ben-manes.versions' version '0.42.0'
   id "me.champeau.jmh" version "0.6.6"
   id 'org.kordamp.gradle.java-project' version '0.47.0'
+}
+
+apply {
+  plugin 'org.kordamp.gradle.checkstyle'
+  plugin 'org.kordamp.gradle.errorprone'
 }
 
 if (!project.hasProperty('sonatypeUsername')) ext.sonatypeUsername = '**undefined**'
@@ -71,7 +76,7 @@ dependencies {
   testImplementation 'org.mockito:mockito-junit-jupiter:4.3.1'
   testImplementation 'org.openjdk.jmh:jmh-core:1.34'
 
-  testRuntimeOnly 'org.mockito:mockito-core:4.2.0'
+  testRuntimeOnly 'org.mockito:mockito-core:4.3.1'
   testRuntimeOnly 'org.junit.platform:junit-platform-runner:1.8.2'
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
@@ -172,6 +177,11 @@ config {
           password = sonatypePassword
         }
       }
+    }
+  }
+  quality {
+    errorprone {
+      errorProneVersion = '2.11.0'
     }
   }
   licensing {

@@ -70,7 +70,7 @@ public interface ResourceIterator {
    * Calls the given action for each resource.
    * 
    * @param action the action being called with each resource found
-   * @throws XMLDBException
+   * @throws XMLDBException if an error during internal loop occurs
    */
   default void forEachRemaining(Consumer<? super Resource> action) throws XMLDBException {
     Objects.requireNonNull(action);

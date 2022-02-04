@@ -39,6 +39,7 @@
  */
 package org.xmldb.api.security;
 
+import static java.lang.String.format;
 import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
 
@@ -47,6 +48,8 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
+ * An entry in an access control list (ACL).
+ * 
  * @since 2.0
  */
 public final class AclEntry {
@@ -139,9 +142,12 @@ public final class AclEntry {
         // check set only contains elements of the given type
         private static void checkSet(Set<?> set, Class<?> type) {
             for (Object e: set) {
-                if (e == null)
+                if (e == null) {
                     throw new NullPointerException();
-                type.cast(e);
+                } else if (!type.isInstance(e)) {
+                    throw new IllegalArgumentException(e.getClass().getName()
+                            + " is not an instance of " + type.getName());
+                }
             }
         }
 
@@ -333,6 +339,6 @@ public final class AclEntry {
      */
     @Override
     public String toString() {
-        return null;
+        return format("%s(%s)", super.toString(), principal);
     }
 }
