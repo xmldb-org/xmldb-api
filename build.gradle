@@ -181,6 +181,7 @@ config {
   }
   quality {
     errorprone {
+      enabled = JavaVersion.current() != JavaVersion.VERSION_1_8
       errorProneVersion = '2.11.0'
     }
   }
