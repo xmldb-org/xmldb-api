@@ -49,10 +49,12 @@ package org.xmldb.api.base;
 public final class XMLDBException extends Exception {
   private static final long serialVersionUID = 8841586061740517362L;
 
-  public int errorCode = ErrorCodes.UNKNOWN_ERROR;
-  public int vendorErrorCode = 0;
+  public final int errorCode;
+  public final int vendorErrorCode;
 
-  public XMLDBException() {}
+  public XMLDBException() {
+    this(ErrorCodes.UNKNOWN_ERROR);
+  }
 
   public XMLDBException(int errorCode) {
     this(errorCode, 0, "", null);
