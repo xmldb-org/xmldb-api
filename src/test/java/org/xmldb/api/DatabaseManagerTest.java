@@ -39,14 +39,8 @@
  */
 package org.xmldb.api;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
-import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -84,32 +78,34 @@ class DatabaseManagerTest {
 
   @Test
   void testGetDatabases() {
-    assertThat(DatabaseManager.getDatabases(), arrayWithSize(0));
+    assertThat(DatabaseManager.getDatabases()).isEmpty();
 
     DatabaseManager.databases.put("1", dbOne);
-    assertThat(DatabaseManager.getDatabases(), arrayContaining(dbOne));
+    assertThat(DatabaseManager.getDatabases()).containsExactly(dbOne);
 
     DatabaseManager.databases.put("2", dbTwo);
-    assertThat(DatabaseManager.getDatabases(), arrayContainingInAnyOrder(dbOne, dbTwo));
+    assertThat(DatabaseManager.getDatabases()).containsExactlyInAnyOrder(dbOne, dbTwo);
   }
 
   @Test
   void testRegisterDatabase_no_or_empty_name() throws XMLDBException {
     when(dbOne.getName()).thenReturn(null);
 
-    XMLDBException xmldbEx1 = assertThrows(XMLDBException.class, () ->
-      DatabaseManager.registerDatabase(dbOne)
-    );
-    assertEquals(ErrorCodes.INVALID_DATABASE, xmldbEx1.errorCode);
-    assertEquals(0, DatabaseManager.databases.size());
+    assertThatExceptionOfType(XMLDBException.class)
+            .isThrownBy(() -> DatabaseManager.registerDatabase(dbOne))
+            .hasFieldOrPropertyWithValue("errorCode",
+                    ErrorCodes.INVALID_DATABASE);
+
+    assertThat(DatabaseManager.databases).isEmpty();
 
     when(dbOne.getName()).thenReturn("");
 
-    XMLDBException xmldbEx2 = assertThrows(XMLDBException.class, () ->
-      DatabaseManager.registerDatabase(dbOne)
-    );
-    assertEquals(ErrorCodes.INVALID_DATABASE, xmldbEx2.errorCode);
-    assertEquals(0, DatabaseManager.databases.size());
+    assertThatExceptionOfType(XMLDBException.class)
+            .isThrownBy(() -> DatabaseManager.registerDatabase(dbOne))
+            .hasFieldOrPropertyWithValue("errorCode",
+                    ErrorCodes.INVALID_DATABASE);
+
+    assertThat(DatabaseManager.databases).isEmpty();
   }
 
   @Test
@@ -117,14 +113,14 @@ class DatabaseManagerTest {
     when(dbOne.getName()).thenReturn("databaseNameOne");
 
     DatabaseManager.registerDatabase(dbOne);
-    assertThat(DatabaseManager.databases.entrySet(), 
-            containsInAnyOrder(entry("databaseNameOne", dbOne)));
+    assertThat(DatabaseManager.databases.entrySet())
+            .containsExactly(entry("databaseNameOne", dbOne));
 
     when(dbTwo.getName()).thenReturn("databaseNameTwo");
 
     DatabaseManager.registerDatabase(dbTwo);
-    assertThat(DatabaseManager.databases.entrySet(),
-        containsInAnyOrder(entry("databaseNameOne", dbOne), entry("databaseNameTwo", dbTwo)));
+    assertThat(DatabaseManager.databases.entrySet()).containsExactlyInAnyOrder(
+            entry("databaseNameOne", dbOne), entry("databaseNameTwo", dbTwo));
   }
 
 @Test
@@ -135,7 +131,7 @@ class DatabaseManagerTest {
 
     DatabaseManager.deregisterDatabase(dbOne);
 
-    assertEquals(0, DatabaseManager.databases.size());
+    assertThat(DatabaseManager.databases).isEmpty();
   }
 
   @Test
@@ -145,7 +141,8 @@ class DatabaseManagerTest {
 
     when(dbOne.getCollection("dbName:collection", null, null)).thenReturn(collection);
 
-    assertEquals(collection, DatabaseManager.getCollection("xmldb:dbName:collection"));
+    assertThat(DatabaseManager.getCollection("xmldb:dbName:collection"))
+            .isEqualTo(collection);
   }
 
   @Test
@@ -155,8 +152,8 @@ class DatabaseManagerTest {
 
     when(dbOne.getCollection("dbName:collection", "username", "password")).thenReturn(collection);
 
-    assertEquals(collection,
-        DatabaseManager.getCollection("xmldb:dbName:collection", "username", "password"));
+    assertThat(DatabaseManager.getCollection("xmldb:dbName:collection",
+            "username", "password")).isEqualTo(collection);
   }
 
   @Test
@@ -165,22 +162,23 @@ class DatabaseManagerTest {
 
     when(dbOne.getConformanceLevel()).thenReturn("1");
 
-    assertEquals("1", DatabaseManager.getConformanceLevel("xmldb:dbName::collection"));
+    assertThat(DatabaseManager.getConformanceLevel("xmldb:dbName::collection"))
+            .isEqualTo("1");
   }
 
   @Test
   void testGetProperty() {
     DatabaseManager.properties.setProperty("key", "value");
 
-    assertEquals(DatabaseManager.getProperty("key"), "value");
-    assertNull(DatabaseManager.getProperty("keyTwo"));
+    assertThat(DatabaseManager.getProperty("key")).isEqualTo("value");
+    assertThat(DatabaseManager.getProperty("keyTwo")).isNull();
   }
 
   @Test
   void testSetProperty() {
     DatabaseManager.setProperty("key", "value");
 
-    assertEquals(DatabaseManager.properties.getProperty("key"), "value");
+    assertThat(DatabaseManager.properties.getProperty("key")).isEqualTo("value");
   }
 
   @Test
@@ -191,10 +189,10 @@ class DatabaseManagerTest {
     when(dbTwo.getName()).thenReturn("databaseNameOne");
 
     DatabaseManager.registerDatabase(dbOne);
-    XMLDBException failure = assertThrows(XMLDBException.class, () -> {
-      DatabaseManager.registerDatabase(dbTwo);
-    });
-    assertEquals(ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED, failure.errorCode);
+    assertThatExceptionOfType(XMLDBException.class)
+            .isThrownBy(() -> DatabaseManager.registerDatabase(dbTwo))
+            .hasFieldOrPropertyWithValue("errorCode",
+                    ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED);
   }
 
   private static Entry<String, Database> entry(String key, Database value) {
