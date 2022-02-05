@@ -43,6 +43,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.xmldb.api.base.ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED;
+import static org.xmldb.api.base.ErrorCodes.INVALID_DATABASE;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
@@ -55,7 +57,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
-import org.xmldb.api.base.ErrorCodes;
 import org.xmldb.api.base.XMLDBException;
 
 @ExtendWith(MockitoExtension.class)
@@ -93,8 +94,10 @@ class DatabaseManagerTest {
 
     assertThatExceptionOfType(XMLDBException.class)
             .isThrownBy(() -> DatabaseManager.registerDatabase(dbOne))
-            .hasFieldOrPropertyWithValue("errorCode",
-                    ErrorCodes.INVALID_DATABASE);
+            .satisfies(e -> {
+                assertThat(e.errorCode).isEqualTo(INVALID_DATABASE);
+                assertThat(e.vendorErrorCode).isEqualTo(0);
+            });
 
     assertThat(DatabaseManager.databases).isEmpty();
 
@@ -102,8 +105,10 @@ class DatabaseManagerTest {
 
     assertThatExceptionOfType(XMLDBException.class)
             .isThrownBy(() -> DatabaseManager.registerDatabase(dbOne))
-            .hasFieldOrPropertyWithValue("errorCode",
-                    ErrorCodes.INVALID_DATABASE);
+            .satisfies(e -> {
+                assertThat(e.errorCode).isEqualTo(INVALID_DATABASE);
+                assertThat(e.vendorErrorCode).isEqualTo(0);
+            });
 
     assertThat(DatabaseManager.databases).isEmpty();
   }
@@ -191,8 +196,10 @@ class DatabaseManagerTest {
     DatabaseManager.registerDatabase(dbOne);
     assertThatExceptionOfType(XMLDBException.class)
             .isThrownBy(() -> DatabaseManager.registerDatabase(dbTwo))
-            .hasFieldOrPropertyWithValue("errorCode",
-                    ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED);
+            .satisfies(e -> {
+                assertThat(e.errorCode).isEqualTo(INSTANCE_NAME_ALREADY_REGISTERED);
+                assertThat(e.vendorErrorCode).isEqualTo(0);
+            });
   }
 
   private static Entry<String, Database> entry(String key, Database value) {

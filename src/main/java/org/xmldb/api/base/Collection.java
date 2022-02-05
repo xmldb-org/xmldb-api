@@ -52,7 +52,7 @@ import java.util.List;
  * the functionality of a {@code Collection} in ways that allows optional functionality to be
  * enabled for the {@code Collection}.
  */
-public interface Collection extends Configurable, AutoCloseable {
+public interface Collection extends Configurable, AutoCloseable, ServiceProvider {
   /**
    * Returns the name associated with the Collection instance.
    *
@@ -61,32 +61,6 @@ public interface Collection extends Configurable, AutoCloseable {
    *         vendor specific errors that occur.
    */
   String getName() throws XMLDBException;
-
-  /**
-   * Checks if a service of the given serviceType is available or not.
-   *
-   * @return {@code true} if the given service type is supported, {@code false otherwise}
-   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the
-   *         {@code close} method has been called on the {@code Collection}
-   */
-  <S extends Service> boolean hasService(Class<S> serviceType) throws XMLDBException;
-
-  /**
-   * Returns a {@code Service} instance for the requested {@code serviceType}. If no {@code Service}
-   * exists a {@link XMLDBException} with {@link ErrorCodes#NO_SUCH_SERVICE} is thrown.
-   * 
-   * @param <S> the type of service
-   * @param serviceType the type of service to return
-   * @return a instance of the given service type
-   * @throws XMLDBException with expected error codes. {@link ErrorCodes#NO_SUCH_SERVICE} if the
-   *         service does not exist, {@link ErrorCodes#VENDOR_ERROR} for any vendor specific errors
-   *         that occur. {@link ErrorCodes#COLLECTION_CLOSED} if the {@code close} method has been
-   *         called on the {@code Collection}
-   *
-   * @since 2.0
-   */
-  <S extends Service> S getService(Class<S> serviceType) throws XMLDBException;
 
   /**
    * Returns the parent collection for this collection or {@code null} if no parent collection

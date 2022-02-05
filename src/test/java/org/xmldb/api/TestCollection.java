@@ -40,12 +40,13 @@
 package org.xmldb.api;
 
 import static java.util.Collections.emptyList;
+import static org.xmldb.api.base.ErrorCodes.NOT_IMPLEMENTED;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.ErrorCodes;
 import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
@@ -67,13 +68,18 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public <S extends Service> boolean hasService(Class<S> serviceType) throws XMLDBException {
+  public <S extends Service> boolean hasService(Class<S> serviceType) {
     return false;
   }
 
   @Override
+  public <S extends Service> Optional<S> findService(Class<S> serviceType) {
+    return Optional.empty();
+  }
+
+  @Override
   public <S extends Service> S getService(Class<S> serviceType) throws XMLDBException {
-    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
+    throw new XMLDBException(NOT_IMPLEMENTED);
   }
 
   @Override
@@ -108,27 +114,27 @@ public class TestCollection extends ConfigurableImpl implements Collection {
 
   @Override
   public <R extends Resource> R createResource(String id, Class<R> type) throws XMLDBException {
-    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
+    throw new XMLDBException(NOT_IMPLEMENTED);
   }
 
   @Override
   public void removeResource(Resource res) throws XMLDBException {
-    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
+    throw new XMLDBException(NOT_IMPLEMENTED);
   }
 
   @Override
   public void storeResource(Resource res) throws XMLDBException {
-    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
+    throw new XMLDBException(NOT_IMPLEMENTED);
   }
 
   @Override
   public Resource getResource(String id) throws XMLDBException {
-    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
+    throw new XMLDBException(NOT_IMPLEMENTED);
   }
 
   @Override
   public String createId() throws XMLDBException {
-    throw new XMLDBException(ErrorCodes.NOT_IMPLEMENTED);
+    throw new XMLDBException(NOT_IMPLEMENTED);
   }
 
   @Override
