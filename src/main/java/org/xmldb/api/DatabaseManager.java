@@ -40,9 +40,11 @@
 package org.xmldb.api;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.locks.StampedLock;
 
 import org.xmldb.api.base.Collection;
@@ -68,18 +70,19 @@ public class DatabaseManager {
       Boolean.getBoolean("org.xmldb.api.strictRegistrationBehavior");
 
   /**
-   * Returns a list of all available {@code Database} implementations that have been registered with
+   * Returns a set of all available {@code Database} implementations that have been registered with
    * this {@code DatabaseManager}.
    *
    * @return An array of {@code Database} instances. One for each {@code Database} registered with
-   *         the {@code DatabaseManager}. If no {@code Database} instances exist then an empty array
+   *         the {@code DatabaseManager}. If no {@code Database} instances exist then an empty set
    *         is returned.
+   * @since 2.0
    */
-  public static Database[] getDatabases() {
+  public static Set<Database> getDatabases() {
     // try optimistic read first
     long stamp = dbLock.tryOptimisticRead();
     if (stamp > 0) {
-      final Database[] result = databases.values().toArray(new Database[0]);
+      final Set<Database> result = new HashSet<>(databases.values());
       if (dbLock.validate(stamp)) {
         return result;
       }
@@ -88,7 +91,7 @@ public class DatabaseManager {
     // fallback to locking read
     stamp = dbLock.readLock();
     try {
-      return databases.values().toArray(new Database[0]);
+      return new HashSet<>(databases.values());
     } finally {
       dbLock.unlockRead(stamp);
     }
