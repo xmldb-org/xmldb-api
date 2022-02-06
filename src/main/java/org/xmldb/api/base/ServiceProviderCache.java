@@ -55,8 +55,8 @@ public final class ServiceProviderCache implements ServiceProvider {
 
     private List<ImplementationProvider<? extends Service>> providers;
 
-    public static <S extends Service> ServiceProviderCache initialize(Consumer<ProviderRegistry> initializer) {
-        return new ServiceProviderCache(initializer);
+    public static <S extends Service> ServiceProviderCache withRegistered(Consumer<ProviderRegistry> registry) {
+        return new ServiceProviderCache(registry);
     }
 
     private ServiceProviderCache(Consumer<ProviderRegistry> initializer) {
