@@ -51,15 +51,15 @@ import java.util.function.Supplier;
 
 public final class ServiceProviderCache implements ServiceProvider {
     private final StampedLock lock;
-    private final Consumer<ServiceRegistry> initializer;
+    private final Consumer<ProviderRegistry> initializer;
 
     private List<ImplementationProvider<? extends Service>> providers;
 
-    public static <S extends Service> ServiceProviderCache initialize(Consumer<ServiceRegistry> initializer) {
+    public static <S extends Service> ServiceProviderCache initialize(Consumer<ProviderRegistry> initializer) {
         return new ServiceProviderCache(initializer);
     }
 
-    private ServiceProviderCache(Consumer<ServiceRegistry> initializer) {
+    private ServiceProviderCache(Consumer<ProviderRegistry> initializer) {
         lock = new StampedLock();
         this.initializer = initializer;
     }
@@ -91,7 +91,7 @@ public final class ServiceProviderCache implements ServiceProvider {
         }
     }
 
-    private <S extends Service> void addServiceCache(Class<S> serviceType, Supplier<S> serviceSupplier) {
+    private <S extends Service> void addServiceCache(Class<S> serviceType, Supplier<? extends S> serviceSupplier) {
         providers.add(new ImplementationProvider<>(serviceType, serviceSupplier));
     }
 
@@ -122,9 +122,9 @@ public final class ServiceProviderCache implements ServiceProvider {
 
     static final class ImplementationProvider<S extends Service> implements Predicate<Class<?>> {
         private final Class<S> serviceType;
-        private final Supplier<S> serviceSupplier;
+        private final Supplier<? extends S> serviceSupplier;
 
-        ImplementationProvider(Class<S> serviceType, Supplier<S> serviceSupplier) {
+        ImplementationProvider(Class<S> serviceType, Supplier<? extends S> serviceSupplier) {
             this.serviceType = serviceType;
             this.serviceSupplier = serviceSupplier;
         }
@@ -144,7 +144,7 @@ public final class ServiceProviderCache implements ServiceProvider {
      * Registry used to add available service providers.
      */
     @FunctionalInterface
-    public interface ServiceRegistry {
+    public interface ProviderRegistry {
         /**
          * Registers the given service supplier for the given service type.
          * 
@@ -153,6 +153,6 @@ public final class ServiceProviderCache implements ServiceProvider {
          * @param serviceSupplier
          *            the supplier for the implementation instance
          */
-        <S extends Service> void add(Class<S> serviceType, Supplier<S> serviceSupplier);
+        <S extends Service> void add(Class<S> serviceType, Supplier<? extends S> serviceSupplier);
     }
 }

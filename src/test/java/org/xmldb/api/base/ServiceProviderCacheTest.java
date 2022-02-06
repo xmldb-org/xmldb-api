@@ -52,6 +52,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.xmldb.api.modules.CollectionManagementService;
+import org.xmldb.api.modules.XPathQueryService;
+import org.xmldb.api.modules.XQueryService;
 import org.xmldb.api.security.UserPrincipalLookupService;
 
 @MockitoSettings
@@ -60,14 +62,19 @@ class ServiceProviderCacheTest {
     CollectionManagementService collectionManagementService;
     @Mock
     Supplier<CollectionManagementService> collectionManagementServiceSupplier;
+    @Mock
+    Supplier<CombinedQueryService> combinedQueryServiceProvider;
 
     ServiceProviderCache cache;
 
     @BeforeEach
     void prepare() {
-        cache = ServiceProviderCache
-                .initialize(init -> init.add(CollectionManagementService.class,
-                        collectionManagementServiceSupplier));
+        cache = ServiceProviderCache.initialize(registry -> {
+            registry.add(CollectionManagementService.class,
+                    collectionManagementServiceSupplier);
+            registry.add(XPathQueryService.class, combinedQueryServiceProvider);
+            registry.add(XQueryService.class, combinedQueryServiceProvider);
+        });
     }
 
     @Test
@@ -107,5 +114,8 @@ class ServiceProviderCacheTest {
                     assertThat(e.errorCode).isEqualTo(NO_SUCH_SERVICE);
                     assertThat(e.vendorErrorCode).isEqualTo(0);
                 });
+    }
+
+    interface CombinedQueryService extends XPathQueryService, XQueryService {
     }
 }
