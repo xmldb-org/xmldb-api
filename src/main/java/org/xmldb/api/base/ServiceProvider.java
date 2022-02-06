@@ -39,6 +39,8 @@
  */
 package org.xmldb.api.base;
 
+import static org.xmldb.api.base.ErrorCodes.NO_SUCH_SERVICE;
+
 import java.util.Optional;
 
 /**
@@ -85,6 +87,8 @@ public interface ServiceProvider {
      *
      * @since 2.0
      */
-    <S extends Service> S getService(Class<S> serviceType) throws XMLDBException;
+    default <S extends Service> S getService(Class<S> serviceType) throws XMLDBException {
+        return findService(serviceType).orElseThrow(() -> new XMLDBException(NO_SUCH_SERVICE));
+    }
 
 }

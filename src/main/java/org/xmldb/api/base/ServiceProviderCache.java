@@ -39,8 +39,6 @@
  */
 package org.xmldb.api.base;
 
-import static org.xmldb.api.base.ErrorCodes.NO_SUCH_SERVICE;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -113,11 +111,6 @@ public final class ServiceProviderCache implements ServiceProvider {
             }
         }
         return Optional.empty();
-    }
-
-    @Override
-    public <S extends Service> S getService(Class<S> serviceType) throws XMLDBException {
-        return findService(serviceType).orElseThrow(() -> new XMLDBException(NO_SUCH_SERVICE));
     }
 
     static final class ImplementationProvider<S extends Service> implements Predicate<Class<?>> {
