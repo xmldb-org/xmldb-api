@@ -64,7 +64,7 @@ class XMLDBExceptionTest {
         XMLDBException ex = new XMLDBException();
         assertThat(ex).hasMessage("").satisfies(e -> {
             assertThat(e.errorCode).isEqualTo(UNKNOWN_ERROR);
-            assertThat(e.vendorErrorCode).isEqualTo(0);
+            assertThat(e.vendorErrorCode).isZero();
         });
     }
 
@@ -73,7 +73,7 @@ class XMLDBExceptionTest {
         XMLDBException ex = new XMLDBException(COLLECTION_CLOSED);
         assertThat(ex).hasMessage("").satisfies(e -> {
             assertThat(e.errorCode).isEqualTo(COLLECTION_CLOSED);
-            assertThat(e.vendorErrorCode).isEqualTo(0);
+            assertThat(e.vendorErrorCode).isZero();
         });
     }
 
@@ -82,7 +82,7 @@ class XMLDBExceptionTest {
         XMLDBException ex = new XMLDBException(INVALID_COLLECTION, "message 1");
         assertThat(ex).hasMessage("message 1").satisfies(e -> {
             assertThat(e.errorCode).isEqualTo(INVALID_COLLECTION);
-            assertThat(e.vendorErrorCode).isEqualTo(0);
+            assertThat(e.vendorErrorCode).isZero();
         });
     }
 
@@ -110,7 +110,7 @@ class XMLDBExceptionTest {
         XMLDBException ex = new XMLDBException(NOT_IMPLEMENTED, cause);
         assertThat(ex).hasMessage("").hasCause(cause).satisfies(e -> {
             assertThat(e.errorCode).isEqualTo(NOT_IMPLEMENTED);
-            assertThat(e.vendorErrorCode).isEqualTo(0);
+            assertThat(e.vendorErrorCode).isZero();
         });
     }
 
@@ -120,7 +120,7 @@ class XMLDBExceptionTest {
         XMLDBException ex = new XMLDBException(INVALID_URI, "message 3", cause);
         assertThat(ex).hasMessage("message 3").hasCause(cause).satisfies(e -> {
             assertThat(e.errorCode).isEqualTo(INVALID_URI);
-            assertThat(e.vendorErrorCode).isEqualTo(0);
+            assertThat(e.vendorErrorCode).isZero();
         });
     }
 

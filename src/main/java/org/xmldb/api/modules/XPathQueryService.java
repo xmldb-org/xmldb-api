@@ -62,8 +62,6 @@ public interface XPathQueryService extends Service {
    * @param uri The URI for the namespace to be associated with prefix.
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
-   *
-   * TODO: Probably need some special error here.
    */
   void setNamespace(String prefix, String uri) throws XMLDBException;
 

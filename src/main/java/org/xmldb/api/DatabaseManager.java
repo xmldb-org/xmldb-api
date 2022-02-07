@@ -39,9 +39,13 @@
  */
 package org.xmldb.api;
 
+import static org.xmldb.api.base.ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED;
+import static org.xmldb.api.base.ErrorCodes.INVALID_DATABASE;
+import static org.xmldb.api.base.ErrorCodes.INVALID_URI;
+import static org.xmldb.api.base.ErrorCodes.NO_SUCH_DATABASE;
+
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -49,7 +53,6 @@ import java.util.concurrent.locks.StampedLock;
 
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
-import org.xmldb.api.base.ErrorCodes;
 import org.xmldb.api.base.XMLDBException;
 
 /**
@@ -59,7 +62,7 @@ import org.xmldb.api.base.XMLDBException;
  * programming language. Individual language mappings should define the exact syntax and semantics
  * of its use.
  */
-public class DatabaseManager {
+public final class DatabaseManager {
   protected static final String URI_PREFIX = "xmldb:";
 
   static final Properties properties = new Properties();
@@ -68,6 +71,8 @@ public class DatabaseManager {
 
   static boolean strictRegistrationBehavior =
       Boolean.getBoolean("org.xmldb.api.strictRegistrationBehavior");
+
+  private DatabaseManager() {}
 
   /**
    * Returns a set of all available {@code Database} implementations that have been registered with
@@ -108,7 +113,7 @@ public class DatabaseManager {
   public static void registerDatabase(final Database database) throws XMLDBException {
     final String name = database.getName();
     if (name == null || name.isEmpty()) {
-      throw new XMLDBException(ErrorCodes.INVALID_DATABASE);
+      throw new XMLDBException(INVALID_DATABASE);
     }
     final long stamp = dbLock.writeLock();
     try {
@@ -123,7 +128,7 @@ public class DatabaseManager {
       throws XMLDBException {
     final Database existing = databases.putIfAbsent(databaseName, database);
     if (existing != null && existing != database && strictRegistrationBehavior) {
-      throw new XMLDBException(ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED);
+      throw new XMLDBException(INSTANCE_NAME_ALREADY_REGISTERED);
     }
   }
 
@@ -132,17 +137,11 @@ public class DatabaseManager {
    * {@code Database} has been deregistered it can no longer be used to handle requests.
    *
    * @param database The {@code Database} instance to deregister.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
    */
-  public static void deregisterDatabase(final Database database) throws XMLDBException {
+  public static void deregisterDatabase(final Database database) {
     final long stamp = dbLock.writeLock();
     try {
-      for (Iterator<Database> dbIterator = databases.values().iterator(); dbIterator.hasNext();) {
-        if (database.equals(dbIterator.next())) {
-          dbIterator.remove();
-        }
-      }
+      databases.values().removeIf(database::equals);
     } finally {
       dbLock.unlockWrite(stamp);
     }
@@ -243,16 +242,14 @@ public class DatabaseManager {
    * @throws XMLDBException if an error occurs whilst getting the database
    */
   protected static Database getDatabase(final String uri) throws XMLDBException {
-    if (!uri.startsWith(URI_PREFIX)) {
-      throw new XMLDBException(ErrorCodes.INVALID_URI);
-    }
+    final String databaseAndCollection = stripURIPrefix(uri); 
 
-    final int end = uri.indexOf(":", URI_PREFIX.length());
+    final int end = databaseAndCollection.indexOf(":");
     if (end == -1) {
-      throw new XMLDBException(ErrorCodes.INVALID_URI);
+      throw new XMLDBException(INVALID_URI);
     }
 
-    final String databaseName = uri.substring(URI_PREFIX.length(), end);
+    final String databaseName = databaseAndCollection.substring(0, end);
 
     // try optimistic read first
     long stamp = dbLock.tryOptimisticRead();
@@ -260,7 +257,7 @@ public class DatabaseManager {
       final Database db = databases.get(databaseName);
       if (dbLock.validate(stamp)) {
         if (db == null) {
-          throw new XMLDBException(ErrorCodes.NO_SUCH_DATABASE);
+          throw new XMLDBException(NO_SUCH_DATABASE);
         }
         return db;
       }
@@ -276,7 +273,7 @@ public class DatabaseManager {
     }
 
     if (db == null) {
-      throw new XMLDBException(ErrorCodes.NO_SUCH_DATABASE);
+      throw new XMLDBException(NO_SUCH_DATABASE);
     }
 
     return db;
@@ -292,7 +289,7 @@ public class DatabaseManager {
    */
   protected static String stripURIPrefix(final String uri) throws XMLDBException {
     if (!uri.startsWith(URI_PREFIX)) {
-      throw new XMLDBException(ErrorCodes.INVALID_URI);
+      throw new XMLDBException(INVALID_URI);
     }
 
     return uri.substring(URI_PREFIX.length());

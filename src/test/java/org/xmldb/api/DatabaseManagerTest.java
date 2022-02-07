@@ -45,6 +45,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.xmldb.api.base.ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED;
 import static org.xmldb.api.base.ErrorCodes.INVALID_DATABASE;
+import static org.xmldb.api.base.ErrorCodes.INVALID_URI;
+import static org.xmldb.api.base.ErrorCodes.NO_SUCH_DATABASE;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
@@ -96,7 +98,7 @@ class DatabaseManagerTest {
             .isThrownBy(() -> DatabaseManager.registerDatabase(dbOne))
             .satisfies(e -> {
                 assertThat(e.errorCode).isEqualTo(INVALID_DATABASE);
-                assertThat(e.vendorErrorCode).isEqualTo(0);
+                assertThat(e.vendorErrorCode).isZero();
             });
 
     assertThat(DatabaseManager.databases).isEmpty();
@@ -107,7 +109,7 @@ class DatabaseManagerTest {
             .isThrownBy(() -> DatabaseManager.registerDatabase(dbOne))
             .satisfies(e -> {
                 assertThat(e.errorCode).isEqualTo(INVALID_DATABASE);
-                assertThat(e.vendorErrorCode).isEqualTo(0);
+                assertThat(e.vendorErrorCode).isZero();
             });
 
     assertThat(DatabaseManager.databases).isEmpty();
@@ -198,8 +200,38 @@ class DatabaseManagerTest {
             .isThrownBy(() -> DatabaseManager.registerDatabase(dbTwo))
             .satisfies(e -> {
                 assertThat(e.errorCode).isEqualTo(INSTANCE_NAME_ALREADY_REGISTERED);
-                assertThat(e.vendorErrorCode).isEqualTo(0);
+                assertThat(e.vendorErrorCode).isZero();
             });
+  }
+
+  @Test
+  void testStripURIPrefix() {
+      assertThatExceptionOfType(XMLDBException.class)
+      .isThrownBy(() -> DatabaseManager.stripURIPrefix("unkown-prefix"))
+      .satisfies(e -> {
+          assertThat(e.errorCode).isEqualTo(INVALID_URI);
+          assertThat(e.vendorErrorCode).isZero();
+      });
+  }
+
+  @Test
+  void testGetDatabaseWrongUri() {
+      assertThatExceptionOfType(XMLDBException.class)
+      .isThrownBy(() -> DatabaseManager.getDatabase("xmldb:somedb"))
+      .satisfies(e -> {
+          assertThat(e.errorCode).isEqualTo(INVALID_URI);
+          assertThat(e.vendorErrorCode).isZero();
+      });
+  }
+
+  @Test
+  void testGetDatabaseUnkown() {
+      assertThatExceptionOfType(XMLDBException.class)
+      .isThrownBy(() -> DatabaseManager.getDatabase("xmldb:somedb:collection"))
+      .satisfies(e -> {
+          assertThat(e.errorCode).isEqualTo(NO_SUCH_DATABASE);
+          assertThat(e.vendorErrorCode).isZero();
+      });
   }
 
   private static Entry<String, Database> entry(String key, Database value) {

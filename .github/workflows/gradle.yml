@@ -36,6 +36,11 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew check
+    - name: SonarQube
+      if:  ${{ matrix.jdk == '17' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+      run: ./gradlew sonarqube -PsonarToken=${{ secrets.SONAR_TOKEN }}
     - name: Run codecov analysis
       uses: codecov/codecov-action@v1
   deploy:

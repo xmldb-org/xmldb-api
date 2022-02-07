@@ -39,92 +39,34 @@
  */
 package org.xmldb.api.base;
 
-/**
- * ErrorCodes defines XML:DB error codes that can be used to set the {@code errorCodes} attribute of
- * an {@code XMLDBException}
- */
-public final class ErrorCodes {
-  /**
-   * Set when a more detailed error can not be determined.
-   */
-  public static final int UNKNOWN_ERROR = 0;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-  /**
-   * Set when a vendor specific error has occured.
-   */
-  public static final int VENDOR_ERROR = 1;
+import java.util.function.Consumer;
 
-  /**
-   * Set if the API implementation does not support the operation being invoked.
-   */
-  public static final int NOT_IMPLEMENTED = 2;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.xmldb.api.TestResourceIterator;
 
-  /**
-   * Set if the content of a {@code Resource} is set to a content type different then that for which
-   * the {@code Resource} was intended to support.
-   */
-  public static final int WRONG_CONTENT_TYPE = 3;
+@MockitoSettings
+class ResourceIteratorTest {
+    @Spy
+    TestResourceIterator resourceIterator;
+    @Mock
+    Resource resource;
+    @Mock
+    Consumer<? super Resource> action;
 
-  /**
-   * Set if access to the requested {@code Collection} can not be granted due to the lack of proper
-   * credentials.
-   */
-  public static final int PERMISSION_DENIED = 4;
+    @Test
+    void testForEachRemaining() throws XMLDBException {
+        when(resourceIterator.hasMoreResources()).thenReturn(true, false);
+        when(resourceIterator.nextResource()).thenReturn(resource);
 
-  /**
-   * Set if the URI format is invalid.
-   */
-  public static final int INVALID_URI = 5;
+        resourceIterator.forEachRemaining(action);
 
-  /**
-   * Set if the requested {@code Service} could not be located.
-   */
-  public static final int NO_SUCH_SERVICE = 100;
+        verify(action).accept(resource);
+    }
 
-  /**
-   * Set if the requested {@code Collection} could not be located.
-   */
-  public static final int NO_SUCH_COLLECTION = 200;
-
-  /**
-   * Set if the Collection instance is in an invalid state.
-   */
-  public static final int INVALID_COLLECTION = 201;
-
-  /**
-   * Set when an operation is invoked against a {@code Collection} instance that has been closed.
-   */
-  public static final int COLLECTION_CLOSED = 202;
-
-  /**
-   * Set if the requested {@code Resource} could not be located.
-   */
-  public static final int NO_SUCH_RESOURCE = 300;
-
-  /**
-   * Set if the {@code Resource} provided to an operation is invalid.
-   */
-  public static final int INVALID_RESOURCE = 301;
-
-  /**
-   * Set if the resource type requested is unknown to the API implementation.
-   */
-  public static final int UNKNOWN_RESOURCE_TYPE = 302;
-
-  /**
-   * Set if a {@code Database} instance can not be located for the provided URI.
-   */
-  public static final int NO_SUCH_DATABASE = 400;
-
-  /**
-   * Set if the {@code Database} instance being registered is invalid.
-   */
-  public static final int INVALID_DATABASE = 401;
-
-  /**
-   * Set if the {@code Database} instance name being registered is already registered.
-   */
-  public static final int INSTANCE_NAME_ALREADY_REGISTERED = 402;
-
-  private ErrorCodes() {}
 }

@@ -53,7 +53,7 @@ public final class ServiceProviderCache implements ServiceProvider {
 
     private List<ImplementationProvider<? extends Service>> providers;
 
-    public static <S extends Service> ServiceProviderCache withRegistered(Consumer<ProviderRegistry> registry) {
+    public static ServiceProviderCache withRegistered(Consumer<ProviderRegistry> registry) {
         return new ServiceProviderCache(registry);
     }
 
@@ -64,10 +64,8 @@ public final class ServiceProviderCache implements ServiceProvider {
 
     private List<ImplementationProvider<? extends Service>> providers() {
         long stamp = lock.tryOptimisticRead();
-        if (stamp > 0) {
-            if (lock.validate(stamp) && providers != null) {
-                return providers;
-            }
+        if (stamp > 0 && lock.validate(stamp) && providers != null) {
+            return providers;
         }
         // fallback to locking read
         stamp = lock.readLock();
@@ -107,7 +105,7 @@ public final class ServiceProviderCache implements ServiceProvider {
     public <S extends Service> Optional<S> findService(Class<S> serviceType) {
         for (ImplementationProvider<? extends Service> provider : providers()) {
             if (provider.test(serviceType)) {
-                return Optional.ofNullable(provider.instance(serviceType));
+                return Optional.ofNullable(provider.instance());
             }
         }
         return Optional.empty();
@@ -128,7 +126,7 @@ public final class ServiceProviderCache implements ServiceProvider {
         }
 
         @SuppressWarnings("unchecked")
-        <I extends Service> I instance(Class<I> serviceType) {
+        <I extends Service> I instance() {
             return (I) serviceSupplier.get();
         }
     }

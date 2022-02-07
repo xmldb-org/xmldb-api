@@ -49,10 +49,12 @@ plugins {
 apply {
   plugin 'org.kordamp.gradle.checkstyle'
   plugin 'org.kordamp.gradle.errorprone'
+  plugin 'org.kordamp.gradle.sonar'
 }
 
 if (!project.hasProperty('sonatypeUsername')) ext.sonatypeUsername = '**undefined**'
 if (!project.hasProperty('sonatypePassword')) ext.sonatypePassword = '**undefined**'
+if (!project.hasProperty('sonarToken')) ext.sonarToken = '**undefined**'
 
 group = 'net.sf.xmldb-org'
 version = '2.0.0-SNAPSHOT'
@@ -183,6 +185,12 @@ config {
     errorprone {
       enabled = JavaVersion.current() != JavaVersion.VERSION_1_8
       errorProneVersion = '2.11.0'
+    }
+    sonar {
+      hostUrl = 'https://sonarcloud.io'
+      login = sonarToken
+      organization = 'xmldb-org'
+      projectKey = 'xmldb-org_xmldb-api'
     }
   }
   licensing {

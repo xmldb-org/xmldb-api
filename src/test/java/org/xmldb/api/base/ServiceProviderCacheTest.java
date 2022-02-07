@@ -104,14 +104,14 @@ class ServiceProviderCacheTest {
         when(combinedQueryServiceProvider.get())
                 .thenReturn(combinedQueryService);
         assertThat(cache.findService(CollectionManagementService.class))
-                .satisfies(s -> assertThat(s.get())
-                        .isEqualTo(collectionManagementService));
+                .satisfies(s -> assertThat(s)
+                        .contains(collectionManagementService));
         assertThat(cache.findService(XPathQueryService.class))
-                .satisfies(s -> assertThat(s.get())
-                        .isEqualTo(combinedQueryService));
+                .satisfies(s -> assertThat(s)
+                        .contains(combinedQueryService));
         assertThat(cache.findService(XQueryService.class))
-                .satisfies(s -> assertThat(s.get())
-                        .isEqualTo(combinedQueryService));
+                .satisfies(s -> assertThat(s)
+                        .contains(combinedQueryService));
         assertThat(cache.findService(UserPrincipalLookupService.class))
                 .satisfies(s -> assertThat(s).isEmpty());
     }
@@ -132,7 +132,7 @@ class ServiceProviderCacheTest {
                 () -> cache.getService(UserPrincipalLookupService.class))
                 .satisfies(e -> {
                     assertThat(e.errorCode).isEqualTo(NO_SUCH_SERVICE);
-                    assertThat(e.vendorErrorCode).isEqualTo(0);
+                    assertThat(e.vendorErrorCode).isZero();
                 });
     }
 
