@@ -39,22 +39,15 @@
  */
 package org.xmldb.api.security;
 
-/**
- * A typesafe enumeration of the access entry permission types.
- *
- * @since 2.0
- */
-public enum AclEntryPermission {
-  /**
-   * Permission to read the data of the collection / resource.
-   */
-  READ,
-  /**
-   * Permission to modify the collection / resource data.
-   */
-  WRITE,
-  /**
-   * Permission to list a execute a resource.
-   */
-  EXECUTE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.xmldb.api.security.AclEntryType.ALLOW;
+import static org.xmldb.api.security.AclEntryType.DENY;
+
+import org.junit.jupiter.api.Test;
+
+class AclEntryTypeTest {
+  @Test
+  void testValidValues() {
+    assertThat(AclEntryType.values()).containsExactly(ALLOW, DENY);
+  }
 }

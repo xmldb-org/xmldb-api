@@ -53,7 +53,9 @@ class ResourceTypeTest {
 
   @Test
   void testToString() {
+    assertThat(BINARY_RESOURCE.typeName()).isEqualTo("BinaryResource");
     assertThat(BINARY_RESOURCE).hasToString("BinaryResource");
+    assertThat(XML_RESOURCE.typeName()).isEqualTo("XMLResource");
     assertThat(XML_RESOURCE).hasToString("XMLResource");
   }
 }

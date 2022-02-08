@@ -45,6 +45,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -89,11 +90,10 @@ public final class AclEntry {
 
     private Builder(AclEntryType type, UserPrincipal principal, Set<AclEntryPermission> permissions,
         Set<AclEntryFlag> flags) {
-      assert permissions != null && flags != null;
       this.type = type;
       this.principal = principal;
-      this.permissions = permissions;
-      this.flags = flags;
+      this.permissions = Objects.requireNonNull(permissions);
+      this.flags = Objects.requireNonNull(flags);
     }
 
     /**
@@ -119,9 +119,7 @@ public final class AclEntry {
      * @return this builder
      */
     public Builder setType(AclEntryType type) {
-      if (type == null)
-        throw new NullPointerException();
-      this.type = type;
+      this.type = Objects.requireNonNull(type);
       return this;
     }
 
@@ -132,18 +130,14 @@ public final class AclEntry {
      * @return this builder
      */
     public Builder setPrincipal(UserPrincipal principal) {
-      if (principal == null)
-        throw new NullPointerException();
-      this.principal = principal;
+      this.principal = Objects.requireNonNull(principal);
       return this;
     }
 
     // check set only contains elements of the given type
     private static void checkSet(Set<?> set, Class<?> type) {
       for (Object e : set) {
-        if (e == null) {
-          throw new NullPointerException();
-        } else if (!type.isInstance(e)) {
+        if (!type.isInstance(e)) {
           throw new IllegalArgumentException(
               e.getClass().getName() + " is not an instance of " + type.getName());
         }
@@ -210,7 +204,6 @@ public final class AclEntry {
         flags = EnumSet.copyOf(flags);
         checkSet(flags, AclEntryFlag.class);
       }
-
       this.flags = flags;
       return this;
     }
@@ -332,6 +325,6 @@ public final class AclEntry {
    */
   @Override
   public String toString() {
-    return format("%s(%s)", super.toString(), principal);
+    return format("%s(%s)", getClass().getName(), principal);
   }
 }

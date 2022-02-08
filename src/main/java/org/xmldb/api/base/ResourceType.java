@@ -53,8 +53,22 @@ public enum ResourceType {
     this.name = name;
   }
 
+  /**
+   * Returns the old style resource type name from XML:DB API version 1.0 constant.
+   * 
+   * @return the classic type name
+   */
+  public String typeName() {
+    return name;
+  }
+
+  /**
+   * Returns the old style resource type name from XML:DB API version 1.0 constant.
+   * 
+   * @return the classic type name
+   */
   @Override
   public String toString() {
-    return name;
+    return typeName();
   }
 }

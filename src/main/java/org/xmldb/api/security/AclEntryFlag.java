@@ -45,4 +45,28 @@ package org.xmldb.api.security;
  * @since 2.0
  */
 public enum AclEntryFlag {
+  /**
+   * Can be placed on a collection and indicates that the ACL entry should be added to each new
+   * resource created.
+   */
+  RESOURCE_INHERIT,
+
+  /**
+   * Can be placed on a collection and indicates that the ACL entry should be added to each new
+   * collection created.
+   */
+  COLLECTION_INHERIT,
+
+  /**
+   * Can be placed on a collection to indicate that the ACL entry should not be placed on the newly
+   * created collection which is inheritable by sub collections of the created collection.
+   */
+  NO_PROPAGATE_INHERIT,
+
+  /**
+   * Can be placed on a collection but does not apply to the collection, only to newly created
+   * resources/collections as specified by the {@link #RESOURCE_INHERIT} and
+   * {@link #COLLECTION_INHERIT} flags.
+   */
+  INHERIT_ONLY;
 }
