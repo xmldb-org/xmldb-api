@@ -37,23 +37,23 @@
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
  * <https://github.com/xmldb-org/>.
  */
-package org.xmldb.api.modules;
+package org.xmldb.api.base;
 
-import org.xmldb.api.base.Resource;
-import org.xmldb.api.base.ResourceType;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.xmldb.api.base.ResourceType.BINARY_RESOURCE;
+import static org.xmldb.api.base.ResourceType.XML_RESOURCE;
 
-/**
- * Resource for encapsulation of binary data that is stored in the data base. Support for
- * BinaryResources is optional.
- *
- * The standard {@code getContent} method returns a {@code byte[]} and the standard setContent
- * expects an {@code byte[]}.
- */
-public interface BinaryResource extends Resource {
+import org.junit.jupiter.api.Test;
 
-  @Override
-  default ResourceType getResourceType() {
-    return ResourceType.BINARY_RESOURCE;
+class ResourceTypeTest {
+  @Test
+  void testValidValues() {
+    assertThat(ResourceType.values()).containsExactly(BINARY_RESOURCE, XML_RESOURCE);
+  }
+
+  @Test
+  void testToString() {
+    assertThat(BINARY_RESOURCE).hasToString("BinaryResource");
+    assertThat(XML_RESOURCE).hasToString("XMLResource");
   }
 }
-

@@ -48,6 +48,17 @@ import java.time.Instant;
  * a specific content type before anything useful can be done.
  */
 public interface Resource extends AutoCloseable {
+
+  /**
+   * Returns the resource type for this Resource.
+   *
+   * XML:DB defined resource types are: XMLResource - all XML data stored in the database
+   * BinaryResource - Binary blob data stored in the database
+   *
+   * @return the resource type for the Resource.
+   */
+    ResourceType getResourceType();
+
   /**
    * Returns the {@code Collection} instance that this resource is associated with. All resources
    * must exist within the context of a {@code collection}.
@@ -67,18 +78,6 @@ public interface Resource extends AutoCloseable {
    *         vendor specific errors that occur.
    */
   String getId() throws XMLDBException;
-
-  /**
-   * Returns the resource type for this Resource.
-   *
-   * XML:DB defined resource types are: XMLResource - all XML data stored in the database
-   * BinaryResource - Binary blob data stored in the database
-   *
-   * @return the resource type for the Resource.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
-   */
-  String getResourceType() throws XMLDBException;
 
   /**
    * Retrieves the content from the resource. The type of the content varies depending what type of

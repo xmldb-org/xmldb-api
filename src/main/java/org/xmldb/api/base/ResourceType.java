@@ -37,23 +37,24 @@
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
  * <https://github.com/xmldb-org/>.
  */
-package org.xmldb.api.modules;
-
-import org.xmldb.api.base.Resource;
-import org.xmldb.api.base.ResourceType;
+package org.xmldb.api.base;
 
 /**
- * Resource for encapsulation of binary data that is stored in the data base. Support for
- * BinaryResources is optional.
- *
- * The standard {@code getContent} method returns a {@code byte[]} and the standard setContent
- * expects an {@code byte[]}.
+ * Enumeration of all available resource types.
+ * 
+ * @since 2.0
  */
-public interface BinaryResource extends Resource {
+public enum ResourceType {
+  BINARY_RESOURCE("BinaryResource"), XML_RESOURCE("XMLResource");
+
+  private final String name;
+
+  private ResourceType(String name) {
+    this.name = name;
+  }
 
   @Override
-  default ResourceType getResourceType() {
-    return ResourceType.BINARY_RESOURCE;
+  public String toString() {
+    return name;
   }
 }
-

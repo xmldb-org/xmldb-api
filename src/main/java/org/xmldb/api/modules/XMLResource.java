@@ -45,6 +45,7 @@ import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.XMLReader;
 import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.ResourceType;
 import org.xmldb.api.base.XMLDBException;
 
 /**
@@ -56,7 +57,10 @@ import org.xmldb.api.base.XMLDBException;
  */
 public interface XMLResource extends Resource {
 
-  public static final String RESOURCE_TYPE = "XMLResource";
+  @Override
+  default ResourceType getResourceType() {
+    return ResourceType.XML_RESOURCE;
+  }
 
   /**
    * Returns the unique id for the parent document to this {@code Resource} or null if the

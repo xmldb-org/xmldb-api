@@ -63,7 +63,7 @@ import org.xmldb.api.base.XMLDBException;
  * of its use.
  */
 public final class DatabaseManager {
-  protected static final String URI_PREFIX = "xmldb:";
+  static final String URI_PREFIX = "xmldb:";
 
   static final Properties properties = new Properties();
   static final StampedLock dbLock = new StampedLock();
@@ -241,7 +241,7 @@ public final class DatabaseManager {
    * @return the requested {@code Database} instance.
    * @throws XMLDBException if an error occurs whilst getting the database
    */
-  protected static Database getDatabase(final String uri) throws XMLDBException {
+  static Database getDatabase(final String uri) throws XMLDBException {
     final String databaseAndCollection = stripURIPrefix(uri); 
 
     final int end = databaseAndCollection.indexOf(":");
@@ -287,7 +287,7 @@ public final class DatabaseManager {
    * @return The database specific portion of the URI.
    * @throws XMLDBException if an error occurs whilst stripping the URI prefix
    */
-  protected static String stripURIPrefix(final String uri) throws XMLDBException {
+  static String stripURIPrefix(final String uri) throws XMLDBException {
     if (!uri.startsWith(URI_PREFIX)) {
       throw new XMLDBException(INVALID_URI);
     }

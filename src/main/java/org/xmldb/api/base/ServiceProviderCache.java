@@ -105,7 +105,7 @@ public final class ServiceProviderCache implements ServiceProvider {
     public <S extends Service> Optional<S> findService(Class<S> serviceType) {
         for (ImplementationProvider<? extends Service> provider : providers()) {
             if (provider.test(serviceType)) {
-                return Optional.ofNullable(provider.instance());
+                return Optional.ofNullable(serviceType.cast(provider.instance()));
             }
         }
         return Optional.empty();
@@ -125,9 +125,8 @@ public final class ServiceProviderCache implements ServiceProvider {
             return serviceType.isAssignableFrom(tested);
         }
 
-        @SuppressWarnings("unchecked")
-        <I extends Service> I instance() {
-            return (I) serviceSupplier.get();
+        S instance() {
+            return serviceSupplier.get();
         }
     }
 

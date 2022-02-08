@@ -39,21 +39,21 @@
  */
 package org.xmldb.api.modules;
 
-import org.xmldb.api.base.Resource;
-import org.xmldb.api.base.ResourceType;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.xmldb.api.base.ResourceType.XML_RESOURCE;
 
-/**
- * Resource for encapsulation of binary data that is stored in the data base. Support for
- * BinaryResources is optional.
- *
- * The standard {@code getContent} method returns a {@code byte[]} and the standard setContent
- * expects an {@code byte[]}.
- */
-public interface BinaryResource extends Resource {
+import org.junit.jupiter.api.Test;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoSettings;
 
-  @Override
-  default ResourceType getResourceType() {
-    return ResourceType.BINARY_RESOURCE;
+@MockitoSettings
+class XMLResourceTest {
+  @Spy
+  XMLResource xmlResource;
+
+  @Test
+  void testGetResourceType() {
+    assertThat(xmlResource.getResourceType()).isEqualTo(XML_RESOURCE);
   }
-}
 
+}
