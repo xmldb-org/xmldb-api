@@ -1,8 +1,9 @@
 = XML:DB Initiative for XML Databases
 Patrick Reinhart <https://github.com/reinhapa[@reinhapa]>
 :group-name: net.sf.xmldb-org
+:project-org: xmldb-org
 :project-name: xmldb-api
-:project-full-path: xmldb-org/{project-name}
+:project-full-path: {project-org}/{project-name}
 :github-branch: master
 
 image:https://img.shields.io/badge/license-XML:DB-blue.svg["XML:DB Initiative Software License", link="https://github.com/{project-full-path}/blob/{github-branch}/LICENSE"]
@@ -10,6 +11,7 @@ image:https://img.shields.io/badge/Java-8-blue.svg["Java 8", link="https://adopt
 image:https://img.shields.io/badge/Java-11-blue.svg["Java 11", link="https://adoptium.net/"]
 image:https://img.shields.io/badge/Java-17-blue.svg["Java 17", link="https://adoptium.net/"]
 image:https://img.shields.io/github/release/{project-full-path}.svg["Release", link="https://github.com/{project-full-path}/releases"]
+image:https://sonarcloud.io/api/project_badges/measure?project={project-org}_{project-name}&metric=alert_status["Quality Gate Status", link ="https://sonarcloud.io/summary/new_code?id={project-org}_{project-name}"]
 image:https://javadoc.io/badge2/{group-name}/{project-name}/javadoc.svg["javadoc", link="https://javadoc.io/doc/{group-name}/{project-name}"]
 image:https://github.com/{project-full-path}/actions/workflows/gradle.yml/badge.svg["CI", link="https://github.com/{project-full-path}/actions/workflows/gradle.yml"]
 
@@ -43,7 +45,7 @@ The JAR file will be located in the `build/libs` folder.
 
 
 == Getting the binaries for your build:
-The latest versions of the API are available at https://search.maven.org/search?q=g:net.sf.xmldb-org
+The latest versions of the API are available at https://search.maven.org/search?q=g:{group-name}
 
 
 == Contribute
