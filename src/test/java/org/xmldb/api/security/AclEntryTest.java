@@ -60,14 +60,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoSettings;
-import org.xmldb.api.security.AclEntry.Builder;
 
 @MockitoSettings
 class AclEntryTest {
   @Mock
   UserPrincipal principal;
 
-  Builder builder;
+  AclEntry.Builder builder;
 
   @BeforeEach
   void prepare() {
@@ -163,36 +162,35 @@ class AclEntryTest {
   }
 
   @Test
-  void testBuilderFromExistingEntry() {
-    UserPrincipal principal2 = mock(UserPrincipal.class);
-    AclEntry aclEntry = builder.setType(ALLOW).setPrincipal(principal).setPermissions(READ, EXECUTE)
-        .setFlags(RESOURCE_INHERIT, INHERIT_ONLY).build();
-    assertThat(aclEntry).isNotEqualTo(null);
-
-    AclEntry aclEntry1 = AclEntry.newBuilder(aclEntry).setPrincipal(principal2).build();
-    assertThat(aclEntry1).isNotEqualTo(aclEntry);
-    assertThat(aclEntry1).doesNotHaveSameHashCodeAs(aclEntry);
-
-    AclEntry aclEntry2 = AclEntry.newBuilder(aclEntry).setType(DENY).build();
-    assertThat(aclEntry2).isNotEqualTo(aclEntry);
-    assertThat(aclEntry2).doesNotHaveSameHashCodeAs(aclEntry);
-
-    AclEntry aclEntry3 = AclEntry.newBuilder(aclEntry).setPermissions(READ).build();
-    assertThat(aclEntry3).isNotEqualTo(aclEntry);
-    assertThat(aclEntry3).doesNotHaveSameHashCodeAs(aclEntry);
-
-    AclEntry aclEntry4 = AclEntry.newBuilder(aclEntry).setFlags(INHERIT_ONLY).build();
-    assertThat(aclEntry4).isNotEqualTo(aclEntry);
-    assertThat(aclEntry4).doesNotHaveSameHashCodeAs(aclEntry);
-
-    AclEntry aclEntry5 = AclEntry.newBuilder(aclEntry).build();
-    assertThat(aclEntry5).isEqualTo(aclEntry).isNotSameAs(aclEntry);
-    assertThat(aclEntry4).doesNotHaveSameHashCodeAs(aclEntry);
-  }
-
-  @Test
   void testToString() {
     AclEntry aclEntry = builder.setType(DENY).setPrincipal(principal).build();
     assertThat(aclEntry).hasToString("org.xmldb.api.security.AclEntry(principal)");
+  }
+
+  @Test
+  void testBuilderFromExistingEntry() {
+    final AclEntry aclEntry = builder.setType(ALLOW).setPrincipal(principal)
+        .setPermissions(READ, EXECUTE).setFlags(RESOURCE_INHERIT, INHERIT_ONLY).build();
+    assertThat(aclEntry).isNotNull();
+
+    final UserPrincipal principal2 = mock(UserPrincipal.class);
+    assertThat(AclEntry.newBuilder(aclEntry).setPrincipal(principal2).build())
+        .satisfies(tested -> nonEquals(tested, aclEntry));
+    assertThat(AclEntry.newBuilder(aclEntry).setType(DENY).build())
+        .satisfies(tested -> nonEquals(tested, aclEntry));
+    assertThat(AclEntry.newBuilder(aclEntry).setPermissions(READ).build())
+        .satisfies(tested -> nonEquals(tested, aclEntry));
+    assertThat(AclEntry.newBuilder(aclEntry).setFlags(INHERIT_ONLY).build())
+        .satisfies(tested -> nonEquals(tested, aclEntry));
+
+    assertThat(AclEntry.newBuilder(aclEntry).build()).satisfies(tested -> {
+      assertThat(tested).isEqualTo(aclEntry);
+      assertThat(tested).hasSameHashCodeAs(aclEntry);
+    });
+  }
+
+  static void nonEquals(AclEntry tested, AclEntry aclEntry) {
+    assertThat(tested).isNotEqualTo(aclEntry);
+    assertThat(tested).doesNotHaveSameHashCodeAs(aclEntry);
   }
 }
