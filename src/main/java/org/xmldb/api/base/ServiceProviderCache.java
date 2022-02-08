@@ -32,10 +32,10 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api.base;
 
@@ -48,101 +48,100 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public final class ServiceProviderCache implements ServiceProvider {
-    private final StampedLock lock;
-    private final Consumer<ProviderRegistry> initializer;
+  private final StampedLock lock;
+  private final Consumer<ProviderRegistry> initializer;
 
-    private List<ImplementationProvider<? extends Service>> providers;
+  private List<ImplementationProvider<? extends Service>> providers;
 
-    public static ServiceProviderCache withRegistered(Consumer<ProviderRegistry> registry) {
-        return new ServiceProviderCache(registry);
+  public static ServiceProviderCache withRegistered(Consumer<ProviderRegistry> registry) {
+    return new ServiceProviderCache(registry);
+  }
+
+  private ServiceProviderCache(Consumer<ProviderRegistry> initializer) {
+    lock = new StampedLock();
+    this.initializer = initializer;
+  }
+
+  private List<ImplementationProvider<? extends Service>> providers() {
+    long stamp = lock.tryOptimisticRead();
+    if (stamp > 0 && lock.validate(stamp) && providers != null) {
+      return providers;
     }
-
-    private ServiceProviderCache(Consumer<ProviderRegistry> initializer) {
-        lock = new StampedLock();
-        this.initializer = initializer;
+    // fallback to locking read
+    stamp = lock.readLock();
+    try {
+      if (providers != null) {
+        return providers;
+      }
+    } finally {
+      lock.unlockRead(stamp);
     }
-
-    private List<ImplementationProvider<? extends Service>> providers() {
-        long stamp = lock.tryOptimisticRead();
-        if (stamp > 0 && lock.validate(stamp) && providers != null) {
-            return providers;
-        }
-        // fallback to locking read
-        stamp = lock.readLock();
-        try {
-            if (providers != null) {
-                return providers;
-            }
-        } finally {
-            lock.unlockRead(stamp);
-        }
-        // create write lock to initialize values
-        stamp = lock.writeLock();
-        try {
-            providers = new ArrayList<>();
-            initializer.accept(this::addServiceCache);
-            return providers;
-        } finally {
-            lock.unlockWrite(stamp);
-        }
+    // create write lock to initialize values
+    stamp = lock.writeLock();
+    try {
+      providers = new ArrayList<>();
+      initializer.accept(this::addServiceCache);
+      return providers;
+    } finally {
+      lock.unlockWrite(stamp);
     }
+  }
 
-    private <S extends Service> void addServiceCache(Class<S> serviceType, Supplier<? extends S> serviceSupplier) {
-        providers.add(new ImplementationProvider<>(serviceType, serviceSupplier));
+  private <S extends Service> void addServiceCache(Class<S> serviceType,
+      Supplier<? extends S> serviceSupplier) {
+    providers.add(new ImplementationProvider<>(serviceType, serviceSupplier));
+  }
+
+  @Override
+  public <S extends Service> boolean hasService(Class<S> serviceType) {
+    for (ImplementationProvider<? extends Service> provider : providers()) {
+      if (provider.test(serviceType)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public <S extends Service> Optional<S> findService(Class<S> serviceType) {
+    for (ImplementationProvider<? extends Service> provider : providers()) {
+      if (provider.test(serviceType)) {
+        return Optional.ofNullable(serviceType.cast(provider.instance()));
+      }
+    }
+    return Optional.empty();
+  }
+
+  static final class ImplementationProvider<S extends Service> implements Predicate<Class<?>> {
+    private final Class<S> serviceType;
+    private final Supplier<? extends S> serviceSupplier;
+
+    ImplementationProvider(Class<S> serviceType, Supplier<? extends S> serviceSupplier) {
+      this.serviceType = serviceType;
+      this.serviceSupplier = serviceSupplier;
     }
 
     @Override
-    public <S extends Service> boolean hasService(Class<S> serviceType) {
-        for (ImplementationProvider<? extends Service> provider : providers()) {
-            if (provider.test(serviceType)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean test(Class<?> tested) {
+      return serviceType.isAssignableFrom(tested);
     }
 
-    @Override
-    public <S extends Service> Optional<S> findService(Class<S> serviceType) {
-        for (ImplementationProvider<? extends Service> provider : providers()) {
-            if (provider.test(serviceType)) {
-                return Optional.ofNullable(serviceType.cast(provider.instance()));
-            }
-        }
-        return Optional.empty();
+    S instance() {
+      return serviceSupplier.get();
     }
+  }
 
-    static final class ImplementationProvider<S extends Service> implements Predicate<Class<?>> {
-        private final Class<S> serviceType;
-        private final Supplier<? extends S> serviceSupplier;
-
-        ImplementationProvider(Class<S> serviceType, Supplier<? extends S> serviceSupplier) {
-            this.serviceType = serviceType;
-            this.serviceSupplier = serviceSupplier;
-        }
-
-        @Override
-        public boolean test(Class<?> tested) {
-            return serviceType.isAssignableFrom(tested);
-        }
-
-        S instance() {
-            return serviceSupplier.get();
-        }
-    }
-
+  /**
+   * Registry used to add available service providers.
+   */
+  @FunctionalInterface
+  public interface ProviderRegistry {
     /**
-     * Registry used to add available service providers.
+     * Registers the given service supplier for the given service type.
+     * 
+     * @param serviceType the service type
+     * @param serviceSupplier the supplier for the implementation instance
      */
-    @FunctionalInterface
-    public interface ProviderRegistry {
-        /**
-         * Registers the given service supplier for the given service type.
-         * 
-         * @param serviceType
-         *            the service type
-         * @param serviceSupplier
-         *            the supplier for the implementation instance
-         */
-        <S extends Service> void add(Class<S> serviceType, Supplier<? extends S> serviceSupplier);
-    }
+    <S extends Service> void add(Class<S> serviceType, Supplier<? extends S> serviceSupplier);
+  }
 }

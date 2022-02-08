@@ -32,10 +32,10 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api.security;
 
@@ -48,8 +48,8 @@ import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
 
 /**
- * This service is providing permission related functions in order to get or
- * change permissions on {@link Collection} or {@link Resource} objects.
+ * This service is providing permission related functions in order to get or change permissions on
+ * {@link Collection} or {@link Resource} objects.
  * 
  * @see org.xmldb.api.base.Collection#getService
  *
@@ -57,171 +57,169 @@ import org.xmldb.api.base.XMLDBException;
  */
 public interface PermissionManagementService extends Service {
 
-    public static final String SERVICE_NAME = "PermissionManagementService";
+  public static final String SERVICE_NAME = "PermissionManagementService";
 
-    /**
-     * Returns an attribute view for the given collection.
-     * 
-     * @param collection the collection for getting the attributes
-     * @return the basic permission attributes of the given collection
-     * @throws XMLDBException if an error occurs whilst getting the attributes
-     */
-    Attributes getAttributes(Collection collection) throws XMLDBException;
+  /**
+   * Returns an attribute view for the given collection.
+   * 
+   * @param collection the collection for getting the attributes
+   * @return the basic permission attributes of the given collection
+   * @throws XMLDBException if an error occurs whilst getting the attributes
+   */
+  Attributes getAttributes(Collection collection) throws XMLDBException;
 
-    /**
-     * Returns an attribute view for the given resource.
-     * 
-     * @param resource the resource for getting the attributes
-     * @return the basic permission attributes of the given resource
-     * @throws XMLDBException if an error occurs whilst getting the attributes
-     */
-    Attributes getAttributes(Resource resource) throws XMLDBException;
+  /**
+   * Returns an attribute view for the given resource.
+   * 
+   * @param resource the resource for getting the attributes
+   * @return the basic permission attributes of the given resource
+   * @throws XMLDBException if an error occurs whilst getting the attributes
+   */
+  Attributes getAttributes(Resource resource) throws XMLDBException;
 
-    /**
-     * Returns a set of currently set permissions for the given collection.
-     * 
-     * @param collection the collection to get the permissions for
-     * @return a set of the current permissions
-     * @throws XMLDBException if an error occurs whilst getting the permissions
-     */
-    Set<Permission> getPermissions(Collection collection) throws XMLDBException;
+  /**
+   * Returns a set of currently set permissions for the given collection.
+   * 
+   * @param collection the collection to get the permissions for
+   * @return a set of the current permissions
+   * @throws XMLDBException if an error occurs whilst getting the permissions
+   */
+  Set<Permission> getPermissions(Collection collection) throws XMLDBException;
 
-    /**
-     * Replaces the current permissions of the given collection with the given
-     * new permission set.
-     * 
-     * @param collection the collection to replace the existing ones
-     * @param perms the new permissions to be set on the collection
-     * @throws XMLDBException if an error occurs whilst setting the permissions
-     */
-    void setPermissions(Collection collection, Set<Permission> perms) throws XMLDBException;
+  /**
+   * Replaces the current permissions of the given collection with the given new permission set.
+   * 
+   * @param collection the collection to replace the existing ones
+   * @param perms the new permissions to be set on the collection
+   * @throws XMLDBException if an error occurs whilst setting the permissions
+   */
+  void setPermissions(Collection collection, Set<Permission> perms) throws XMLDBException;
 
-    /**
-     * Returns a set of currently set permissions for the given resource.
-     * 
-     * @param resource the resource to get the permissions for
-     * @return a set of the current permissions
-     * @throws XMLDBException if an error occurs whilst getting the permissions
-     */
-    Set<Permission> getPermissions(Resource resource) throws XMLDBException;
+  /**
+   * Returns a set of currently set permissions for the given resource.
+   * 
+   * @param resource the resource to get the permissions for
+   * @return a set of the current permissions
+   * @throws XMLDBException if an error occurs whilst getting the permissions
+   */
+  Set<Permission> getPermissions(Resource resource) throws XMLDBException;
 
-    /**
-     * Replaces the current permissions of the given resource with the given
-     * new permission set.
-     * 
-     * @param resource the resource to replace the existing ones
-     * @param perms the new permissions to be set on the resource
-     * @throws XMLDBException if an error occurs whilst setting the permissions
-     */
-    void setPermissions(Resource resource, Set<Permission> perms) throws XMLDBException;
+  /**
+   * Replaces the current permissions of the given resource with the given new permission set.
+   * 
+   * @param resource the resource to replace the existing ones
+   * @param perms the new permissions to be set on the resource
+   * @throws XMLDBException if an error occurs whilst setting the permissions
+   */
+  void setPermissions(Resource resource, Set<Permission> perms) throws XMLDBException;
 
-    /**
-     * Returns a list of current ACL (Access Control List) entries for the given collection.
-     *
-     * @param collection the collection to get the ACL entries
-     * @return a list of the current ACL entries
-     * @throws XMLDBException if an error occurs whilst getting the ACL entries
-     */
-    List<AclEntry> getAcl(Collection collection) throws XMLDBException;
+  /**
+   * Returns a list of current ACL (Access Control List) entries for the given collection.
+   *
+   * @param collection the collection to get the ACL entries
+   * @return a list of the current ACL entries
+   * @throws XMLDBException if an error occurs whilst getting the ACL entries
+   */
+  List<AclEntry> getAcl(Collection collection) throws XMLDBException;
 
-    /**
-     * Replaces the current ACL (Access Control List) entries of the given collection
-     * with the given new ACL entries list.
-     *
-     * @param collection the collection to replace the ACL entries for
-     * @param aclEntries the new ACL entries to be set on the collection
-     * @throws XMLDBException if an error occurs whilst setting the ACL entries
-     */
-    void setAcl(Collection collection, List<AclEntry> aclEntries) throws XMLDBException;
+  /**
+   * Replaces the current ACL (Access Control List) entries of the given collection with the given
+   * new ACL entries list.
+   *
+   * @param collection the collection to replace the ACL entries for
+   * @param aclEntries the new ACL entries to be set on the collection
+   * @throws XMLDBException if an error occurs whilst setting the ACL entries
+   */
+  void setAcl(Collection collection, List<AclEntry> aclEntries) throws XMLDBException;
 
-    /**
-     * Returns a list of current ACL (Access Control List) entries for the given resource.
-     *
-     * @param resource the resource to get the ACL entries
-     * @return a list of the current ACL entries
-     * @throws XMLDBException if an error occurs whilst getting the ACL entries
-     */
-    List<AclEntry> getAcl(Resource resource) throws XMLDBException;
+  /**
+   * Returns a list of current ACL (Access Control List) entries for the given resource.
+   *
+   * @param resource the resource to get the ACL entries
+   * @return a list of the current ACL entries
+   * @throws XMLDBException if an error occurs whilst getting the ACL entries
+   */
+  List<AclEntry> getAcl(Resource resource) throws XMLDBException;
 
-    /**
-     * Replaces the current ACL (Access Control List) entries of the given resource
-     * with the given new ACL entries list.
-     *
-     * @param resource the resource to replace the ACL entries for
-     * @param aclEntries the new ACL entries to be set on the resource
-     * @throws XMLDBException if an error occurs whilst setting the ACL entries
-     */
-    void setAcl(Resource resource, List<AclEntry> aclEntries) throws XMLDBException;
+  /**
+   * Replaces the current ACL (Access Control List) entries of the given resource with the given new
+   * ACL entries list.
+   *
+   * @param resource the resource to replace the ACL entries for
+   * @param aclEntries the new ACL entries to be set on the resource
+   * @throws XMLDBException if an error occurs whilst setting the ACL entries
+   */
+  void setAcl(Resource resource, List<AclEntry> aclEntries) throws XMLDBException;
 
-    /**
-     * Returns the current owner of the given collection.
-     * 
-     * @param collection the collection to get the owner for
-     * @return a user principal representing the owner of the collection
-     * @throws XMLDBException if an error occurs whilst getting the owner
-     */
-    UserPrincipal getOwner(Collection collection) throws XMLDBException;
+  /**
+   * Returns the current owner of the given collection.
+   * 
+   * @param collection the collection to get the owner for
+   * @return a user principal representing the owner of the collection
+   * @throws XMLDBException if an error occurs whilst getting the owner
+   */
+  UserPrincipal getOwner(Collection collection) throws XMLDBException;
 
-    /**
-     * Sets the new owner of the given collection.
-     * 
-     * @param collection the collection to get the owner for
-     * @param owner the user principal the new owner of the collection
-     * @throws XMLDBException if an error occurs whilst setting the owner
-     */
-    void setOwner(Collection collection, UserPrincipal owner) throws XMLDBException;
+  /**
+   * Sets the new owner of the given collection.
+   * 
+   * @param collection the collection to get the owner for
+   * @param owner the user principal the new owner of the collection
+   * @throws XMLDBException if an error occurs whilst setting the owner
+   */
+  void setOwner(Collection collection, UserPrincipal owner) throws XMLDBException;
 
-    /**
-     * Returns the current owner of the given resource.
-     * 
-     * @param resource the resource to get the owner for
-     * @return a user principal representing the owner of the resource
-     * @throws XMLDBException if an error occurs whilst getting the owner
-     */
-    UserPrincipal getOwner(Resource resource) throws XMLDBException;
+  /**
+   * Returns the current owner of the given resource.
+   * 
+   * @param resource the resource to get the owner for
+   * @return a user principal representing the owner of the resource
+   * @throws XMLDBException if an error occurs whilst getting the owner
+   */
+  UserPrincipal getOwner(Resource resource) throws XMLDBException;
 
-    /**
-     * Sets the new owner of the given resource.
-     * 
-     * @param resource the resource to get the owner for
-     * @param owner the user principal the new owner of the resource
-     * @throws XMLDBException if an error occurs whilst setting the owner
-     */
-    void setOwner(Resource resource, UserPrincipal owner) throws XMLDBException;
+  /**
+   * Sets the new owner of the given resource.
+   * 
+   * @param resource the resource to get the owner for
+   * @param owner the user principal the new owner of the resource
+   * @throws XMLDBException if an error occurs whilst setting the owner
+   */
+  void setOwner(Resource resource, UserPrincipal owner) throws XMLDBException;
 
-    /**
-     * Returns the current group of the given collection.
-     * 
-     * @param collection the collection to get the owner for
-     * @return a group principal representing the owner of the collection
-     * @throws XMLDBException if an error occurs whilst getting the group
-     */
-    GroupPrincipal getGroup(Collection collection) throws XMLDBException;
+  /**
+   * Returns the current group of the given collection.
+   * 
+   * @param collection the collection to get the owner for
+   * @return a group principal representing the owner of the collection
+   * @throws XMLDBException if an error occurs whilst getting the group
+   */
+  GroupPrincipal getGroup(Collection collection) throws XMLDBException;
 
-    /**
-     * Sets the new group of the given collection.
-     * 
-     * @param collection the collection to get the group for
-     * @param group the group principal the new group of the collection
-     * @throws XMLDBException if an error occurs whilst setting the group
-     */
-    void setGroup(Collection collection, GroupPrincipal group) throws XMLDBException;
+  /**
+   * Sets the new group of the given collection.
+   * 
+   * @param collection the collection to get the group for
+   * @param group the group principal the new group of the collection
+   * @throws XMLDBException if an error occurs whilst setting the group
+   */
+  void setGroup(Collection collection, GroupPrincipal group) throws XMLDBException;
 
-    /**
-     * Returns the current group of the given resource.
-     * 
-     * @param resource the resource to get the owner for
-     * @return a group principal representing the owner of the resource
-     * @throws XMLDBException if an error occurs whilst getting the group
-     */
-    GroupPrincipal getGroup(Resource resource) throws XMLDBException;
+  /**
+   * Returns the current group of the given resource.
+   * 
+   * @param resource the resource to get the owner for
+   * @return a group principal representing the owner of the resource
+   * @throws XMLDBException if an error occurs whilst getting the group
+   */
+  GroupPrincipal getGroup(Resource resource) throws XMLDBException;
 
-    /**
-     * Sets the new group of the given resource.
-     * 
-     * @param resource the resource to get the group for
-     * @param group the group principal the new group of the resource
-     * @throws XMLDBException if an error occurs whilst setting the group
-     */
-    void setGroup(Resource resource, GroupPrincipal group) throws XMLDBException;
+  /**
+   * Sets the new group of the given resource.
+   * 
+   * @param resource the resource to get the group for
+   * @param group the group principal the new group of the resource
+   * @throws XMLDBException if an error occurs whilst setting the group
+   */
+  void setGroup(Resource resource, GroupPrincipal group) throws XMLDBException;
 }

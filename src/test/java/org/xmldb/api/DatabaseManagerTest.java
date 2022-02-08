@@ -32,10 +32,10 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api;
 
@@ -95,22 +95,20 @@ class DatabaseManagerTest {
     when(dbOne.getName()).thenReturn(null);
 
     assertThatExceptionOfType(XMLDBException.class)
-            .isThrownBy(() -> DatabaseManager.registerDatabase(dbOne))
-            .satisfies(e -> {
-                assertThat(e.errorCode).isEqualTo(INVALID_DATABASE);
-                assertThat(e.vendorErrorCode).isZero();
-            });
+        .isThrownBy(() -> DatabaseManager.registerDatabase(dbOne)).satisfies(e -> {
+          assertThat(e.errorCode).isEqualTo(INVALID_DATABASE);
+          assertThat(e.vendorErrorCode).isZero();
+        });
 
     assertThat(DatabaseManager.databases).isEmpty();
 
     when(dbOne.getName()).thenReturn("");
 
     assertThatExceptionOfType(XMLDBException.class)
-            .isThrownBy(() -> DatabaseManager.registerDatabase(dbOne))
-            .satisfies(e -> {
-                assertThat(e.errorCode).isEqualTo(INVALID_DATABASE);
-                assertThat(e.vendorErrorCode).isZero();
-            });
+        .isThrownBy(() -> DatabaseManager.registerDatabase(dbOne)).satisfies(e -> {
+          assertThat(e.errorCode).isEqualTo(INVALID_DATABASE);
+          assertThat(e.vendorErrorCode).isZero();
+        });
 
     assertThat(DatabaseManager.databases).isEmpty();
   }
@@ -121,16 +119,16 @@ class DatabaseManagerTest {
 
     DatabaseManager.registerDatabase(dbOne);
     assertThat(DatabaseManager.databases.entrySet())
-            .containsExactly(entry("databaseNameOne", dbOne));
+        .containsExactly(entry("databaseNameOne", dbOne));
 
     when(dbTwo.getName()).thenReturn("databaseNameTwo");
 
     DatabaseManager.registerDatabase(dbTwo);
     assertThat(DatabaseManager.databases.entrySet()).containsExactlyInAnyOrder(
-            entry("databaseNameOne", dbOne), entry("databaseNameTwo", dbTwo));
+        entry("databaseNameOne", dbOne), entry("databaseNameTwo", dbTwo));
   }
 
-@Test
+  @Test
   void testDeregisterDatabase() throws XMLDBException {
     DatabaseManager.databases.put("one", dbOne);
     DatabaseManager.databases.put("databaseNameOne", dbOne);
@@ -148,8 +146,7 @@ class DatabaseManagerTest {
 
     when(dbOne.getCollection("dbName:collection", null, null)).thenReturn(collection);
 
-    assertThat(DatabaseManager.getCollection("xmldb:dbName:collection"))
-            .isEqualTo(collection);
+    assertThat(DatabaseManager.getCollection("xmldb:dbName:collection")).isEqualTo(collection);
   }
 
   @Test
@@ -159,8 +156,8 @@ class DatabaseManagerTest {
 
     when(dbOne.getCollection("dbName:collection", "username", "password")).thenReturn(collection);
 
-    assertThat(DatabaseManager.getCollection("xmldb:dbName:collection",
-            "username", "password")).isEqualTo(collection);
+    assertThat(DatabaseManager.getCollection("xmldb:dbName:collection", "username", "password"))
+        .isEqualTo(collection);
   }
 
   @Test
@@ -169,8 +166,7 @@ class DatabaseManagerTest {
 
     when(dbOne.getConformanceLevel()).thenReturn("1");
 
-    assertThat(DatabaseManager.getConformanceLevel("xmldb:dbName::collection"))
-            .isEqualTo("1");
+    assertThat(DatabaseManager.getConformanceLevel("xmldb:dbName::collection")).isEqualTo("1");
   }
 
   @Test
@@ -197,41 +193,37 @@ class DatabaseManagerTest {
 
     DatabaseManager.registerDatabase(dbOne);
     assertThatExceptionOfType(XMLDBException.class)
-            .isThrownBy(() -> DatabaseManager.registerDatabase(dbTwo))
-            .satisfies(e -> {
-                assertThat(e.errorCode).isEqualTo(INSTANCE_NAME_ALREADY_REGISTERED);
-                assertThat(e.vendorErrorCode).isZero();
-            });
+        .isThrownBy(() -> DatabaseManager.registerDatabase(dbTwo)).satisfies(e -> {
+          assertThat(e.errorCode).isEqualTo(INSTANCE_NAME_ALREADY_REGISTERED);
+          assertThat(e.vendorErrorCode).isZero();
+        });
   }
 
   @Test
   void testStripURIPrefix() {
-      assertThatExceptionOfType(XMLDBException.class)
-      .isThrownBy(() -> DatabaseManager.stripURIPrefix("unkown-prefix"))
-      .satisfies(e -> {
+    assertThatExceptionOfType(XMLDBException.class)
+        .isThrownBy(() -> DatabaseManager.stripURIPrefix("unkown-prefix")).satisfies(e -> {
           assertThat(e.errorCode).isEqualTo(INVALID_URI);
           assertThat(e.vendorErrorCode).isZero();
-      });
+        });
   }
 
   @Test
   void testGetDatabaseWrongUri() {
-      assertThatExceptionOfType(XMLDBException.class)
-      .isThrownBy(() -> DatabaseManager.getDatabase("xmldb:somedb"))
-      .satisfies(e -> {
+    assertThatExceptionOfType(XMLDBException.class)
+        .isThrownBy(() -> DatabaseManager.getDatabase("xmldb:somedb")).satisfies(e -> {
           assertThat(e.errorCode).isEqualTo(INVALID_URI);
           assertThat(e.vendorErrorCode).isZero();
-      });
+        });
   }
 
   @Test
   void testGetDatabaseUnkown() {
-      assertThatExceptionOfType(XMLDBException.class)
-      .isThrownBy(() -> DatabaseManager.getDatabase("xmldb:somedb:collection"))
-      .satisfies(e -> {
+    assertThatExceptionOfType(XMLDBException.class)
+        .isThrownBy(() -> DatabaseManager.getDatabase("xmldb:somedb:collection")).satisfies(e -> {
           assertThat(e.errorCode).isEqualTo(NO_SUCH_DATABASE);
           assertThat(e.vendorErrorCode).isZero();
-      });
+        });
   }
 
   private static Entry<String, Database> entry(String key, Database value) {

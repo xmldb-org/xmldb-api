@@ -32,10 +32,10 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api;
 
@@ -242,7 +242,7 @@ public final class DatabaseManager {
    * @throws XMLDBException if an error occurs whilst getting the database
    */
   static Database getDatabase(final String uri) throws XMLDBException {
-    final String databaseAndCollection = stripURIPrefix(uri); 
+    final String databaseAndCollection = stripURIPrefix(uri);
 
     final int end = databaseAndCollection.indexOf(":");
     if (end == -1) {

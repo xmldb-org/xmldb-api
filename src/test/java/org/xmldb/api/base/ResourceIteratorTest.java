@@ -32,10 +32,10 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api.base;
 
@@ -52,21 +52,21 @@ import org.xmldb.api.TestResourceIterator;
 
 @MockitoSettings
 class ResourceIteratorTest {
-    @Spy
-    TestResourceIterator resourceIterator;
-    @Mock
-    Resource resource;
-    @Mock
-    Consumer<? super Resource> action;
+  @Spy
+  TestResourceIterator resourceIterator;
+  @Mock
+  Resource resource;
+  @Mock
+  Consumer<? super Resource> action;
 
-    @Test
-    void testForEachRemaining() throws XMLDBException {
-        when(resourceIterator.hasMoreResources()).thenReturn(true, false);
-        when(resourceIterator.nextResource()).thenReturn(resource);
+  @Test
+  void testForEachRemaining() throws XMLDBException {
+    when(resourceIterator.hasMoreResources()).thenReturn(true, false);
+    when(resourceIterator.nextResource()).thenReturn(resource);
 
-        resourceIterator.forEachRemaining(action);
+    resourceIterator.forEachRemaining(action);
 
-        verify(action).accept(resource);
-    }
+    verify(action).accept(resource);
+  }
 
 }

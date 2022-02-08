@@ -32,10 +32,10 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api;
 
@@ -47,46 +47,46 @@ import org.xmldb.api.base.Database;
 import org.xmldb.api.base.XMLDBException;
 
 public class TestDatabase extends ConfigurableImpl implements Database {
-    private static final String DETAULT_NAME = "testdatabase";
+  private static final String DETAULT_NAME = "testdatabase";
 
-    private final String name;
-    private final Map<String, TestCollection> collections;
+  private final String name;
+  private final Map<String, TestCollection> collections;
 
-    public TestDatabase() {
-        this(null);
+  public TestDatabase() {
+    this(null);
+  }
+
+  public TestDatabase(String name) {
+    if (name == null || name.isEmpty()) {
+      this.name = DETAULT_NAME;
+    } else {
+      this.name = name;
     }
+    collections = new HashMap<>();
+  }
 
-    public TestDatabase(String name) {
-        if (name == null || name.isEmpty()) {
-            this.name = DETAULT_NAME;
-        } else {
-            this.name = name;
-        }
-        collections = new HashMap<>();
-    }
+  @Override
+  public final String getName() throws XMLDBException {
+    return name;
+  }
 
-    @Override
-    public final String getName() throws XMLDBException {
-        return name;
-    }
+  public TestCollection addCollection(String collectionName) {
+    return collections.computeIfAbsent(collectionName, TestCollection::new);
+  }
 
-    public TestCollection addCollection(String collectionName) {
-        return collections.computeIfAbsent(collectionName, TestCollection::new);
-    }
+  @Override
+  public Collection getCollection(String uri, String username, String password)
+      throws XMLDBException {
+    return collections.get(uri);
+  }
 
-    @Override
-    public Collection getCollection(String uri, String username,
-            String password) throws XMLDBException {
-        return collections.get(uri);
-    }
+  @Override
+  public boolean acceptsURI(String uri) throws XMLDBException {
+    return false;
+  }
 
-    @Override
-    public boolean acceptsURI(String uri) throws XMLDBException {
-        return false;
-    }
-
-    @Override
-    public String getConformanceLevel() throws XMLDBException {
-        return "0";
-    }
+  @Override
+  public String getConformanceLevel() throws XMLDBException {
+    return "0";
+  }
 }

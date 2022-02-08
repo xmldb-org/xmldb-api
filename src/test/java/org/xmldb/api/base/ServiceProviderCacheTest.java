@@ -32,10 +32,10 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api.base;
 
@@ -58,84 +58,73 @@ import org.xmldb.api.security.UserPrincipalLookupService;
 
 @MockitoSettings
 class ServiceProviderCacheTest {
-    @Mock
-    CollectionManagementService collectionManagementService;
-    @Mock
-    Supplier<CollectionManagementService> collectionManagementServiceSupplier;
-    @Mock
-    Supplier<CombinedQueryService> combinedQueryServiceProvider;
-    @Mock
-    CombinedQueryService combinedQueryService;
+  @Mock
+  CollectionManagementService collectionManagementService;
+  @Mock
+  Supplier<CollectionManagementService> collectionManagementServiceSupplier;
+  @Mock
+  Supplier<CombinedQueryService> combinedQueryServiceProvider;
+  @Mock
+  CombinedQueryService combinedQueryService;
 
-    ServiceProviderCache cache;
+  ServiceProviderCache cache;
 
-    @BeforeEach
-    void prepare() {
-        cache = ServiceProviderCache.withRegistered(registry -> {
-            registry.add(CollectionManagementService.class,
-                    collectionManagementServiceSupplier);
-            registry.add(XPathQueryService.class, combinedQueryServiceProvider);
-            registry.add(XQueryService.class, combinedQueryServiceProvider);
+  @BeforeEach
+  void prepare() {
+    cache = ServiceProviderCache.withRegistered(registry -> {
+      registry.add(CollectionManagementService.class, collectionManagementServiceSupplier);
+      registry.add(XPathQueryService.class, combinedQueryServiceProvider);
+      registry.add(XQueryService.class, combinedQueryServiceProvider);
+    });
+  }
+
+  @Test
+  void testWithRegistered() throws XMLDBException {
+    verifyNoInteractions(collectionManagementServiceSupplier);
+    assertThat(cache.hasService(CollectionManagementService.class)).isTrue();
+    assertThat(cache.hasService(XPathQueryService.class)).isTrue();
+    assertThat(cache.hasService(XQueryService.class)).isTrue();
+    assertThat(cache.hasService(UserPrincipalLookupService.class)).isFalse();
+  }
+
+  @Test
+  void testHasService() throws XMLDBException {
+    verifyNoInteractions(collectionManagementServiceSupplier);
+    assertThat(cache.hasService(CollectionManagementService.class)).isTrue();
+    assertThat(cache.hasService(XPathQueryService.class)).isTrue();
+    assertThat(cache.hasService(XQueryService.class)).isTrue();
+    assertThat(cache.hasService(UserPrincipalLookupService.class)).isFalse();
+  }
+
+  @Test
+  void testFindService() throws XMLDBException {
+    when(collectionManagementServiceSupplier.get()).thenReturn(collectionManagementService);
+    when(combinedQueryServiceProvider.get()).thenReturn(combinedQueryService);
+    assertThat(cache.findService(CollectionManagementService.class))
+        .satisfies(s -> assertThat(s).contains(collectionManagementService));
+    assertThat(cache.findService(XPathQueryService.class))
+        .satisfies(s -> assertThat(s).contains(combinedQueryService));
+    assertThat(cache.findService(XQueryService.class))
+        .satisfies(s -> assertThat(s).contains(combinedQueryService));
+    assertThat(cache.findService(UserPrincipalLookupService.class))
+        .satisfies(s -> assertThat(s).isEmpty());
+  }
+
+  @Test
+  void testGetService() throws XMLDBException {
+    when(collectionManagementServiceSupplier.get()).thenReturn(collectionManagementService);
+    when(combinedQueryServiceProvider.get()).thenReturn(combinedQueryService);
+    assertThat(cache.getService(CollectionManagementService.class))
+        .isEqualTo(collectionManagementService);
+    assertThat(cache.getService(XPathQueryService.class)).isEqualTo(combinedQueryService);
+    assertThat(cache.getService(XQueryService.class)).isEqualTo(combinedQueryService);
+    assertThatExceptionOfType(XMLDBException.class)
+        .isThrownBy(() -> cache.getService(UserPrincipalLookupService.class)).satisfies(e -> {
+          assertThat(e.errorCode).isEqualTo(NO_SUCH_SERVICE);
+          assertThat(e.vendorErrorCode).isZero();
         });
-    }
+  }
 
-    @Test
-    void testWithRegistered() throws XMLDBException {
-        verifyNoInteractions(collectionManagementServiceSupplier);
-        assertThat(cache.hasService(CollectionManagementService.class)).isTrue();
-        assertThat(cache.hasService(XPathQueryService.class)).isTrue();
-        assertThat(cache.hasService(XQueryService.class)).isTrue();
-        assertThat(cache.hasService(UserPrincipalLookupService.class)).isFalse();
-    }
-
-    @Test
-    void testHasService() throws XMLDBException {
-        verifyNoInteractions(collectionManagementServiceSupplier);
-        assertThat(cache.hasService(CollectionManagementService.class)).isTrue();
-        assertThat(cache.hasService(XPathQueryService.class)).isTrue();
-        assertThat(cache.hasService(XQueryService.class)).isTrue();
-        assertThat(cache.hasService(UserPrincipalLookupService.class)).isFalse();
-    }
-
-    @Test
-    void testFindService() throws XMLDBException {
-        when(collectionManagementServiceSupplier.get())
-                .thenReturn(collectionManagementService);
-        when(combinedQueryServiceProvider.get())
-                .thenReturn(combinedQueryService);
-        assertThat(cache.findService(CollectionManagementService.class))
-                .satisfies(s -> assertThat(s)
-                        .contains(collectionManagementService));
-        assertThat(cache.findService(XPathQueryService.class))
-                .satisfies(s -> assertThat(s)
-                        .contains(combinedQueryService));
-        assertThat(cache.findService(XQueryService.class))
-                .satisfies(s -> assertThat(s)
-                        .contains(combinedQueryService));
-        assertThat(cache.findService(UserPrincipalLookupService.class))
-                .satisfies(s -> assertThat(s).isEmpty());
-    }
-
-    @Test
-    void testGetService() throws XMLDBException {
-        when(collectionManagementServiceSupplier.get())
-                .thenReturn(collectionManagementService);
-        when(combinedQueryServiceProvider.get())
-                .thenReturn(combinedQueryService);
-        assertThat(cache.getService(CollectionManagementService.class))
-                .isEqualTo(collectionManagementService);
-        assertThat(cache.getService(XPathQueryService.class))
-                .isEqualTo(combinedQueryService);
-        assertThat(cache.getService(XQueryService.class))
-                .isEqualTo(combinedQueryService);
-        assertThatExceptionOfType(XMLDBException.class).isThrownBy(
-                () -> cache.getService(UserPrincipalLookupService.class))
-                .satisfies(e -> {
-                    assertThat(e.errorCode).isEqualTo(NO_SUCH_SERVICE);
-                    assertThat(e.vendorErrorCode).isZero();
-                });
-    }
-
-    interface CombinedQueryService extends XPathQueryService, XQueryService {
-    }
+  interface CombinedQueryService extends XPathQueryService, XQueryService {
+  }
 }

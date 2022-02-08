@@ -32,10 +32,10 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api.security;
 
@@ -46,63 +46,63 @@ package org.xmldb.api.security;
  */
 public enum Permission {
 
-    /**
-     * Read permission, owner.
-     */
-    OWNER_READ,
+  /**
+   * Read permission, owner.
+   */
+  OWNER_READ,
 
-    /**
-     * Write permission, owner.
-     */
-    OWNER_WRITE,
+  /**
+   * Write permission, owner.
+   */
+  OWNER_WRITE,
 
-    /**
-     * Execute/search permission, owner.
-     */
-    OWNER_EXECUTE,
+  /**
+   * Execute/search permission, owner.
+   */
+  OWNER_EXECUTE,
 
-    /**
-     * Read permission, group.
-     */
-    GROUP_READ,
+  /**
+   * Read permission, group.
+   */
+  GROUP_READ,
 
-    /**
-     * Write permission, group.
-     */
-    GROUP_WRITE,
+  /**
+   * Write permission, group.
+   */
+  GROUP_WRITE,
 
-    /**
-     * Execute/search permission, group.
-     */
-    GROUP_EXECUTE,
+  /**
+   * Execute/search permission, group.
+   */
+  GROUP_EXECUTE,
 
-    /**
-     * Read permission, others.
-     */
-    OTHERS_READ,
+  /**
+   * Read permission, others.
+   */
+  OTHERS_READ,
 
-    /**
-     * Write permission, others.
-     */
-    OTHERS_WRITE,
+  /**
+   * Write permission, others.
+   */
+  OTHERS_WRITE,
 
-    /**
-     * Execute/search permission, others.
-     */
-    OTHERS_EXECUTE,
+  /**
+   * Execute/search permission, others.
+   */
+  OTHERS_EXECUTE,
 
-    /**
-     * Set User ID.
-     */
-    SET_UID,
+  /**
+   * Set User ID.
+   */
+  SET_UID,
 
-    /**
-     * Set Group ID.
-     */
-    SET_GID,
+  /**
+   * Set Group ID.
+   */
+  SET_GID,
 
-    /**
-     * The Sticky bit.
-     */
-    STICKY_BIT;
+  /**
+   * The Sticky bit.
+   */
+  STICKY_BIT;
 }

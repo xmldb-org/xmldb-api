@@ -32,10 +32,10 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api.base;
 
@@ -97,7 +97,7 @@ public interface ResourceSet {
   ResourceIterator getIterator() throws XMLDBException;
 
   /**
-   * Returns a Resource containing an XML representation of all resources stored in the set. 
+   * Returns a Resource containing an XML representation of all resources stored in the set.
    * 
    * @return A {@code Resource} instance containing an XML representation of all set members.
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
@@ -126,4 +126,3 @@ public interface ResourceSet {
    */
   void clear() throws XMLDBException;
 }
-

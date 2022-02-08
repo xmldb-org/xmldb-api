@@ -32,23 +32,22 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api.security;
 
 /**
- * A {@code Principal} representing an identity used to determine access rights
- * to objects in the XMLDB.
+ * A {@code Principal} representing an identity used to determine access rights to objects in the
+ * XMLDB.
  *
- * <p> A {@code UserPrincipal} object is an abstract representation of an
- * identity. It has a {@link #getName() name} that is the account name that 
- * it represents. User principal objects may be obtained using
- * a {@link UserPrincipalLookupService}, or returned by {@link
- * Attributes} implementations that provide access to identity related
- * attributes.
+ * <p>
+ * A {@code UserPrincipal} object is an abstract representation of an identity. It has a
+ * {@link #getName() name} that is the account name that it represents. User principal objects may
+ * be obtained using a {@link UserPrincipalLookupService}, or returned by {@link Attributes}
+ * implementations that provide access to identity related attributes.
  *
  * @since 2.0
  */

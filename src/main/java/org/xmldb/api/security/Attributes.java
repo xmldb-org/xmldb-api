@@ -32,10 +32,10 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api.security;
 
@@ -43,54 +43,54 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Represents the basic attributes of either a {@link org.xmldb.api.base.Resource}
- * or {@link org.xmldb.api.base.Collection}.
+ * Represents the basic attributes of either a {@link org.xmldb.api.base.Resource} or
+ * {@link org.xmldb.api.base.Collection}.
  *
  * @since 2.0
-*/
+ */
 public interface Attributes {
 
-    /**
-     * Returns the owner of the collection or resource.
-     *
-     * @return  the resource owner
-     *
-     * @see PermissionManagementService#setOwner
-     */
-    UserPrincipal owner();
+  /**
+   * Returns the owner of the collection or resource.
+   *
+   * @return the resource owner
+   *
+   * @see PermissionManagementService#setOwner
+   */
+  UserPrincipal owner();
 
-    /**
-     * Returns the group owner of the collection or resource.
-     *
-     * @return  the resource group owner
-     *
-     * @see PermissionManagementService#setGroup
-     */
-    GroupPrincipal group();
+  /**
+   * Returns the group owner of the collection or resource.
+   *
+   * @return the resource group owner
+   *
+   * @see PermissionManagementService#setGroup
+   */
+  GroupPrincipal group();
 
-    /**
-     * Returns the permissions of the collection or resource. The collection or resource permissions are returned
-     * as a set of {@link Permission} elements. The returned set is a
-     * copy of the collection or resource permissions and is modifiable. This allows the result
-     * to be modified and passed to the {@link PermissionManagementService#setPermissions}
-     * methods to update the collection's or resources's permissions.
-     *
-     * @return  the collection or resource permissions
-     *
-     * @see PermissionManagementService#setPermissions
-     */
-    Set<Permission> permissions();
+  /**
+   * Returns the permissions of the collection or resource. The collection or resource permissions
+   * are returned as a set of {@link Permission} elements. The returned set is a copy of the
+   * collection or resource permissions and is modifiable. This allows the result to be modified and
+   * passed to the {@link PermissionManagementService#setPermissions} methods to update the
+   * collection's or resources's permissions.
+   *
+   * @return the collection or resource permissions
+   *
+   * @see PermissionManagementService#setPermissions
+   */
+  Set<Permission> permissions();
 
-    /**
-     * Returns the ACL of the collection or resource. The collection or resource permissions are returned
-     * as a list of {@link AclEntry} elements. The returned list is a
-     * copy of the collection or resource ACL and is modifiable. This allows the result
-     * to be modified and passed to the {@link PermissionManagementService#setAcl}
-     * methods to update the collection's or resources's Access Control List.
-     *
-     * @return  the collection or resource ACL entries
-     *
-     * @see PermissionManagementService#setAcl
-     */
-    List<AclEntry> acl();
+  /**
+   * Returns the ACL of the collection or resource. The collection or resource permissions are
+   * returned as a list of {@link AclEntry} elements. The returned list is a copy of the collection
+   * or resource ACL and is modifiable. This allows the result to be modified and passed to the
+   * {@link PermissionManagementService#setAcl} methods to update the collection's or resources's
+   * Access Control List.
+   *
+   * @return the collection or resource ACL entries
+   *
+   * @see PermissionManagementService#setAcl
+   */
+  List<AclEntry> acl();
 }

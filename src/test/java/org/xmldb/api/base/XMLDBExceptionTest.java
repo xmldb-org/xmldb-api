@@ -32,10 +32,10 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api.base;
 
@@ -59,88 +59,88 @@ import org.junit.jupiter.api.Test;
  */
 class XMLDBExceptionTest {
 
-    @Test
-    void testXMLDBException() {
-        XMLDBException ex = new XMLDBException();
-        assertThat(ex).hasMessage("").satisfies(e -> {
-            assertThat(e.errorCode).isEqualTo(UNKNOWN_ERROR);
-            assertThat(e.vendorErrorCode).isZero();
-        });
-    }
+  @Test
+  void testXMLDBException() {
+    XMLDBException ex = new XMLDBException();
+    assertThat(ex).hasMessage("").satisfies(e -> {
+      assertThat(e.errorCode).isEqualTo(UNKNOWN_ERROR);
+      assertThat(e.vendorErrorCode).isZero();
+    });
+  }
 
-    @Test
-    void testXMLDBExceptionInt() {
-        XMLDBException ex = new XMLDBException(COLLECTION_CLOSED);
-        assertThat(ex).hasMessage("").satisfies(e -> {
-            assertThat(e.errorCode).isEqualTo(COLLECTION_CLOSED);
-            assertThat(e.vendorErrorCode).isZero();
-        });
-    }
+  @Test
+  void testXMLDBExceptionInt() {
+    XMLDBException ex = new XMLDBException(COLLECTION_CLOSED);
+    assertThat(ex).hasMessage("").satisfies(e -> {
+      assertThat(e.errorCode).isEqualTo(COLLECTION_CLOSED);
+      assertThat(e.vendorErrorCode).isZero();
+    });
+  }
 
-    @Test
-    void testXMLDBExceptionIntString() {
-        XMLDBException ex = new XMLDBException(INVALID_COLLECTION, "message 1");
-        assertThat(ex).hasMessage("message 1").satisfies(e -> {
-            assertThat(e.errorCode).isEqualTo(INVALID_COLLECTION);
-            assertThat(e.vendorErrorCode).isZero();
-        });
-    }
+  @Test
+  void testXMLDBExceptionIntString() {
+    XMLDBException ex = new XMLDBException(INVALID_COLLECTION, "message 1");
+    assertThat(ex).hasMessage("message 1").satisfies(e -> {
+      assertThat(e.errorCode).isEqualTo(INVALID_COLLECTION);
+      assertThat(e.vendorErrorCode).isZero();
+    });
+  }
 
-    @Test
-    void testXMLDBExceptionIntInt() {
-        XMLDBException ex = new XMLDBException(INVALID_DATABASE, 123);
-        assertThat(ex).hasMessage("").satisfies(e -> {
-            assertThat(e.errorCode).isEqualTo(INVALID_DATABASE);
-            assertThat(e.vendorErrorCode).isEqualTo(123);
-        });
-    }
+  @Test
+  void testXMLDBExceptionIntInt() {
+    XMLDBException ex = new XMLDBException(INVALID_DATABASE, 123);
+    assertThat(ex).hasMessage("").satisfies(e -> {
+      assertThat(e.errorCode).isEqualTo(INVALID_DATABASE);
+      assertThat(e.vendorErrorCode).isEqualTo(123);
+    });
+  }
 
-    @Test
-    void testXMLDBExceptionIntIntString() {
-        XMLDBException ex = new XMLDBException(INVALID_RESOURCE, 234, "message 2");
-        assertThat(ex).hasMessage("message 2").satisfies(e -> {
-            assertThat(e.errorCode).isEqualTo(INVALID_RESOURCE);
-            assertThat(e.vendorErrorCode).isEqualTo(234);
-        });
-    }
+  @Test
+  void testXMLDBExceptionIntIntString() {
+    XMLDBException ex = new XMLDBException(INVALID_RESOURCE, 234, "message 2");
+    assertThat(ex).hasMessage("message 2").satisfies(e -> {
+      assertThat(e.errorCode).isEqualTo(INVALID_RESOURCE);
+      assertThat(e.vendorErrorCode).isEqualTo(234);
+    });
+  }
 
-    @Test
-    void testXMLDBExceptionIntThrowable() {
-        Throwable cause = new IOException("error 1");
-        XMLDBException ex = new XMLDBException(NOT_IMPLEMENTED, cause);
-        assertThat(ex).hasMessage("").hasCause(cause).satisfies(e -> {
-            assertThat(e.errorCode).isEqualTo(NOT_IMPLEMENTED);
-            assertThat(e.vendorErrorCode).isZero();
-        });
-    }
+  @Test
+  void testXMLDBExceptionIntThrowable() {
+    Throwable cause = new IOException("error 1");
+    XMLDBException ex = new XMLDBException(NOT_IMPLEMENTED, cause);
+    assertThat(ex).hasMessage("").hasCause(cause).satisfies(e -> {
+      assertThat(e.errorCode).isEqualTo(NOT_IMPLEMENTED);
+      assertThat(e.vendorErrorCode).isZero();
+    });
+  }
 
-    @Test
-    void testXMLDBExceptionIntStringThrowable() {
-        Throwable cause = new IOException("error 2");
-        XMLDBException ex = new XMLDBException(INVALID_URI, "message 3", cause);
-        assertThat(ex).hasMessage("message 3").hasCause(cause).satisfies(e -> {
-            assertThat(e.errorCode).isEqualTo(INVALID_URI);
-            assertThat(e.vendorErrorCode).isZero();
-        });
-    }
+  @Test
+  void testXMLDBExceptionIntStringThrowable() {
+    Throwable cause = new IOException("error 2");
+    XMLDBException ex = new XMLDBException(INVALID_URI, "message 3", cause);
+    assertThat(ex).hasMessage("message 3").hasCause(cause).satisfies(e -> {
+      assertThat(e.errorCode).isEqualTo(INVALID_URI);
+      assertThat(e.vendorErrorCode).isZero();
+    });
+  }
 
-    @Test
-    void testXMLDBExceptionIntIntThrowable() {
-        Throwable cause = new IOException("error 3");
-        XMLDBException ex = new XMLDBException(NO_SUCH_DATABASE, 345, cause);
-        assertThat(ex).hasMessage("").hasCause(cause).satisfies(e -> {
-            assertThat(e.errorCode).isEqualTo(NO_SUCH_DATABASE);
-            assertThat(e.vendorErrorCode).isEqualTo(345);
-        });
-    }
+  @Test
+  void testXMLDBExceptionIntIntThrowable() {
+    Throwable cause = new IOException("error 3");
+    XMLDBException ex = new XMLDBException(NO_SUCH_DATABASE, 345, cause);
+    assertThat(ex).hasMessage("").hasCause(cause).satisfies(e -> {
+      assertThat(e.errorCode).isEqualTo(NO_SUCH_DATABASE);
+      assertThat(e.vendorErrorCode).isEqualTo(345);
+    });
+  }
 
-    @Test
-    void testXMLDBExceptionIntIntStringThrowable() {
-        Throwable cause = new IOException("error 3");
-        XMLDBException ex = new XMLDBException(PERMISSION_DENIED, 456, "message 4", cause);
-        assertThat(ex).hasMessage("message 4").hasCause(cause).satisfies(e -> {
-            assertThat(e.errorCode).isEqualTo(PERMISSION_DENIED);
-            assertThat(e.vendorErrorCode).isEqualTo(456);
-        });
-    }
+  @Test
+  void testXMLDBExceptionIntIntStringThrowable() {
+    Throwable cause = new IOException("error 3");
+    XMLDBException ex = new XMLDBException(PERMISSION_DENIED, 456, "message 4", cause);
+    assertThat(ex).hasMessage("message 4").hasCause(cause).satisfies(e -> {
+      assertThat(e.errorCode).isEqualTo(PERMISSION_DENIED);
+      assertThat(e.vendorErrorCode).isEqualTo(456);
+    });
+  }
 }

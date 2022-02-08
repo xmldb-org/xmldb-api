@@ -32,21 +32,19 @@
  * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * ====================================================================
+ * =================================================================================================
  * This software consists of voluntary contributions made by many individuals on behalf of the
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
- * <https://github.com/xmldb-org/>.
+ * <https://github.com/xmldb-org/>
  */
 package org.xmldb.api.security;
 
 /**
- * A {@code UserPrincipal} representing a <em>group identity</em>, used to
- * determine access rights to objects in a file system. The exact definition of
- * a group is implementation specific, but typically, it represents an identity
- * created for administrative purposes so as to determine the access rights for
- * the members of the group. Whether an entity can be a member of multiple
- * groups, and whether groups can be nested, are implementation specified and
- * therefore not specified.
+ * A {@code UserPrincipal} representing a <em>group identity</em>, used to determine access rights
+ * to objects in a file system. The exact definition of a group is implementation specific, but
+ * typically, it represents an identity created for administrative purposes so as to determine the
+ * access rights for the members of the group. Whether an entity can be a member of multiple groups,
+ * and whether groups can be nested, are implementation specified and therefore not specified.
  *
  * @see UserPrincipalLookupService#lookupPrincipalByGroupName
  *
