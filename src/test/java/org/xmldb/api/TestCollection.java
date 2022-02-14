@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.CollectionVisitor;
 import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
@@ -156,5 +157,11 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   @Override
   public Instant getCreationTime() throws XMLDBException {
     return creation;
+  }
+
+  @Override
+  public void walkCollectionTree(int maxDepth, CollectionVisitor collectionVisitor)
+      throws XMLDBException {
+    throw new XMLDBException(NOT_IMPLEMENTED);
   }
 }
