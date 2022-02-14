@@ -64,7 +64,6 @@ defaultTasks 'build'
 
 java {
   sourceCompatibility = JavaVersion.VERSION_1_8
-  targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 repositories {
@@ -95,7 +94,6 @@ signing {
 
 jar {
   manifest.attributes 'Implementation-Title': 'XML:DB API specification',
-                      'Implementation-Version': project.version,
                       'Automatic-Module-Name': "org.xmldb.api"
 }
 
