@@ -64,6 +64,8 @@ import java.util.regex.Pattern;
  * 
  * This class provides static methods to parse string and integer based permission modes into a set
  * of permissions.
+ * 
+ * @since 2.0
  */
 public final class Permissions {
   private static final byte READ = 04;
