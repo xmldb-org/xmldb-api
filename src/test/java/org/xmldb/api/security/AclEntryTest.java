@@ -126,6 +126,32 @@ class AclEntryTest {
   }
 
   @Test
+  void testBuildWithPermissionsModeString() {
+    assertThatExceptionOfType(IllegalArgumentException.class)
+        .isThrownBy(() -> builder.setPermissions((String) null))
+        .withMessage("Invalid mode string 'null'");
+    assertThatExceptionOfType(IllegalArgumentException.class)
+        .isThrownBy(() -> builder.setPermissions("")).withMessage("Invalid mode string ''");
+    assertThatExceptionOfType(IllegalArgumentException.class)
+        .isThrownBy(() -> builder.setPermissions("xxxx")).withMessage("Invalid mode string 'xxxx'");
+    assertThatExceptionOfType(IllegalArgumentException.class)
+        .isThrownBy(() -> builder.setPermissions("a"))
+        .withMessage("Unknown char 'a' in mode string 'a'");
+    builder.setType(ALLOW).setPrincipal(principal).setPermissions("rw-");
+    assertThat(builder.build()).satisfies(aclEntry -> {
+      assertThat(aclEntry.type()).isEqualTo(ALLOW);
+      assertThat(aclEntry.permissions()).containsExactlyInAnyOrder(READ, WRITE)
+          .isInstanceOf(EnumSet.class);
+    });
+    builder.setType(ALLOW).setPrincipal(principal).setPermissions("r-x");
+    assertThat(builder.build()).satisfies(aclEntry -> {
+      assertThat(aclEntry.type()).isEqualTo(ALLOW);
+      assertThat(aclEntry.permissions()).containsExactlyInAnyOrder(READ, EXECUTE)
+          .isInstanceOf(EnumSet.class);
+    });
+  }
+
+  @Test
   void testBuildWithEmpptyFlagsSet() {
     builder.setType(DENY).setPrincipal(principal);
     assertThat(builder.setFlags(new HashSet<>())).isSameAs(builder);
