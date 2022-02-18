@@ -186,6 +186,41 @@ public final class AclEntry {
     }
 
     /**
+     * Sets the permissions component of this builder. On return, the permissions component of this
+     * builder is a copy of the permissions in the given array.
+     *
+     * @param modeStr the permissions mode string
+     * @return this builder
+     */
+    public Builder setPermissions(String modeStr) {
+      Set<AclEntryPermission> set = EnumSet.noneOf(AclEntryPermission.class);
+      if (modeStr == null || modeStr.isEmpty() || modeStr.length() > 3) {
+        throw new IllegalArgumentException("Invalid mode string '" + modeStr + "'");
+      }
+      for (int index = 0; index < 3; index++) {
+        char chr = modeStr.charAt(index);
+        switch (chr) {
+          case 'r':
+            set.add(AclEntryPermission.READ);
+            break;
+          case 'w':
+            set.add(AclEntryPermission.WRITE);
+            break;
+          case 'x':
+            set.add(AclEntryPermission.EXECUTE);
+            break;
+          case '-':
+            break;
+          default:
+            throw new IllegalArgumentException(
+                "Unknown char '" + chr + "' in mode string '" + modeStr + "'");
+        }
+      }
+      this.permissions = set;
+      return this;
+    }
+
+    /**
      * Sets the flags component of this builder. On return, the flags component of this builder is a
      * copy of the given set.
      *
