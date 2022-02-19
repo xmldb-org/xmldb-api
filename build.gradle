@@ -87,11 +87,6 @@ compileJava {
   options.compilerArgs << '-Xlint:unchecked'
 }
 
-signing {
-  required { project.hasProperty('signing.password') && !project.version.endsWith('-SNAPSHOT') }
-  sign publishing.publications
-}
-
 jar {
   manifest.attributes 'Implementation-Title': 'XML:DB API specification',
                       'Automatic-Module-Name': "org.xmldb.api"
