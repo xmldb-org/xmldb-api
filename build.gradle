@@ -58,7 +58,7 @@ if (!project.hasProperty('sonatypePassword')) ext.sonatypePassword = '**undefine
 if (!project.hasProperty('sonarToken')) ext.sonarToken = '**undefined**'
 
 group = 'net.sf.xmldb-org'
-version = '2.0.0-SNAPSHOT'
+version = '2.0.0'
 
 defaultTasks 'build'
 
