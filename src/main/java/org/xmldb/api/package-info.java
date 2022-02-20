@@ -37,14 +37,8 @@
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
  * <https://github.com/xmldb-org/>
  */
-package org.xmldb.api.base;
 
 /**
- * Represents a complied expression.
+ * XML:DB API specification base package defining the {@link org.xmldb.api.DatabaseManager}.
  */
-public interface CompiledExpression {
-  /**
-   * Prepare the expression for being reused.
-   */
-  void reset();
-}
+package org.xmldb.api;

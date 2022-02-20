@@ -47,12 +47,25 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+/**
+ * Helper class responsible to lazy create {@link Service} implementations, based on the registered
+ * on the {@link ProviderRegistry}.
+ *
+ * @since 2.0
+ */
 public final class ServiceProviderCache implements ServiceProvider {
   private final StampedLock lock;
   private final Consumer<ProviderRegistry> initializer;
 
   private List<ImplementationProvider<? extends Service>> providers;
 
+  /**
+   * Creates a new service provider cache instance with the given registry action being used, to
+   * initialize all supported services,
+   * 
+   * @param registry the registration action to define the supported services
+   * @return the new service provider cache instance
+   */
   public static ServiceProviderCache withRegistered(Consumer<ProviderRegistry> registry) {
     return new ServiceProviderCache(registry);
   }
@@ -92,6 +105,9 @@ public final class ServiceProviderCache implements ServiceProvider {
     providers.add(new ImplementationProvider<>(serviceType, serviceSupplier));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public <S extends Service> boolean hasService(Class<S> serviceType) {
     for (ImplementationProvider<? extends Service> provider : providers()) {
@@ -102,6 +118,9 @@ public final class ServiceProviderCache implements ServiceProvider {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public <S extends Service> Optional<S> findService(Class<S> serviceType) {
     for (ImplementationProvider<? extends Service> provider : providers()) {

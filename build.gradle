@@ -58,7 +58,7 @@ if (!project.hasProperty('sonatypePassword')) ext.sonatypePassword = '**undefine
 if (!project.hasProperty('sonarToken')) ext.sonarToken = '**undefined**'
 
 group = 'net.sf.xmldb-org'
-version = '2.0.0'
+version = '2.0.1-SNAPSHOT'
 
 defaultTasks 'build'
 
@@ -89,6 +89,7 @@ compileJava {
 
 jar {
   manifest.attributes 'Implementation-Title': 'XML:DB API specification',
+                      'Specification-Title': 'XML:DB API specification',
                       'Automatic-Module-Name': "org.xmldb.api"
 }
 
@@ -143,7 +144,16 @@ config {
       developerConnection = 'scm:git://github.com/xmldb-org/xmldb-api.git'
       url = 'https://github.com/xmldb-org/xmldb-api'
     }
+    organization {
+      name = 'XML:DB Initiative for XML Databases'
+      url = 'https://github.com/xmldb-org'
+    }
     people {
+      person {
+        id = 'xmldb-api'
+        name = 'XML:DB Initiative'
+        roles = [ 'owner' ]
+      }
       person {
         id = 'reinhapa'
         name = 'Patrick Reinhart'
@@ -203,7 +213,14 @@ config {
     }
   }
   docs {
-    javadoc.autoLinks.enabled = false
+    javadoc {
+      autoLinks.enabled = false
+      options {
+        docTitle = "XML:DB ${project.version} API"
+        header = "XML:DB ${project.version} API"
+        windowTitle = "XML:DB ${project.version} API"
+      }
+    }
   }
   artifacts {
     minpom.enabled = false
