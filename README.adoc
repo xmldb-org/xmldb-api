@@ -23,6 +23,7 @@ Supported Java versions:
 image:https://img.shields.io/badge/Java-8-blue.svg["Java 8", link="https://adoptium.net/"]
 image:https://img.shields.io/badge/Java-11-blue.svg["Java 11", link="https://adoptium.net/"]
 image:https://img.shields.io/badge/Java-17-blue.svg["Java 17", link="https://adoptium.net/"]
+image:https://img.shields.io/badge/Java-18-blue.svg["Java 18", link="https://adoptium.net/"]
 
 == Content
 The API interfaces are what driver developers must implement when creating a
