@@ -221,7 +221,6 @@ public interface Collection extends Configurable, AutoCloseable, ServiceProvider
   @Override
   void close() throws XMLDBException;
 
-
   /**
    * Returns the time of creation of the collection.
    *
@@ -232,4 +231,44 @@ public interface Collection extends Configurable, AutoCloseable, ServiceProvider
    * @since 2.0
    */
   Instant getCreationTime() throws XMLDBException;
+
+  /**
+   * Walks a file tree.
+   * <p>
+   * This method works as if invoking it were equivalent to evaluating the expression: <blockquote>
+   * 
+   * <pre>
+   * walkCollectionTree(Integer.MAX_VALUE, visitor)
+   * </pre>
+   * 
+   * </blockquote> In other words, it does not follow symbolic links, and visits all levels of the
+   * file tree.
+   * 
+   * @param collectionVisitor the file visitor to invoke for each file
+   * @throws XMLDBException if an XML DB error is thrown by a visitor method
+   * 
+   * @since 2.0
+   */
+  default void walkCollectionTree(CollectionVisitor collectionVisitor) throws XMLDBException {
+    walkCollectionTree(Integer.MAX_VALUE, collectionVisitor);
+  }
+
+  /**
+   * Walks a file tree.
+   * <p>
+   * The {@code maxDepth} parameter is the maximum number of levels of directories to visit. A value
+   * of {@code 0} means that only the starting file is visited, unless denied by the security
+   * manager. A value of {@link Integer#MAX_VALUE MAX_VALUE} may be used to indicate that all levels
+   * should be visited. The {@code visitResource} method is invoked for all files, including
+   * directories, encountered at {@code maxDepth}, unless the basic file attributes cannot be read,
+   * in which case the {@code visitResourceFailed} method is invoked.
+   * 
+   * @param maxDepth the maximum number of collection levels to visit
+   * @param collectionVisitor the file visitor to invoke for each file
+   * @throws IllegalArgumentException if the {@code maxDepth} parameter is negative
+   * @throws XMLDBException if an XML DB error is thrown by a visitor method
+   * 
+   * @since 2.0
+   */
+  void walkCollectionTree(int maxDepth, CollectionVisitor collectionVisitor) throws XMLDBException;
 }
