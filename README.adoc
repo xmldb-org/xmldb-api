@@ -20,7 +20,6 @@ via `anonymous@a.cvs.sourceforge.net:/cvsroot/xmldb-org`.
 The archived project and code can be found at https://sourceforge.net/projects/xmldb-org/
 
 Supported Java versions: 
-image:https://img.shields.io/badge/Java-8-blue.svg["Java 8", link="https://adoptium.net/"]
 image:https://img.shields.io/badge/Java-11-blue.svg["Java 11", link="https://adoptium.net/"]
 image:https://img.shields.io/badge/Java-17-blue.svg["Java 17", link="https://adoptium.net/"]
 image:https://img.shields.io/badge/Java-18-blue.svg["Java 18", link="https://adoptium.net/"]
@@ -36,7 +35,7 @@ provides.
 The XML:DB API can be built as a JAR file. This is also used by http://exist-db.org/[eXist-db]'s 
 implementation of the XML:DB API.
 
-Java 8 or later is required to build the JAR file.
+Java 11 or later is required to build the JAR file.
 
 [source,bash]
 ----
