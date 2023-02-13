@@ -41,7 +41,7 @@ import java.text.SimpleDateFormat
 
 plugins {
   id 'java-library'
-  id 'com.diffplug.spotless' version '6.14.1'
+  id 'com.diffplug.spotless' version '6.15.0'
   id 'com.github.ben-manes.versions' version '0.45.0'
   id 'me.champeau.jmh' version '0.6.8'
   id 'org.kordamp.gradle.java-project' version '0.49.0'
