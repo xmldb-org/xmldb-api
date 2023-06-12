@@ -42,7 +42,7 @@ import java.text.SimpleDateFormat
 plugins {
   id 'java-library'
   id 'com.diffplug.spotless' version '6.19.0'
-  id 'com.github.ben-manes.versions' version '0.46.0'
+  id 'com.github.ben-manes.versions' version '0.47.0'
   id 'me.champeau.jmh' version '0.7.1'
   id 'org.kordamp.gradle.java-project' version '0.51.0'
 }
