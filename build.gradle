@@ -58,7 +58,6 @@ if (!project.hasProperty('sonatypePassword')) ext.sonatypePassword = '**undefine
 if (!project.hasProperty('sonarToken')) ext.sonarToken = '**undefined**'
 
 group = 'net.sf.xmldb-org'
-version = '2.1.0-SNAPSHOT'
 
 defaultTasks 'build'
 
@@ -128,7 +127,7 @@ dependencyUpdates.resolutionStrategy {
 }
 
 config {
-  release = !project.version.endsWith('-SNAPSHOT')
+  release = !project.version.toString().endsWith('-SNAPSHOT')
   info {
     vendor = 'reinhapa'
     name = 'XML:DB API specification'
