@@ -40,7 +40,9 @@
 import java.text.SimpleDateFormat
 
 plugins {
+  id 'eclipse'
   id 'java-library'
+  id 'java-test-fixtures'
   id 'com.diffplug.spotless' version '6.20.0'
   id 'com.github.ben-manes.versions' version '0.47.0'
   id 'me.champeau.jmh' version '0.7.1'
@@ -84,6 +86,12 @@ dependencies {
 
 compileJava {
   options.compilerArgs << '-Xlint:unchecked'
+}
+
+eclipse {
+  classpath {
+    testSourceSets =  [sourceSets.test, sourceSets.jmh]
+  }
 }
 
 jar {
