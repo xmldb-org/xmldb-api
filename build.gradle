@@ -44,7 +44,7 @@ plugins {
   id 'java-library'
   id 'java-test-fixtures'
   id 'com.diffplug.spotless' version '6.22.0'
-  id 'com.github.ben-manes.versions' version '0.48.0'
+  id 'com.github.ben-manes.versions' version '0.49.0'
   id 'me.champeau.jmh' version '0.7.1'
   id 'org.kordamp.gradle.java-project' version '0.51.0'
 }
