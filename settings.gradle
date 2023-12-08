@@ -38,7 +38,7 @@
  * <https://github.com/xmldb-org/>
  */
 plugins {
-  id('org.ajoberstar.reckon.settings') version '0.18.1'
+  id 'org.ajoberstar.reckon.settings' version '0.18.1'
 }
 
 reckon {
@@ -48,4 +48,4 @@ reckon {
   stageCalc = calcStageFromProp()
 }
 
-rootProject.name = 'xml-api'
+rootProject.name = 'xmldb-api'
