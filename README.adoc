@@ -14,7 +14,7 @@ image:https://javadoc.io/badge2/{group-name}/{project-name}/javadoc.svg["javadoc
 image:https://github.com/{project-full-path}/actions/workflows/gradle.yml/badge.svg["CI", link="https://github.com/{project-full-path}/actions/workflows/gradle.yml"]
 
 
-This is a conversion to Git of the `xapi` module from the XML:DB CVS repositiory
+This is a conversion to Git of the `xapi` module from the XML:DB CVS repository
 via `anonymous@a.cvs.sourceforge.net:/cvsroot/xmldb-org`.
 
 The archived project and code can be found at https://sourceforge.net/projects/xmldb-org/
@@ -22,7 +22,7 @@ The archived project and code can be found at https://sourceforge.net/projects/x
 Supported Java versions: 
 image:https://img.shields.io/badge/Java-11-blue.svg["Java 11", link="https://adoptium.net/"]
 image:https://img.shields.io/badge/Java-17-blue.svg["Java 17", link="https://adoptium.net/"]
-image:https://img.shields.io/badge/Java-18-blue.svg["Java 18", link="https://adoptium.net/"]
+image:https://img.shields.io/badge/Java-21-blue.svg["Java 21", link="https://adoptium.net/"]
 
 == Content
 The API interfaces are what driver developers must implement when creating a
@@ -37,10 +37,10 @@ implementation of the XML:DB API.
 
 Java 11 or later is required to build the JAR file.
 
-[source,bash]
+[source,bash,subs="attributes"]
 ----
-$ git clone https://github.com/xmldb-org/xmldb-api.git
-$ cd xmldb-api
+$ git clone https://github.com/{project-full-path}.git
+$ cd {project-name}
 $ gradlew build
 ----
 
