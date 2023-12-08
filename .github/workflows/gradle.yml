@@ -23,7 +23,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        jdk: ['11', '17', '18']
+        jdk: ['11', '17', '21']
         os: [ubuntu-latest]
     steps:
     - uses: actions/checkout@v4
@@ -37,10 +37,11 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew check
     - name: SonarQube
-      if:  ${{ matrix.jdk == '17' }}
+      if:  ${{ matrix.jdk == '21' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-      run: ./gradlew sonarqube -PsonarToken=${{ secrets.SONAR_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: ./gradlew sonar -PsonarToken=$SONAR_TOKEN
     - name: Run codecov analysis
       uses: codecov/codecov-action@v3
   deploy:
