@@ -120,7 +120,7 @@ class DatabaseManagerTest {
     DatabaseManager.registerDatabase(dbOne);
 
     when(dbOne.acceptsURI("xmldb:dbName:collection")).thenReturn(true);
-    when(dbOne.getCollection("dbName:collection", null, null)).thenReturn(collection);
+    when(dbOne.getCollection("xmldb:dbName:collection", null, null)).thenReturn(collection);
 
     assertThat(DatabaseManager.getCollection("xmldb:dbName:collection")).isEqualTo(collection);
   }
@@ -130,7 +130,8 @@ class DatabaseManagerTest {
     DatabaseManager.registerDatabase(dbOne);
 
     when(dbOne.acceptsURI("xmldb:dbName:collection")).thenReturn(true);
-    when(dbOne.getCollection("dbName:collection", "username", "password")).thenReturn(collection);
+    when(dbOne.getCollection("xmldb:dbName:collection", "username", "password"))
+        .thenReturn(collection);
 
     assertThat(DatabaseManager.getCollection("xmldb:dbName:collection", "username", "password"))
         .isEqualTo(collection);
@@ -169,15 +170,6 @@ class DatabaseManagerTest {
     assertThatExceptionOfType(XMLDBException.class)
         .isThrownBy(() -> DatabaseManager.registerDatabase(dbOne)).satisfies(e -> {
           assertThat(e.errorCode).isEqualTo(INSTANCE_NAME_ALREADY_REGISTERED);
-          assertThat(e.vendorErrorCode).isZero();
-        });
-  }
-
-  @Test
-  void testStripURIPrefix() {
-    assertThatExceptionOfType(XMLDBException.class)
-        .isThrownBy(() -> DatabaseManager.stripURIPrefix("unkown-prefix")).satisfies(e -> {
-          assertThat(e.errorCode).isEqualTo(INVALID_URI);
           assertThat(e.vendorErrorCode).isZero();
         });
   }

@@ -40,7 +40,6 @@
 package org.xmldb.api;
 
 import static org.xmldb.api.base.ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED;
-import static org.xmldb.api.base.ErrorCodes.INVALID_URI;
 import static org.xmldb.api.base.ErrorCodes.NO_SUCH_DATABASE;
 
 import java.util.Map;
@@ -180,7 +179,7 @@ public final class DatabaseManager {
    */
   public static Collection getCollection(final String uri, final String username,
       final String password) throws XMLDBException {
-    return getDatabase(uri).getCollection(stripURIPrefix(uri), username, password);
+    return getDatabase(uri).getCollection(uri, username, password);
   }
 
   /**
@@ -237,21 +236,6 @@ public final class DatabaseManager {
       }
     }
     throw new XMLDBException(NO_SUCH_DATABASE);
-  }
-
-  /**
-   * Removes the URI_PREFIX from the front of the URI. This is so the database can focus on handling
-   * its own URIs.
-   *
-   * @param uri The full URI to strip.
-   * @return The database specific portion of the URI.
-   * @throws XMLDBException if an error occurs whilst stripping the URI prefix
-   */
-  static String stripURIPrefix(final String uri) throws XMLDBException {
-    if (!uri.startsWith(URI_PREFIX)) {
-      throw new XMLDBException(INVALID_URI);
-    }
-    return uri.substring(URI_PREFIX.length());
   }
 
   record DatabaseInfo(Database database, DatabaseAction action) {
