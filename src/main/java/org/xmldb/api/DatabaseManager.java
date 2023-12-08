@@ -255,7 +255,7 @@ public final class DatabaseManager {
   }
 
   record DatabaseInfo(Database database, DatabaseAction action) {
-    public boolean acceptsURI(String uri) throws XMLDBException {
+    boolean acceptsURI(String uri) {
       return database.acceptsURI(uri);
     }
 
