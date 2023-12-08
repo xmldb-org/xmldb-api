@@ -64,11 +64,15 @@ group = 'net.sf.xmldb-org'
 defaultTasks 'build'
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_11
+  sourceCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
   mavenCentral()
+}
+
+sourceSets.main.resources {
+  srcDir 'src/main/proto'
 }
 
 dependencies {

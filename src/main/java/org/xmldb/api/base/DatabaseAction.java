@@ -1,7 +1,7 @@
 /*
  * The XML:DB Initiative Software License, Version 1.0
  *
- * Copyright (c) 2000-2024 The XML:DB Initiative. All rights reserved.
+ * Copyright (c) 2000-2023 The XML:DB Initiative. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
@@ -37,56 +37,27 @@
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
  * <https://github.com/xmldb-org/>
  */
-package org.xmldb.api;
+package org.xmldb.api.base;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.xmldb.api.DatabaseManager;
 
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.Database;
-import org.xmldb.api.base.XMLDBException;
-
-public class TestDatabase extends ConfigurableImpl implements Database {
-  private static final String DETAULT_NAME = "testdatabase";
-
-  private final String name;
-  private final Map<String, TestCollection> collections;
-
-  public TestDatabase() {
-    this(null);
-  }
-
-  public TestDatabase(String name) {
-    if (name == null || name.isEmpty()) {
-      this.name = DETAULT_NAME;
-    } else {
-      this.name = name;
-    }
-    collections = new HashMap<>();
-  }
-
-  @Override
-  public final String getName() throws XMLDBException {
-    return name;
-  }
-
-  public TestCollection addCollection(String collectionName) {
-    return collections.computeIfAbsent(collectionName, TestCollection::new);
-  }
-
-  @Override
-  public Collection getCollection(String uri, String username, String password)
-      throws XMLDBException {
-    return collections.get(uri);
-  }
-
-  @Override
-  public boolean acceptsURI(String uri) {
-    return uri.startsWith(DatabaseManager.URI_PREFIX + "test");
-  }
-
-  @Override
-  public String getConformanceLevel() throws XMLDBException {
-    return "0";
-  }
+public interface DatabaseAction {
+  /**
+   * Method called by {@linkplain DatabaseManager#deregisterDatabase(Database) } to notify the
+   * Database that it was de-registered.
+   * <p>
+   * The {@code deregister} method is intended only to be used by database and not by applications.
+   * Databases are recommended to not implement {@code DatabaseAction} in a public class. If there
+   * are active connections to the database at the time that the {@code deregister} method is
+   * called, it is implementation specific as to whether the connections are closed or allowed to
+   * continue. Once this method is called, it is implementation specific as to whether the database
+   * may limit the ability to open collections of a database, invoke other {@code Database} methods
+   * or throw a {@code XMLDBException}. Consult your database's documentation for additional
+   * information on its behavior.
+   * 
+   * @see DatabaseManager#registerDatabase(Database, DatabaseAction)
+   * @see DatabaseManager#deregisterDatabase(Database)
+   * @since 3
+   */
+  void deregister();
 }

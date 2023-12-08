@@ -40,28 +40,28 @@
 package org.xmldb.api.base;
 
 /**
- * {@code Database} is an encapsulation of the database driver functionality that is necessary to
- * access an XML database. Each vendor must provide their own implmentation of the {@code Database}
- * interface. The implementation is registered with the {@code DatabaseManager} to provide access to
- * the resources of the XML database.
- *
- * In general usage client applications should only access {@code Database} implementations directly
- * during initialization.
+ * {@link Database} is an encapsulation of the database driver functionality that is necessary to
+ * access an XML database. Each vendor must provide their own implementation of the {@link Database}
+ * interface. The implementation will be looked up by the {@link org.xmldb.api.DatabaseManager}
+ * using the {@link java.util.ServiceLoader} if not registered directly.
+ * <p/>
+ * The
  */
 public interface Database extends Configurable {
   /**
    * Returns the name associated with the Database instance.
    *
    * @return the name of the object.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   String getName() throws XMLDBException;
 
   /**
-   * Retrieves a {@code Collection} instance based on the URI provided in the {@code uri} parameter.
-   * The format of the URI is defined in the documentation for DatabaseManager.getCollection().
-   *
+   * Retrieves a {@link Collection} instance based on the URI provided in the {@code uri} parameter.
+   * The format of the URI is defined in the documentation for
+   * {@link org.xmldb.api.DatabaseManager#getCollection(String, String, String)}.
+   * <p/>
    * Authentication is handled via username and password however it is not required that the
    * database support authentication. Databases that do not support authentication MUST ignore the
    * {@code username} and {@code password} if those provided are not null.
@@ -71,33 +71,31 @@ public interface Database extends Configurable {
    *        does not support authentication.
    * @param password The password to use for authentication to the database or null if the database
    *        does not support authentication.
-   * @return A {@code Collection} instance for the requested collection or null if the collection
+   * @return A {@link Collection} instance for the requested collection or null if the collection
    *         could not be found.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrroCodes.INVALID_URI} If the URI is not in
-   *         a valid format. {@code ErrroCodes.PERMISSION_DENIED} If the {@code username} and
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur. {@link ErrorCodes#INVALID_URI} If the URI is not in
+   *         a valid format. {@link ErrorCodes#PERMISSION_DENIED} If the {@code username} and
    *         {@code password} were not accepted by the database.
    */
   Collection getCollection(String uri, String username, String password) throws XMLDBException;
 
   /**
-   * acceptsURI determines whether this {@code Database} implementation can handle the URI. It
-   * should return true if the Database instance knows how to handle the URI and false otherwise.
+   * acceptsURI determines whether this {@link Database} implementation can handle the URI. It
+   * should return {@code true} if the Database instance knows how to handle the URI and
+   * {@code false} otherwise.
    *
    * @param uri the URI to check for.
    * @return true if the URI can be handled, false otherwise.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrroCodes.INVALID_URI} If the URI is not in
-   *         a valid format.
    */
-  boolean acceptsURI(String uri) throws XMLDBException;
+  boolean acceptsURI(String uri);
 
   /**
    * Returns the XML:DB API Conformance level for the implementation. This can be used by client
    * programs to determine what functionality is available to them.
    *
    * @return the XML:DB API conformance level for this implementation.
-   * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
   String getConformanceLevel() throws XMLDBException;
