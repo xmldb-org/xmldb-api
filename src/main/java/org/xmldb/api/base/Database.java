@@ -39,13 +39,35 @@
  */
 package org.xmldb.api.base;
 
+import java.util.Properties;
+
 /**
- * {@link Database} is an encapsulation of the database driver functionality that is necessary to
- * access an XML database. Each vendor must provide their own implementation of the {@link Database}
- * interface. The implementation will be looked up by the {@link org.xmldb.api.DatabaseManager}
- * using the {@link java.util.ServiceLoader} if not registered directly.
- * <p/>
- * The
+ * The interface that every XMLDB base class must implement.
+ * <P>
+ * The {@code DatabaseManager} allows for multiple databases.
+ *
+ * <P>
+ * Each XMLDB should supply a class that implements the {@linkplain Database} interface.
+ *
+ * <P>
+ * The {@code DatabaseManager} will try to load as many drivers as it can find and then for any
+ * given {@code Database} request, it will ask each {@code Database} in turn to try to connect to
+ * the target URL.
+ *
+ * <P>
+ * It is strongly recommended that each {@code Database} class should be small and standalone so
+ * that the {@code Database} class can be loaded and queried without bringing in vast quantities of
+ * supporting code.
+ *
+ * <P>
+ * When a {@code Database} class is loaded, it should create an instance of itself and register it
+ * with the {@code DatabaseManager}. This means that a user can load and register a driver by
+ * calling:
+ * <p>
+ * {@code Class.forName("foo.bah.Database")}
+ * <p>
+ * A {@code Database} may create a {@linkplain DatabaseAction} implementation in order to receive
+ * notifications when {@linkplain org.xmldb.api.DatabaseManager#deregisterDatabase} has been called.
  */
 public interface Database extends Configurable {
   /**
@@ -58,27 +80,32 @@ public interface Database extends Configurable {
   String getName() throws XMLDBException;
 
   /**
-   * Retrieves a {@link Collection} instance based on the URI provided in the {@code uri} parameter.
-   * The format of the URI is defined in the documentation for
-   * {@link org.xmldb.api.DatabaseManager#getCollection(String, String, String)}.
+   * Attempts to make a {@code Collection} connection to the given URI. The {@code Database} should
+   * return "null" if it realizes it is the wrong kind of driver to connect to the given URL. This
+   * will be common, as when the {@code DatabaseManager} is asked to connect to a given URL it
+   * passes the URL to each loaded driver in turn.
    * <p/>
-   * Authentication is handled via username and password however it is not required that the
-   * database support authentication. Databases that do not support authentication MUST ignore the
-   * {@code username} and {@code password} if those provided are not null.
+   * The driver should throw an {@code XMLDBException} if it is the right driver to connect to the
+   * given URL but has trouble connecting to the database.
+   * <p/>
+   * The {@code Properties} argument can be used to pass arbitrary string tag/value pairs as
+   * connection arguments. Normally at least "user" and "password" properties should be included in
+   * the {@code Properties} object.
+   * <p/>
+   * <B>Note:</B> If a property is specified as part of the {@code uri} and is also specified in the
+   * {@code Properties} object, it is implementation-defined as to which value will take precedence.
+   * For maximum portability, an application should only specify a property once.
    *
-   * @param uri the URI to use to locate the collection.
-   * @param username The username to use for authentication to the database or null if the database
-   *        does not support authentication.
-   * @param password The password to use for authentication to the database or null if the database
-   *        does not support authentication.
-   * @return A {@link Collection} instance for the requested collection or null if the collection
-   *         could not be found.
+   * @param uri the URI of the database to which to connect
+   * @param info a list of arbitrary string tag/value pairs as connection arguments. Normally at
+   *        least a "user" and "password" property should be included.
+   * @return a {@code Collection} object that represents a connection to the URL
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
    *         vendor specific errors that occur. {@link ErrorCodes#INVALID_URI} If the URI is not in
    *         a valid format. {@link ErrorCodes#PERMISSION_DENIED} If the {@code username} and
    *         {@code password} were not accepted by the database.
    */
-  Collection getCollection(String uri, String username, String password) throws XMLDBException;
+  Collection getCollection(String uri, Properties info) throws XMLDBException;
 
   /**
    * acceptsURI determines whether this {@link Database} implementation can handle the URI. It
@@ -86,7 +113,7 @@ public interface Database extends Configurable {
    * {@code false} otherwise.
    *
    * @param uri the URI to check for.
-   * @return true if the URI can be handled, false otherwise.
+   * @return {@code true} if the URI can be handled, {@code false} otherwise.
    */
   boolean acceptsURI(String uri);
 

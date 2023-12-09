@@ -43,6 +43,7 @@ import static org.xmldb.api.base.ErrorCodes.INSTANCE_NAME_ALREADY_REGISTERED;
 import static org.xmldb.api.base.ErrorCodes.NO_SUCH_DATABASE;
 
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -65,8 +66,6 @@ public final class DatabaseManager {
   private static final Map<String, String> properties = new ConcurrentHashMap<>();
   private static final CopyOnWriteArrayList<DatabaseInfo> registeredDatabases =
       new CopyOnWriteArrayList<>();
-  static boolean strictRegistrationBehavior =
-      Boolean.getBoolean("org.xmldb.api.strictRegistrationBehavior");
 
   private DatabaseManager() {}
 
@@ -107,8 +106,7 @@ public final class DatabaseManager {
    */
   public static void registerDatabase(final Database database, final DatabaseAction action)
       throws XMLDBException {
-    if (!registeredDatabases.addIfAbsent(new DatabaseInfo(database, action))
-        && strictRegistrationBehavior) {
+    if (!registeredDatabases.addIfAbsent(new DatabaseInfo(database, action))) {
       throw new XMLDBException(INSTANCE_NAME_ALREADY_REGISTERED);
     }
   }
@@ -135,8 +133,7 @@ public final class DatabaseManager {
    * characters xmldb: and be followed by the name of the database instance as returned by
    * {@link Database#getName()} and a colon character. An example would be for the database named
    * "vendordb" the URI handed to getCollection would look something like the following.
-   * {@code xmldb:vendordb://host:port/path/to/collection}. The xmldb: prefix will be removed from
-   * the URI prior to handing the URI to the {@link Database} instance for handling.
+   * {@code xmldb:vendordb://host:port/path/to/collection}.
    * <p/>
    * This method is called when no authentication is necessary for the database.
    *
@@ -150,7 +147,7 @@ public final class DatabaseManager {
    *         instance could not be found to handle the provided URI.
    */
   public static Collection getCollection(final String uri) throws XMLDBException {
-    return getCollection(uri, null, null);
+    return getCollection(uri, new Properties());
   }
 
   /**
@@ -159,12 +156,11 @@ public final class DatabaseManager {
    * characters xmldb: and be followed by the name of the database instance as returned by
    * {@link Database#getName()} and a colon character. An example would be for the database named
    * "vendordb" the URI handed to getCollection would look something like the following.
-   * {@code xmldb:vendordb://host:port/path/to/collection}. The xmldb: prefix will be removed from
-   * the URI prior to handing the URI to the {@link Database} instance for handling.
+   * {@code xmldb:vendordb://host:port/path/to/collection}.
    *
    * @param uri The database specific URI to use to locate the collection.
-   * @param username The username to use for authentication to the database or null if the database
-   *        does not support authentication.
+   * @param user The username to use for authentication to the database or null if the database does
+   *        not support authentication.
    * @param password The password to use for authentication to the database or null if the database
    *        does not support authentication.
    * @return A {@code Collection} instance for the requested collection or null if the collection
@@ -177,9 +173,41 @@ public final class DatabaseManager {
    *         {@link org.xmldb.api.base.ErrorCodes#PERMISSION_DENIED} If the {@code username} and
    *         {@code password} were not accepted by the database.
    */
-  public static Collection getCollection(final String uri, final String username,
-      final String password) throws XMLDBException {
-    return getDatabase(uri).getCollection(uri, username, password);
+  public static Collection getCollection(final String uri, final String user, final String password)
+      throws XMLDBException {
+    Properties info = new Properties();
+    if (user != null) {
+      info.put("user", user);
+    }
+    if (password != null) {
+      info.put("password", password);
+    }
+    return getCollection(uri, info);
+  }
+
+  /**
+   * Retrieves a {@link Collection} instance from the database for the given URI. The format of the
+   * majority of the URI is database implementation specific however the uri must begin with
+   * characters xmldb: and be followed by the name of the database instance as returned by
+   * {@link Database#getName()} and a colon character. An example would be for the database named
+   * "vendordb" the URI handed to getCollection would look something like the following.
+   * {@code xmldb:vendordb://host:port/path/to/collection}.
+   *
+   * @param uri The database specific URI to use to locate the collection.
+   * @param info The database specific connection options
+   * @return A {@code Collection} instance for the requested collection or null if the collection
+   *         could not be found.
+   * @throws XMLDBException with expected error codes.
+   *         {@link org.xmldb.api.base.ErrorCodes#VENDOR_ERROR} for any vendor specific errors that
+   *         occur. {@link org.xmldb.api.base.ErrorCodes#INVALID_URI} If the URI is not in a valid
+   *         format. {@link org.xmldb.api.base.ErrorCodes#NO_SUCH_DATABASE} If a {@link Database}
+   *         instance could not be found to handle the provided URI.
+   *         {@link org.xmldb.api.base.ErrorCodes#PERMISSION_DENIED} If the {@code username} and
+   *         {@code password} were not accepted by the database.
+   */
+  public static Collection getCollection(final String uri, final Properties info)
+      throws XMLDBException {
+    return withDatabase(uri, database -> database.getCollection(uri, info));
   }
 
   /**
@@ -195,7 +223,7 @@ public final class DatabaseManager {
    *         instance could not be found to handle the provided URI.
    */
   public static String getConformanceLevel(final String uri) throws XMLDBException {
-    return getDatabase(uri).getConformanceLevel();
+    return withDatabase(uri, Database::getConformanceLevel);
   }
 
   /**
@@ -229,13 +257,34 @@ public final class DatabaseManager {
    * @return the requested {@link Database} instance.
    * @throws XMLDBException if an error occurs whilst getting the database
    */
-  static Database getDatabase(final String uri) throws XMLDBException {
+  static <T> T withDatabase(final String uri, final DatabaseFunction<T> function)
+      throws XMLDBException {
+    // Walk through the loaded registeredDrivers attempting to make a connection.
+    // Remember the first exception that gets raised so we can reraise it.
+    XMLDBException reason = null;
     for (DatabaseInfo info : registeredDatabases) {
       if (info.acceptsURI(uri)) {
-        return info.database;
+        try {
+          T result = function.apply(info.database);
+          if (result != null) {
+            return result;
+          }
+        } catch (XMLDBException ex) {
+          if (reason == null) {
+            reason = ex;
+          }
+        }
       }
     }
+    if (reason != null) {
+      throw reason;
+    }
     throw new XMLDBException(NO_SUCH_DATABASE);
+  }
+
+  @FunctionalInterface
+  interface DatabaseFunction<T> {
+    T apply(Database database) throws XMLDBException;
   }
 
   record DatabaseInfo(Database database, DatabaseAction action) {
