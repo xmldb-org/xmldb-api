@@ -20,7 +20,6 @@ via `anonymous@a.cvs.sourceforge.net:/cvsroot/xmldb-org`.
 The archived project and code can be found at https://sourceforge.net/projects/xmldb-org/
 
 Supported Java versions: 
-image:https://img.shields.io/badge/Java-11-blue.svg["Java 11", link="https://adoptium.net/"]
 image:https://img.shields.io/badge/Java-17-blue.svg["Java 17", link="https://adoptium.net/"]
 image:https://img.shields.io/badge/Java-21-blue.svg["Java 21", link="https://adoptium.net/"]
 
