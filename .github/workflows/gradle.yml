@@ -13,7 +13,7 @@ on:
 jobs:
   codacy-analysis-cli:
     runs-on: ubuntu-latest
-    name: Codacy Analysis CLI
+    name: Codacy Analysis CLI XXXX
     steps:
       - uses: actions/checkout@v4
       - name: Run codacy-analysis-cli
@@ -21,6 +21,9 @@ jobs:
   build:
     name: ${{ matrix.os }} / OpenJDK ${{ matrix.jdk }}
     runs-on: ${{ matrix.os }}
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+      ORG_GRADLE_PROJECT_sonarToken: ${{ secrets.SONAR_TOKEN }}
     strategy:
       matrix:
         jdk: ['11', '17', '21']
@@ -38,9 +41,6 @@ jobs:
       run: ./gradlew check
     - name: SonarQube
       if:  ${{ matrix.jdk == '21' }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        ORG_GRADLE_PROJECT_sonarToken: ${{ secrets.SONAR_TOKEN }}
       run: ./gradlew sonar
     - name: Run codecov analysis
       uses: codecov/codecov-action@v4
@@ -49,6 +49,11 @@ jobs:
     needs: [ build, codacy-analysis-cli ]
     runs-on: ubuntu-latest
     name: Deploy
+    env:
+      ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_SIGNING_KEY }}
+      ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
+      ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.OSSRH_USERNAME }}
+      ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.OSSRH_PASSWORD }}
     steps:
     - uses: actions/checkout@v4
       with:
@@ -59,9 +64,4 @@ jobs:
         distribution: temurin
         java-version: '11'
     - name: Deploy
-      env:
-        ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_SIGNING_KEY }}
-        ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
-        ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.OSSRH_USERNAME }}
-        ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.OSSRH_PASSWORD }}
       run: ./gradlew publish --no-daemon
