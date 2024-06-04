@@ -43,7 +43,7 @@ package org.xmldb.api.base;
  * ResourceSet is a container for a set of resources. Generally a {@code ResourceSet} is obtained as
  * the result of a query.
  */
-public interface ResourceSet {
+public interface ResourceSet extends AutoCloseable {
   /**
    * Returns the {@code Resource} instance stored at the index specified by index.
    *
@@ -125,4 +125,24 @@ public interface ResourceSet {
    *         vendor specific errors that occur.
    */
   void clear() throws XMLDBException;
+
+  /**
+   * Returns whenever the current resource has been closed or not.
+   *
+   * @return {@code true} when the resource has been closed, {@code false} otherwise.
+   * @since 3.0
+   */
+  boolean isClosed();
+
+  /**
+   * Releases all resources consumed by the {@code ResourceSet}. The {@code close} method must
+   * always be called when use of a {@code ResourceSet} is complete. It is not safe to use a
+   * {@code ResourceSet} after the {@code close} method has been called.
+   *
+   * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
+   *         vendor specific errors that occur.
+   * @since 3.0
+   */
+  @Override
+  void close() throws XMLDBException;
 }
