@@ -53,6 +53,8 @@ import static org.xmldb.api.base.ErrorCodes.UNKNOWN_ERROR;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 /**
  * Tests the {@link XMLDBException}
@@ -62,7 +64,7 @@ class XMLDBExceptionTest {
   @Test
   void testXMLDBException() {
     XMLDBException ex = new XMLDBException();
-    assertThat(ex).hasMessage("").satisfies(e -> {
+    assertThat(ex).hasMessage("Unknown error").satisfies(e -> {
       assertThat(e.errorCode).isEqualTo(UNKNOWN_ERROR);
       assertThat(e.vendorErrorCode).isZero();
     });
@@ -71,7 +73,7 @@ class XMLDBExceptionTest {
   @Test
   void testXMLDBExceptionInt() {
     XMLDBException ex = new XMLDBException(COLLECTION_CLOSED);
-    assertThat(ex).hasMessage("").satisfies(e -> {
+    assertThat(ex).hasMessage("Collection closed").satisfies(e -> {
       assertThat(e.errorCode).isEqualTo(COLLECTION_CLOSED);
       assertThat(e.vendorErrorCode).isZero();
     });
@@ -89,7 +91,7 @@ class XMLDBExceptionTest {
   @Test
   void testXMLDBExceptionIntInt() {
     XMLDBException ex = new XMLDBException(INVALID_DATABASE, 123);
-    assertThat(ex).hasMessage("").satisfies(e -> {
+    assertThat(ex).hasMessage("Invalid database").satisfies(e -> {
       assertThat(e.errorCode).isEqualTo(INVALID_DATABASE);
       assertThat(e.vendorErrorCode).isEqualTo(123);
     });
@@ -108,7 +110,7 @@ class XMLDBExceptionTest {
   void testXMLDBExceptionIntThrowable() {
     Throwable cause = new IOException("error 1");
     XMLDBException ex = new XMLDBException(NOT_IMPLEMENTED, cause);
-    assertThat(ex).hasMessage("").hasCause(cause).satisfies(e -> {
+    assertThat(ex).hasMessage("Not implemented").hasCause(cause).satisfies(e -> {
       assertThat(e.errorCode).isEqualTo(NOT_IMPLEMENTED);
       assertThat(e.vendorErrorCode).isZero();
     });
@@ -128,7 +130,7 @@ class XMLDBExceptionTest {
   void testXMLDBExceptionIntIntThrowable() {
     Throwable cause = new IOException("error 3");
     XMLDBException ex = new XMLDBException(NO_SUCH_DATABASE, 345, cause);
-    assertThat(ex).hasMessage("").hasCause(cause).satisfies(e -> {
+    assertThat(ex).hasMessage("No such database").hasCause(cause).satisfies(e -> {
       assertThat(e.errorCode).isEqualTo(NO_SUCH_DATABASE);
       assertThat(e.vendorErrorCode).isEqualTo(345);
     });
@@ -141,6 +143,34 @@ class XMLDBExceptionTest {
     assertThat(ex).hasMessage("message 4").hasCause(cause).satisfies(e -> {
       assertThat(e.errorCode).isEqualTo(PERMISSION_DENIED);
       assertThat(e.vendorErrorCode).isEqualTo(456);
+    });
+  }
+
+  @ParameterizedTest
+  @CsvSource(textBlock = """
+      -1,  Unknown error code: -1
+      0,   Unknown error
+      1,   Vendor error: 4711
+      2,   Not implemented
+      3,   Wrong content type
+      4,   Permission denied
+      5,   Invalid URI
+      100, No such service
+      200, No such collection
+      201, Invalid collection
+      202, Collection closed
+      300, No such resource
+      301, Invalid resource
+      302, Unknown resource type
+      400, No such database
+      401, Invalid database
+      402, Instance name already registered
+      """)
+  void testMessageFromErrorCode(final int errorCode, final String expectedMessage) {
+    XMLDBException ex = new XMLDBException(errorCode, 4711);
+    assertThat(ex).hasMessage(expectedMessage).satisfies(e -> {
+      assertThat(e.errorCode).isEqualTo(errorCode);
+      assertThat(e.vendorErrorCode).isEqualTo(4711);
     });
   }
 }

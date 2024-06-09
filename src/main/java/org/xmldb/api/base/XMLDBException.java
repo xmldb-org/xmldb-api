@@ -57,7 +57,7 @@ public final class XMLDBException extends Exception {
   }
 
   public XMLDBException(int errorCode) {
-    this(errorCode, 0, "", null);
+    this(errorCode, 0, null, null);
   }
 
   public XMLDBException(int errorCode, String message) {
@@ -65,7 +65,7 @@ public final class XMLDBException extends Exception {
   }
 
   public XMLDBException(int errorCode, int vendorErrorCode) {
-    this(errorCode, vendorErrorCode, "", null);
+    this(errorCode, vendorErrorCode, null, null);
   }
 
   public XMLDBException(int errorCode, int vendorErrorCode, String message) {
@@ -73,7 +73,7 @@ public final class XMLDBException extends Exception {
   }
 
   public XMLDBException(int errorCode, Throwable cause) {
-    this(errorCode, 0, "", cause);
+    this(errorCode, 0, null, cause);
   }
 
   public XMLDBException(int errorCode, String message, Throwable cause) {
@@ -81,12 +81,23 @@ public final class XMLDBException extends Exception {
   }
 
   public XMLDBException(int errorCode, int vendorErrorCode, Throwable cause) {
-    this(errorCode, vendorErrorCode, "", cause);
+    this(errorCode, vendorErrorCode, null, cause);
   }
 
   public XMLDBException(int errorCode, int vendorErrorCode, String message, Throwable cause) {
-    super(message, cause);
+    super(messageFromErrorCode(message, errorCode, vendorErrorCode), cause);
     this.errorCode = errorCode;
     this.vendorErrorCode = vendorErrorCode;
+  }
+
+  static String messageFromErrorCode(final String message, final int errorCode,
+      final int vendorErrorCode) {
+    if (message != null) {
+      return message;
+    } else if (ErrorCodes.VENDOR_ERROR == errorCode) {
+      return "Vendor error: " + vendorErrorCode;
+    } else {
+      return ErrorCodes.defaultMessage(errorCode);
+    }
   }
 }

@@ -155,7 +155,7 @@ public final class DatabaseManager {
    * "vendordb" the URI handed to getCollection would look something like the following.
    * {@code xmldb:vendordb://host:port/path/to/collection}. The xmldb: prefix will be removed from
    * the URI prior to handing the URI to the {@code Database} instance for handling.
-   *
+   * <p>
    * This method is called when no authentication is necessary for the database.
    *
    * @param uri The database specific URI to use to locate the collection.
@@ -200,7 +200,7 @@ public final class DatabaseManager {
 
   /**
    * Returns the Core Level conformance value for the provided URI. The current API defines valid
-   * resuls of "0" or "1" as defined in the XML:DB API specification.
+   * results of "0" or "1" as defined in the XML:DB API specification.
    *
    * @param uri The database specific URI to use to locate the collection.
    * @return The XML:DB Core Level conformance for the uri.
@@ -273,7 +273,7 @@ public final class DatabaseManager {
     }
 
     if (db == null) {
-      throw new XMLDBException(NO_SUCH_DATABASE);
+      throw new XMLDBException(NO_SUCH_DATABASE, "No matching database found for: " + uri);
     }
 
     return db;

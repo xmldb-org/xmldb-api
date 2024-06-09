@@ -127,4 +127,32 @@ public final class ErrorCodes {
   public static final int INSTANCE_NAME_ALREADY_REGISTERED = 402;
 
   private ErrorCodes() {}
+
+  /**
+   * Returns a default message for the given error code.
+   *
+   * @param errorCode the error code constant defined in {@link ErrorCodes}
+   * @return a default non-empty message representing the error code
+   */
+  public static String defaultMessage(int errorCode) {
+    return switch (errorCode) {
+      case COLLECTION_CLOSED -> "Collection closed";
+      case INSTANCE_NAME_ALREADY_REGISTERED -> "Instance name already registered";
+      case INVALID_COLLECTION -> "Invalid collection";
+      case INVALID_DATABASE -> "Invalid database";
+      case INVALID_RESOURCE -> "Invalid resource";
+      case INVALID_URI -> "Invalid URI";
+      case NO_SUCH_COLLECTION -> "No such collection";
+      case NO_SUCH_DATABASE -> "No such database";
+      case NO_SUCH_RESOURCE -> "No such resource";
+      case NO_SUCH_SERVICE -> "No such service";
+      case NOT_IMPLEMENTED -> "Not implemented";
+      case PERMISSION_DENIED -> "Permission denied";
+      case UNKNOWN_ERROR -> "Unknown error";
+      case UNKNOWN_RESOURCE_TYPE -> "Unknown resource type";
+      case VENDOR_ERROR -> "Vendor error";
+      case WRONG_CONTENT_TYPE -> "Wrong content type";
+      default -> "Unknown error code: " + errorCode;
+    };
+  }
 }

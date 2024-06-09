@@ -88,7 +88,8 @@ public interface ServiceProvider {
    * @since 2.0
    */
   default <S extends Service> S getService(Class<S> serviceType) throws XMLDBException {
-    return findService(serviceType).orElseThrow(() -> new XMLDBException(NO_SUCH_SERVICE));
+    return findService(serviceType)
+        .orElseThrow(() -> new XMLDBException(NO_SUCH_SERVICE, "Unknown service: " + serviceType));
   }
 
 }
