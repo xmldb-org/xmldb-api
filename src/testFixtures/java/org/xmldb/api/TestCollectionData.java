@@ -37,19 +37,18 @@
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
  * <https://github.com/xmldb-org/>
  */
-plugins {
-  id 'org.ajoberstar.reckon.settings' version '0.18.3'
-}
+package org.xmldb.api;
 
-reckon {
-  defaultInferredScope = 'minor'
-  snapshots()
-  scopeCalc = calcScopeFromProp().or(calcScopeFromCommitMessages())
-  stageCalc = calcStageFromProp()
-  // enable parse of old `xmldb-api-xxx' tags
-  tagParser = tagName -> java.util.Optional.of(tagName)
-          .map(name -> name.replaceFirst(/xmldb-api-(\d+\.\d+)/, '$1.0'))
-          .flatMap(name -> org.ajoberstar.reckon.core.Version.parse(name))
-}
+import java.time.Instant;
+import java.util.Objects;
 
-rootProject.name = 'xmldb-api'
+public record TestCollectionData(String name, Instant creation) {
+  public TestCollectionData(String name) {
+    this(name, Instant.now());
+  }
+
+  public TestCollectionData {
+    Objects.requireNonNull(name);
+    Objects.requireNonNull(creation);
+  }
+}

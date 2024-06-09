@@ -41,6 +41,7 @@ package org.xmldb.api;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -71,18 +72,17 @@ public class TestDatabase extends ConfigurableImpl implements Database {
   }
 
   public TestCollection addCollection(String collectionName) {
-    return collections.computeIfAbsent(collectionName, TestCollection::new);
+    return collections.computeIfAbsent(collectionName, TestCollection::create);
   }
 
   @Override
-  public Collection getCollection(String uri, String username, String password)
-      throws XMLDBException {
+  public Collection getCollection(String uri, Properties info) throws XMLDBException {
     return collections.get(uri);
   }
 
   @Override
-  public boolean acceptsURI(String uri) throws XMLDBException {
-    return false;
+  public boolean acceptsURI(String uri) {
+    return uri.startsWith(DatabaseManager.URI_PREFIX + "test");
   }
 
   @Override

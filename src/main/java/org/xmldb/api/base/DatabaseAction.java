@@ -37,19 +37,27 @@
  * XML:DB Initiative. For more information on the XML:DB Initiative, please see
  * <https://github.com/xmldb-org/>
  */
-plugins {
-  id 'org.ajoberstar.reckon.settings' version '0.18.3'
-}
+package org.xmldb.api.base;
 
-reckon {
-  defaultInferredScope = 'minor'
-  snapshots()
-  scopeCalc = calcScopeFromProp().or(calcScopeFromCommitMessages())
-  stageCalc = calcStageFromProp()
-  // enable parse of old `xmldb-api-xxx' tags
-  tagParser = tagName -> java.util.Optional.of(tagName)
-          .map(name -> name.replaceFirst(/xmldb-api-(\d+\.\d+)/, '$1.0'))
-          .flatMap(name -> org.ajoberstar.reckon.core.Version.parse(name))
-}
+import org.xmldb.api.DatabaseManager;
 
-rootProject.name = 'xmldb-api'
+public interface DatabaseAction {
+  /**
+   * Method called by {@linkplain DatabaseManager#deregisterDatabase(Database) } to notify the
+   * Database that it was de-registered.
+   * <p>
+   * The {@code deregister} method is intended only to be used by database and not by applications.
+   * Databases are recommended to not implement {@code DatabaseAction} in a public class. If there
+   * are active connections to the database at the time that the {@code deregister} method is
+   * called, it is implementation specific as to whether the connections are closed or allowed to
+   * continue. Once this method is called, it is implementation specific as to whether the database
+   * may limit the ability to open collections of a database, invoke other {@code Database} methods
+   * or throw a {@code XMLDBException}. Consult your database's documentation for additional
+   * information on its behavior.
+   * 
+   * @see DatabaseManager#registerDatabase(Database, DatabaseAction)
+   * @see DatabaseManager#deregisterDatabase(Database)
+   * @since 3
+   */
+  void deregister();
+}
