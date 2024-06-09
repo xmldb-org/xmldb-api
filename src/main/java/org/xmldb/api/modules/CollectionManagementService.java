@@ -51,8 +51,6 @@ import org.xmldb.api.base.XMLDBException;
  */
 public interface CollectionManagementService extends Service {
 
-  public static final String SERVICE_NAME = "CollectionManagementService";
-
   /**
    * Creates a new {@code Collection} in the database. The default configuration of the database is
    * determined by the implementer. The new {@code Collection} will be created relative to the

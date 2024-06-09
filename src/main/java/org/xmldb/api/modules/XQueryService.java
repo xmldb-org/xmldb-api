@@ -46,8 +46,6 @@ import org.xmldb.api.base.XMLDBException;
 
 public interface XQueryService extends Service {
 
-  public static final String SERVICE_NAME = "XQueryService";
-
   /**
    * Sets a namespace mapping in the internal namespace map used to evaluate queries. If
    * {@code prefix} is null or empty the default namespace is associated with the provided URI. A

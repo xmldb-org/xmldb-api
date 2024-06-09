@@ -62,8 +62,6 @@ import org.xmldb.api.base.XMLDBException;
  */
 public interface UserPrincipalLookupService extends Service {
 
-  public static final String SERVICE_NAME = "UserPrincipalLookupService";
-
   /**
    * Lookup a user principal by name.
    *

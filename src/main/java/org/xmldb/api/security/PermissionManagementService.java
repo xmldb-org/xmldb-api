@@ -57,8 +57,6 @@ import org.xmldb.api.base.XMLDBException;
  */
 public interface PermissionManagementService extends Service {
 
-  public static final String SERVICE_NAME = "PermissionManagementService";
-
   /**
    * Returns an attribute view for the given collection.
    * 

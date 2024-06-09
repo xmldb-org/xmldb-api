@@ -49,8 +49,6 @@ import org.xmldb.api.base.XMLDBException;
  */
 public interface TransactionService extends Service {
 
-  public static final String SERVICE_NAME = "TransactionService";
-
   /**
    * Begin the transaction
    *

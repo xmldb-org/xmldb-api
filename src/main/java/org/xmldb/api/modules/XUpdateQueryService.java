@@ -48,8 +48,6 @@ import org.xmldb.api.base.XMLDBException;
  */
 public interface XUpdateQueryService extends Service {
 
-  public static final String SERVICE_NAME = "XUpdateQueryService";
-
   /**
    * Runs a set of XUpdate operations against the collection. All selected documents are to be
    * updated and stored back to the repository.
