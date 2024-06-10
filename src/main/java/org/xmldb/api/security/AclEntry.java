@@ -200,20 +200,13 @@ public final class AclEntry {
       for (int index = 0; index < 3; index++) {
         char chr = modeStr.charAt(index);
         switch (chr) {
-          case 'r':
-            set.add(AclEntryPermission.READ);
-            break;
-          case 'w':
-            set.add(AclEntryPermission.WRITE);
-            break;
-          case 'x':
-            set.add(AclEntryPermission.EXECUTE);
-            break;
-          case '-':
-            break;
-          default:
-            throw new IllegalArgumentException(
-                "Unknown char '" + chr + "' in mode string '" + modeStr + "'");
+          case 'r' -> set.add(AclEntryPermission.READ);
+          case 'w' -> set.add(AclEntryPermission.WRITE);
+          case 'x' -> set.add(AclEntryPermission.EXECUTE);
+          case '-' -> {
+          }
+          default -> throw new IllegalArgumentException(
+              "Unknown char '" + chr + "' in mode string '" + modeStr + "'");
         }
       }
       this.permissions = set;
@@ -330,8 +323,7 @@ public final class AclEntry {
    */
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof AclEntry) {
-      AclEntry other = (AclEntry) obj;
+    if (obj instanceof AclEntry other) {
       return principal.equals(other.principal) && type.equals(other.type)
           && permissions.equals(other.permissions) && flags.equals(other.flags);
     }

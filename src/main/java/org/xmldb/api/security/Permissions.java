@@ -199,61 +199,73 @@ public final class Permissions {
 
       for (final char c : whoose) {
         switch (c) {
-          case ALL_CHAR:
-            if (clause.indexOf('+') > -1 || clause.indexOf('=') > -1) {
-              if (perms.containsKey(PermType.READ)) {
-                permissions.add(OWNER_READ);
-                permissions.add(GROUP_READ);
-                permissions.add(OTHERS_READ);
-              }
-              if (perms.containsKey(PermType.WRITE)) {
-                permissions.add(OWNER_WRITE);
-                permissions.add(GROUP_WRITE);
-                permissions.add(OTHERS_WRITE);
-              }
-              if (perms.containsKey(PermType.EXECUTE)) {
-                permissions.add(OWNER_EXECUTE);
-                permissions.add(GROUP_EXECUTE);
-                permissions.add(OTHERS_EXECUTE);
-              }
-              if (perms.containsKey(PermType.SETID)) {
-                permissions.add(SET_UID);
-                permissions.add(SET_GID);
-              }
-              if (perms.containsKey(PermType.STICKY)) {
-                permissions.add(STICKY_BIT);
-              }
-            }
-            break;
-          case USER_CHAR:
-            if (clause.indexOf('+') > -1 || clause.indexOf('=') > -1) {
-              setPermissions(permissions, perms, OWNER_READ, OWNER_WRITE, OWNER_EXECUTE);
-              if (perms.containsKey(PermType.SETID)) {
-                permissions.add(SET_UID);
-              }
-            }
-            break;
-          case GROUP_CHAR:
-            if (clause.indexOf('+') > -1 || clause.indexOf('=') > -1) {
-              setPermissions(permissions, perms, GROUP_READ, GROUP_WRITE, GROUP_EXECUTE);
-              if (perms.containsKey(PermType.SETID)) {
-                permissions.add(SET_GID);
-              }
-            }
-            break;
-          case OTHER_CHAR:
-            if (clause.indexOf('+') > -1 || clause.indexOf('=') > -1) {
-              setPermissions(permissions, perms, OTHERS_READ, OTHERS_WRITE, OTHERS_EXECUTE);
-              if (perms.containsKey(PermType.STICKY)) {
-                permissions.add(STICKY_BIT);
-              }
-            }
-            break;
-          default:
-            throw new IllegalArgumentException("Unrecognised mode char '" + c + "'");
+          case ALL_CHAR -> handleAllChar(permissions, clause, perms);
+          case USER_CHAR -> handleUserChar(permissions, clause, perms);
+          case GROUP_CHAR -> handleGroupChar(permissions, clause, perms);
+          case OTHER_CHAR -> handleOtherChar(permissions, clause, perms);
+          default -> throw new IllegalArgumentException("Unrecognised mode char '" + c + "'");
         }
       }
       perms.clear();
+    }
+  }
+
+  private static void handleOtherChar(EnumSet<Permission> permissions, String clause,
+      EnumMap<PermType, Boolean> perms) {
+    if (clause.indexOf('+') > -1 || clause.indexOf('=') > -1) {
+      setPermissions(permissions, perms, OTHERS_READ, OTHERS_WRITE, OTHERS_EXECUTE);
+      if (perms.containsKey(PermType.STICKY)) {
+        permissions.add(STICKY_BIT);
+      }
+    }
+  }
+
+  private static void handleGroupChar(EnumSet<Permission> permissions, String clause,
+      EnumMap<PermType, Boolean> perms) {
+    if (clause.indexOf('+') > -1 || clause.indexOf('=') > -1) {
+      setPermissions(permissions, perms, GROUP_READ, GROUP_WRITE, GROUP_EXECUTE);
+      if (perms.containsKey(PermType.SETID)) {
+        permissions.add(SET_GID);
+      }
+    }
+  }
+
+  private static void handleUserChar(EnumSet<Permission> permissions, String clause,
+      EnumMap<PermType, Boolean> perms) {
+    if (clause.indexOf('+') > -1 || clause.indexOf('=') > -1) {
+      setPermissions(permissions, perms, OWNER_READ, OWNER_WRITE, OWNER_EXECUTE);
+      if (perms.containsKey(PermType.SETID)) {
+        permissions.add(SET_UID);
+      }
+    }
+    return;
+  }
+
+  private static void handleAllChar(EnumSet<Permission> permissions, String clause,
+      EnumMap<PermType, Boolean> perms) {
+    if (clause.indexOf('+') > -1 || clause.indexOf('=') > -1) {
+      if (perms.containsKey(PermType.READ)) {
+        permissions.add(OWNER_READ);
+        permissions.add(GROUP_READ);
+        permissions.add(OTHERS_READ);
+      }
+      if (perms.containsKey(PermType.WRITE)) {
+        permissions.add(OWNER_WRITE);
+        permissions.add(GROUP_WRITE);
+        permissions.add(OTHERS_WRITE);
+      }
+      if (perms.containsKey(PermType.EXECUTE)) {
+        permissions.add(OWNER_EXECUTE);
+        permissions.add(GROUP_EXECUTE);
+        permissions.add(OTHERS_EXECUTE);
+      }
+      if (perms.containsKey(PermType.SETID)) {
+        permissions.add(SET_UID);
+        permissions.add(SET_GID);
+      }
+      if (perms.containsKey(PermType.STICKY)) {
+        permissions.add(STICKY_BIT);
+      }
     }
   }
 
@@ -261,23 +273,12 @@ public final class Permissions {
       final EnumMap<PermType, Boolean> perms) {
     for (final char c : whoPerm[1].toCharArray()) {
       switch (c) {
-        case READ_CHAR:
-          perms.put(PermType.READ, TRUE);
-          break;
-        case WRITE_CHAR:
-          perms.put(PermType.WRITE, TRUE);
-          break;
-        case EXECUTE_CHAR:
-          perms.put(PermType.EXECUTE, TRUE);
-          break;
-        case SETID_CHAR:
-          perms.put(PermType.SETID, TRUE);
-          break;
-        case STICKY_CHAR:
-          perms.put(PermType.STICKY, TRUE);
-          break;
-        default:
-          throw new IllegalArgumentException("Unrecognised mode char '" + c + "'");
+        case READ_CHAR -> perms.put(PermType.READ, TRUE);
+        case WRITE_CHAR -> perms.put(PermType.WRITE, TRUE);
+        case EXECUTE_CHAR -> perms.put(PermType.EXECUTE, TRUE);
+        case SETID_CHAR -> perms.put(PermType.SETID, TRUE);
+        case STICKY_CHAR -> perms.put(PermType.STICKY, TRUE);
+        default -> throw new IllegalArgumentException("Unrecognised mode char '" + c + "'");
       }
     }
   }
