@@ -22,6 +22,9 @@ jobs:
   build:
     name: ${{ matrix.os }} / OpenJDK ${{ matrix.jdk }}
     runs-on: ${{ matrix.os }}
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+      ORG_GRADLE_PROJECT_sonarToken: ${{ secrets.SONAR_TOKEN || '**undefined**' }}
     strategy:
       matrix:
         jdk: ['17', '21', '22']
@@ -38,13 +41,10 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build without sonar
-      if:  ${{ matrix.jdk != env.MIN_JDK }}
+      if:  ${{ env.ORG_GRADLE_PROJECT_sonarToken == '**undefined**' || matrix.jdk != env.MIN_JDK }}
       run: ./gradlew check
     - name: Build with sonar
-      if:  ${{ matrix.jdk == env.MIN_JDK }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        ORG_GRADLE_PROJECT_sonarToken: ${{ secrets.SONAR_TOKEN }}
+      if:  ${{ env.ORG_GRADLE_PROJECT_sonarToken != '**undefined**' }}
       run: ./gradlew check sonar
     - name: Run codecov analysis
       uses: codecov/codecov-action@v4
