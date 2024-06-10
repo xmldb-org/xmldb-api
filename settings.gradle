@@ -46,6 +46,10 @@ reckon {
   snapshots()
   scopeCalc = calcScopeFromProp()
   stageCalc = calcStageFromProp()
+  // enable parse of old `xmldb-api-xxx' tags
+  tagParser = tagName -> java.util.Optional.of(tagName)
+          .map(name -> name.replaceFirst(/xmldb-api-(\d+\.\d+)/, '$1.0'))
+          .flatMap(name -> org.ajoberstar.reckon.core.Version.parse(name))
 }
 
 rootProject.name = 'xmldb-api'
