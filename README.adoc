@@ -29,7 +29,6 @@ new driver and are the interfaces that applications are developed against.
 Along with the interfaces a concrete DriverManager implementation is also
 provides.
 
-
 == Building for eXist-db
 The XML:DB API can be built as a JAR file. This is also used by http://exist-db.org/[eXist-db]'s 
 implementation of the XML:DB API.
@@ -48,6 +47,9 @@ The JAR file will be located in the `build/libs` folder.
 
 == Getting the binaries for your build:
 The latest versions of the API are available at https://search.maven.org/search?q=g:{group-name}
+
+Snapshot builds are available from the Maven snapshot repository
+https://oss.sonatype.org/content/repositories/snapshots/net/sf/xmldb-org/xmldb-api/[https://oss.sonatype.org/content/repositories/snapshots]
 
 
 == Contribute
