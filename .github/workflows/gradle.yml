@@ -28,6 +28,8 @@ jobs:
         os: [ubuntu-latest]
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Set up JDK ${{ matrix.jdk }}
       uses: actions/setup-java@v4
       with:
@@ -35,14 +37,15 @@ jobs:
         java-version: ${{ matrix.jdk }}
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
+    - name: Build without sonar
+      if:  ${{ matrix.jdk != env.MIN_JDK }}
       run: ./gradlew check
-    - name: SonarQube
+    - name: Build with sonar
       if:  ${{ matrix.jdk == env.MIN_JDK }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         ORG_GRADLE_PROJECT_sonarToken: ${{ secrets.SONAR_TOKEN }}
-      run: ./gradlew sonar
+      run: ./gradlew check sonar
     - name: Run codecov analysis
       uses: codecov/codecov-action@v4
   deploy:
