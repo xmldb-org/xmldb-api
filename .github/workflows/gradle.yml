@@ -49,7 +49,7 @@ jobs:
     - name: Run codecov analysis
       uses: codecov/codecov-action@v4
   deploy:
-    if: ${{ github.event_name != 'pull_request' && github.event.repository.name == 'xmldb-org/xmldb-api' }}
+    if: ${{ github.event_name != 'pull_request' && github.repository == 'xmldb-org/xmldb-api' }}
     needs: [ build, codacy-analysis-cli ]
     runs-on: ubuntu-latest
     name: Deploy
