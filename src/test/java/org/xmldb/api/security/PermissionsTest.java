@@ -39,8 +39,7 @@
  */
 package org.xmldb.api.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.*;
 import static org.xmldb.api.security.Permission.GROUP_EXECUTE;
 import static org.xmldb.api.security.Permission.GROUP_READ;
 import static org.xmldb.api.security.Permission.GROUP_WRITE;
@@ -135,6 +134,11 @@ class PermissionsTest {
         OTHERS_EXECUTE);
     assertThat(fromModeString("--------T")).containsExactly(STICKY_BIT);
     assertThat(fromModeString("--------t")).containsExactly(OTHERS_EXECUTE, STICKY_BIT);
+  }
+
+  @Test
+  void fromModeStringFailureCases() {
+    assertThatIllegalArgumentException().isThrownBy(() -> fromModeString("u+q"));
   }
 
   @Test
