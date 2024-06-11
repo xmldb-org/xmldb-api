@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+import "org/xmldb/api/grpc/messages.proto";
+
+package org.xmldb.api.grpc;
+
+service XmlDbService {
+  rpc VersionCall(EmptyRequest) returns (VersionResponse);
+  rpc CollectionCountCall(CountRequest) returns (CountValue);
+  rpc DocumentCountCall(EmptyRequest) returns (CountValue);
+  rpc CollectionIdsCall(IdRequest) returns (stream IdValue);
+  rpc DocumentIdsCall(IdRequest) returns (stream IdValue);
+  rpc GetResource(ResourceRequest) returns (Resource);
+}
