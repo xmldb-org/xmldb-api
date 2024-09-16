@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package org.xmldb.api.grpc;
+
+message EmptyRequest {}
+
+message VersionResponse {
+  int32 major = 1;
+  int32 minor = 2;
+}
+
+message CountRequest {
+  string collectionName = 1;
+}
+
+message CountValue {
+  int64 count = 1;
+}
+
+message IdRequest {
+  string path = 1;
+}
+
+message IdValue {
+  string id = 1;
+}
+
+message ResourceRequest {
+  string collectionName = 1;
+  string resourceName = 2;
+}
+
+enum ResourceType {
+  XML = 0;
+  BINARY = 1;
+}
+
+message Resource {
+  ResourceType type = 1;
+  string contentType = 2;
+  uint64 creationTime = 3;
+  uint64 lastModificationTime = 4;
+}
