@@ -55,8 +55,8 @@ apply {
   plugin 'org.kordamp.gradle.sonar'
 }
 
-if (!project.hasProperty('sonatypeUsername')) ext.sonatypeUsername = '**undefined**'
-if (!project.hasProperty('sonatypePassword')) ext.sonatypePassword = '**undefined**'
+if (!project.hasProperty('ossrhUsername')) ext.ossrhUsername = '**undefined**'
+if (!project.hasProperty('ossrhPassword')) ext.ossrhPassword = '**undefined**'
 if (!project.hasProperty('sonarToken')) ext.sonarToken = '**undefined**'
 
 group = 'net.sf.xmldb-org'
@@ -189,16 +189,16 @@ config {
         name = 'sonatypeRelease'
         url  = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
         credentials {
-          username = sonatypeUsername
-          password = sonatypePassword
+          username = ossrhUsername
+          password = ossrhPassword
         }
       }
       repository {
         name = 'sonatypeSnapshot'
         url  = 'https://oss.sonatype.org/content/repositories/snapshots/'
         credentials {
-          username = sonatypeUsername
-          password = sonatypePassword
+          username = ossrhUsername
+          password = ossrhPassword
         }
       }
     }
