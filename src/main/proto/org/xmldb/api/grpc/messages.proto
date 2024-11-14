@@ -2,11 +2,38 @@ syntax = "proto3";
 
 package org.xmldb.api.grpc;
 
+// represents an empty response
 message EmptyRequest {}
 
-message VersionResponse {
-  int32 major = 1;
-  int32 minor = 2;
+// represents the java runtime information
+message JavaVersion {
+  string date = 1;
+  string version = 2;
+  string vendor = 3;
+  string vendorVersion = 4;
+}
+
+// represents the database system information
+message SystemInfo {
+  string systemVersion = 1;
+  optional JavaVersion javaVersion = 2;
+}
+
+
+
+//
+// below not not yet used
+//
+
+message LoginRequest {
+}
+
+message LoginResult {
+}
+
+message UUID {
+  uint64 most_significant_uuid_bits = 1;
+  uint64 least_significant_uuid_bits = 2;
 }
 
 message CountRequest {

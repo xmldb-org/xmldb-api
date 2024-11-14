@@ -5,7 +5,14 @@ import "org/xmldb/api/grpc/messages.proto";
 package org.xmldb.api.grpc;
 
 service XmlDbService {
-  rpc VersionCall(EmptyRequest) returns (VersionResponse);
+  // query the system info
+  rpc getSystemInfo(EmptyRequest) returns (SystemInfo);
+
+
+  //
+  // below not not yet used
+  //
+
   rpc CollectionCountCall(CountRequest) returns (CountValue);
   rpc DocumentCountCall(EmptyRequest) returns (CountValue);
   rpc CollectionIdsCall(IdRequest) returns (stream IdValue);
