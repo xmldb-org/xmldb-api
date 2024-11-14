@@ -1,8 +1,11 @@
 syntax = "proto3";
 
-import "org/xmldb/api/grpc/messages.proto";
-
 package org.xmldb.api.grpc;
+
+option java_multiple_files=true;
+option java_package="org.xmldb.api.grpc";
+
+import "org/xmldb/api/grpc/messages.proto";
 
 service XmlDbService {
   // query the system info
