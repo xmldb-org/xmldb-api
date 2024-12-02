@@ -47,7 +47,7 @@ jobs:
       if:  ${{ env.ORG_GRADLE_PROJECT_sonarToken != '**undefined**' }}
       run: ./gradlew check sonar
     - name: Run codecov analysis
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
   deploy:
     if: ${{ github.event_name != 'pull_request' && github.repository == 'xmldb-org/xmldb-api' }}
     needs: [ build, codacy-analysis-cli ]
