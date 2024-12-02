@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package org.xmldb.api.grpc;
+
+option java_multiple_files=true;
+option java_package="org.xmldb.api.grpc";
+
+// represents an empty response
+message EmptyRequest {}
+
+// represents the java runtime information
+message JavaVersion {
+  string date = 1;
+  string version = 2;
+  string vendor = 3;
+  string vendorVersion = 4;
+}
+
+// represents the database system information
+message SystemInfo {
+  string systemVersion = 1;
+  optional JavaVersion javaVersion = 2;
+}
+
+
+
+//
+// below not not yet used
+//
+
+message LoginRequest {
+}
+
+message LoginResult {
+}
+
+message UUID {
+  uint64 most_significant_uuid_bits = 1;
+  uint64 least_significant_uuid_bits = 2;
+}
+
+message CountRequest {
+  string collectionName = 1;
+}
+
+message CountValue {
+  int64 count = 1;
+}
+
+message IdRequest {
+  string path = 1;
+}
+
+message IdValue {
+  string id = 1;
+}
+
+message ResourceRequest {
+  string collectionName = 1;
+  string resourceName = 2;
+}
+
+enum ResourceType {
+  XML = 0;
+  BINARY = 1;
+}
+
+message Resource {
+  ResourceType type = 1;
+  string contentType = 2;
+  uint64 creationTime = 3;
+  uint64 lastModificationTime = 4;
+}
