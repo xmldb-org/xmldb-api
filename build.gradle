@@ -71,6 +71,10 @@ repositories {
   mavenCentral()
 }
 
+sourceSets.main.resources {
+  srcDir 'src/main/proto'
+}
+
 dependencies {
   testImplementation 'org.assertj:assertj-core:3.27.0'
   testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.4'
