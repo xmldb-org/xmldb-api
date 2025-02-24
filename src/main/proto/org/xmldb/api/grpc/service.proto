@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package org.xmldb.api.grpc;
+
+option java_multiple_files=true;
+option java_package="org.xmldb.api.grpc";
+
+import "org/xmldb/api/grpc/messages.proto";
+
+service XmlDbService {
+  // query the system info
+  rpc getSystemInfo(EmptyRequest) returns (SystemInfo);
+
+
+  //
+  // below not not yet used
+  //
+
+  rpc CollectionCountCall(CountRequest) returns (CountValue);
+  rpc DocumentCountCall(EmptyRequest) returns (CountValue);
+  rpc CollectionIdsCall(IdRequest) returns (stream IdValue);
+  rpc DocumentIdsCall(IdRequest) returns (stream IdValue);
+  rpc GetResource(ResourceRequest) returns (Resource);
+}
