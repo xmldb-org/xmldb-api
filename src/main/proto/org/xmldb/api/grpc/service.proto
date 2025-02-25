@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package org.xmldb.api.grpc;
+
+option java_multiple_files = true;
+option java_package = "org.xmldb.api.grpc";
+
+import "org/xmldb/api/grpc/messages.proto";
+
+service XmlDbService {
+  // query the system info
+  rpc systemInfo(Empty) returns (SystemInfo);
+  // open & retrieve the metadata for the root collection
+  rpc openRootCollection(RootCollectionName) returns (CollectionMeta);
+  // open & retrieve the metadata for a collection
+  rpc openChildCollection(ChildCollectionName) returns (CollectionMeta);
+  // close and dispose a collection
+  rpc closeCollection(HandleId) returns (Empty);
+  // returns the collection count for the given handle id
+  rpc collectionCount(HandleId) returns (Count);
+  // returns the document count for the given handle id
+  rpc resourceCount(HandleId) returns (Count);
+  // returns a document id stream for the given handle id
+  rpc listResources(HandleId) returns (stream ResourceId);
+  // returns a collection name stream for the given handle id
+  rpc childCollections(HandleId) returns (stream ChildCollectionName);
+  // returns a resource for the given document id
+  rpc resource(ResourceId) returns (ResourceMeta);
+  // returns the resource data for the given handle
+  rpc resourceData(HandleId) returns (stream Data);
+}

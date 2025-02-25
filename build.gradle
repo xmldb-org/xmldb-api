@@ -79,6 +79,10 @@ repositories {
   mavenCentral()
 }
 
+sourceSets.main.resources {
+  srcDir 'src/main/proto'
+}
+
 test {
   finalizedBy jacocoTestReport
 }
