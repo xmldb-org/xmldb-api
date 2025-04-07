@@ -111,7 +111,7 @@ testing {
       useJUnitJupiter()
       dependencies {
         implementation 'org.assertj:assertj-core:3.27.3'
-        implementation 'org.mockito:mockito-junit-jupiter:5.16.1'
+        implementation 'org.mockito:mockito-junit-jupiter:5.17.0'
         implementation 'org.openjdk.jmh:jmh-core:1.37'
         implementation 'org.simplify4u:slf4j-mock:2.4.0'
       }
