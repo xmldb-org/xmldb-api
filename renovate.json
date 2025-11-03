@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "config:base",
+    "group:all",
+    "schedule:daily"
+  ],
+  "dependencyDashboard": true,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ],
+  "schedule": ["at any time"]
+}
