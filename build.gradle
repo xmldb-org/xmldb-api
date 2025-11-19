@@ -44,8 +44,8 @@ plugins {
   id 'java-library'
   id 'java-test-fixtures'
   id 'com.diffplug.spotless' version '8.1.0'
-  id 'com.github.ben-manes.versions' version '0.53.0'
   id 'me.champeau.jmh' version '0.7.3'
+  id 'net.nemerosa.versioning' version '3.1.0'
   id 'org.kordamp.gradle.java-project' version '0.54.0'
 }
 
@@ -65,6 +65,14 @@ defaultTasks 'build'
 
 java {
   sourceCompatibility = JavaVersion.VERSION_17
+}
+
+versioning {
+  def branchName = versioning.info.branch
+  if (branchName != 'main') {
+    version = project.version.toString().replace('-SNAPSHOT', '') + '-' + branchName.replaceAll('[^a-zA-Z\\d-]', '-') + '-SNAPSHOT'
+    println "actual version = '$version'"
+  }
 }
 
 repositories {
@@ -114,19 +122,6 @@ testing {
         implementation 'org.mockito:mockito-junit-jupiter:5.20.0'
         implementation 'org.openjdk.jmh:jmh-core:1.37'
         implementation 'org.simplify4u:slf4j-mock:2.4.0'
-      }
-    }
-  }
-}
-
-dependencyUpdates.resolutionStrategy {
-  componentSelection { rules ->
-    rules.all { ComponentSelection selection ->
-      boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm', 'pr', 'preview'].any { qualifier ->
-        selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
-      }
-      if (rejected) {
-        selection.reject('Release candidate')
       }
     }
   }
