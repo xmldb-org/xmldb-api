@@ -6,9 +6,9 @@ env:
   MIN_JDK: '17'
 on:
   push:
-    branches: [ main ]
+    branches: [ main, protobuf ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, protobuf ]
   workflow_dispatch:
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
       ORG_GRADLE_PROJECT_sonarToken: ${{ secrets.SONAR_TOKEN || '**undefined**' }}
     strategy:
       matrix:
-        jdk: ['17', '21', '22']
+        jdk: ['17', '21']
         os: [ubuntu-latest]
     steps:
     - uses: actions/checkout@v5
