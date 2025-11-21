@@ -39,7 +39,7 @@
  */
 package org.xmldb.api;
 
-import static java.util.Collections.emptyList;
+import static org.xmldb.api.base.ErrorCodes.INVALID_RESOURCE;
 import static org.xmldb.api.base.ErrorCodes.NOT_IMPLEMENTED;
 
 import java.time.Instant;
@@ -47,15 +47,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.BiFunction;
 
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.modules.BinaryResource;
+import org.xmldb.api.modules.XMLResource;
 
 public class TestCollection extends ConfigurableImpl implements Collection {
   private final TestCollectionData data;
-  private final ConcurrentMap<String, TestCollectionData> childCollections;
+  private final ConcurrentMap<String, Collection> childCollections;
+  private final ConcurrentMap<String, Resource> resources;
 
   private boolean closed;
   private Collection parent;
@@ -67,11 +71,23 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   public TestCollection(final TestCollectionData data, final Collection parent) {
     this.data = data;
     this.parent = parent;
+    resources = new ConcurrentHashMap<>();
     childCollections = new ConcurrentHashMap<>();
   }
 
   public static TestCollection create(String name) {
     return new TestCollection(new TestCollectionData(name));
+  }
+
+  public <T extends TestBaseResource> T addResource(String id,
+      BiFunction<String, Collection, T> createAction) {
+    T resource = createAction.apply(id, this);
+    resources.put(resource.getId(), resource);
+    return resource;
+  }
+
+  public void addCollection(String child, TestCollection childCollection) {
+    childCollections.put(child, childCollection);
   }
 
   @Override
@@ -95,54 +111,58 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public int getChildCollectionCount() throws XMLDBException {
+  public int getChildCollectionCount() {
     return childCollections.size();
   }
 
   @Override
-  public List<String> listChildCollections() throws XMLDBException {
+  public List<String> listChildCollections() {
     return childCollections.keySet().stream().toList();
   }
 
   @Override
-  public Collection getChildCollection(String collectionName) throws XMLDBException {
-    return new TestCollection(
-        childCollections.computeIfAbsent(collectionName, TestCollectionData::new), this);
+  public Collection getChildCollection(String collectionName) {
+    return childCollections.get(collectionName);
   }
 
   @Override
-  public Collection getParentCollection() throws XMLDBException {
+  public Collection getParentCollection() {
     return parent;
   }
 
   @Override
-  public int getResourceCount() throws XMLDBException {
-    return 0;
+  public int getResourceCount() {
+    return resources.size();
   }
 
   @Override
-  public List<String> listResources() throws XMLDBException {
-    return emptyList();
+  public List<String> listResources() {
+    return resources.keySet().stream().toList();
   }
 
   @Override
   public <R extends Resource> R createResource(String id, Class<R> type) throws XMLDBException {
-    throw new XMLDBException(NOT_IMPLEMENTED);
+    if (BinaryResource.class.equals(type)) {
+      return type.cast(new TestBinaryResource(id, this));
+    } else if (XMLResource.class.equals(type)) {
+      return type.cast(new TestXMLResource(id, this));
+    }
+    throw new XMLDBException(INVALID_RESOURCE);
   }
 
   @Override
   public void removeResource(Resource res) throws XMLDBException {
-    throw new XMLDBException(NOT_IMPLEMENTED);
+    resources.remove(res.getId());
   }
 
   @Override
   public void storeResource(Resource res) throws XMLDBException {
-    throw new XMLDBException(NOT_IMPLEMENTED);
+    resources.put(res.getId(), res);
   }
 
   @Override
-  public Resource getResource(String id) throws XMLDBException {
-    throw new XMLDBException(NOT_IMPLEMENTED);
+  public Resource getResource(String id) {
+    return resources.get(id);
   }
 
   @Override
@@ -151,17 +171,17 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public boolean isOpen() throws XMLDBException {
+  public boolean isOpen() {
     return !closed;
   }
 
   @Override
-  public void close() throws XMLDBException {
+  public void close() {
     closed = true;
   }
 
   @Override
-  public Instant getCreationTime() throws XMLDBException {
+  public Instant getCreationTime() {
     return data.creation();
   }
 

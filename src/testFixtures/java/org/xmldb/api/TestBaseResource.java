@@ -49,24 +49,26 @@ import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.XMLDBException;
 
 public abstract class TestBaseResource implements Resource {
+  private final String id;
   private final Collection parentCollection;
   private final Instant creation;
 
   private boolean closed;
 
-  protected TestBaseResource(Collection parentCollection) {
+  protected TestBaseResource(String id, Collection parentCollection) {
+    this.id = id;
     this.parentCollection = parentCollection;
     creation = Instant.now();
   }
 
   @Override
-  public Collection getParentCollection() throws XMLDBException {
+  public Collection getParentCollection() {
     return parentCollection;
   }
 
   @Override
-  public String getId() throws XMLDBException {
-    return null;
+  public String getId() {
+    return id;
   }
 
   @Override
@@ -90,17 +92,17 @@ public abstract class TestBaseResource implements Resource {
   }
 
   @Override
-  public void close() throws XMLDBException {
+  public void close() {
     closed = true;
   }
 
   @Override
-  public Instant getCreationTime() throws XMLDBException {
+  public Instant getCreationTime() {
     return creation;
   }
 
   @Override
-  public Instant getLastModificationTime() throws XMLDBException {
+  public Instant getLastModificationTime() {
     return creation;
   }
 }

@@ -52,11 +52,11 @@ import org.xmldb.api.modules.XMLResource;
 
 public class TestXMLResource extends TestBaseResource implements XMLResource {
   public TestXMLResource() {
-    this(null);
+    this(null, null);
   }
 
-  public TestXMLResource(Collection parentCollection) {
-    super(parentCollection);
+  public TestXMLResource(String id, Collection parentCollection) {
+    super(id, parentCollection);
   }
 
   @Override

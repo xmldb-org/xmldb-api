@@ -86,7 +86,7 @@ public class TestDatabase extends ConfigurableImpl implements Database {
   }
 
   @Override
-  public String getConformanceLevel() throws XMLDBException {
+  public String getConformanceLevel() {
     return "0";
   }
 }

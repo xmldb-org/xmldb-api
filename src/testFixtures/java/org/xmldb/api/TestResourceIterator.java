@@ -46,12 +46,12 @@ import org.xmldb.api.base.XMLDBException;
 public class TestResourceIterator implements ResourceIterator {
 
   @Override
-  public boolean hasMoreResources() throws XMLDBException {
+  public boolean hasMoreResources() {
     return false;
   }
 
   @Override
-  public Resource nextResource() throws XMLDBException {
+  public Resource nextResource() {
     return null;
   }
 

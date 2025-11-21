@@ -53,17 +53,17 @@ public class ConfigurableImpl implements Configurable {
   }
 
   @Override
-  public final String getProperty(String name) throws XMLDBException {
+  public final String getProperty(String name) {
     return properties.get(name);
   }
 
   @Override
-  public String getProperty(String name, String defaultValue) throws XMLDBException {
+  public String getProperty(String name, String defaultValue) {
     return properties.getOrDefault(name, defaultValue);
   }
 
   @Override
-  public final void setProperty(String name, String value) throws XMLDBException {
+  public final void setProperty(String name, String value) {
     properties.put(name, value);
   }
 }

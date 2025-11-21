@@ -44,10 +44,10 @@ import org.xmldb.api.modules.BinaryResource;
 
 public class TestBinaryResource extends TestBaseResource implements BinaryResource {
   public TestBinaryResource() {
-    this(null);
+    this(null, null);
   }
 
-  public TestBinaryResource(Collection parentCollection) {
-    super(parentCollection);
+  public TestBinaryResource(String id, Collection parentCollection) {
+    super(id, parentCollection);
   }
 }
