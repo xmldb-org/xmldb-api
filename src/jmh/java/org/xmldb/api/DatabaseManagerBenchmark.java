@@ -53,17 +53,17 @@ import org.xmldb.api.base.XMLDBException;
 public class DatabaseManagerBenchmark {
 
   @Benchmark
-  public void registerDatabase(RegistedDatabaseState state) throws XMLDBException {
+  public void registerDatabase(DatabaseState state) throws XMLDBException {
     DatabaseManager.registerDatabase(state.database);
   }
 
   @Benchmark
-  public void getCollection(RegistedDatabaseState state, Blackhole bh) throws XMLDBException {
+  public void getCollection(DatabaseState state, Blackhole bh) throws XMLDBException {
     bh.consume(DatabaseManager.getCollection("xmldb:testdatabase:testcollection"));
   }
 
   @Benchmark
-  public void deregisterDatabase(RegistedDatabaseState state) throws XMLDBException {
+  public void deregisterDatabase(DatabaseState state) {
     DatabaseManager.deregisterDatabase(state.database);
   }
 }

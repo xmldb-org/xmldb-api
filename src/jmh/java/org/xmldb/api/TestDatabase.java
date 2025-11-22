@@ -39,36 +39,44 @@
  */
 package org.xmldb.api;
 
-import org.xmldb.api.base.Resource;
-import org.xmldb.api.base.ResourceIterator;
-import org.xmldb.api.base.XMLDBException;
+import java.util.Properties;
 
-/**
- * The TestResourceIterator class implements the ResourceIterator interface and provides a simple,
- * non-functional implementation of its methods. This class is designed as a placeholder or test
- * implementation and does not actually iterate over any resources.
- * <p>
- * Methods in this implementation are overridden to return default or null values, indicating the
- * absence of functionality.
- */
-public class TestResourceIterator implements ResourceIterator {
+import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.Database;
 
-  /**
-   * Constructs a new instance of the TestResourceIterator class. This constructor initializes a
-   * basic implementation of a resource iterator with no specific functionality or state.
-   */
-  public TestResourceIterator() {
-    super();
+public class TestDatabase implements Database {
+  @Override
+  public String getName() {
+    return "testdb";
   }
 
   @Override
-  public boolean hasMoreResources() {
+  public Collection getCollection(String uri, Properties info) {
+    return null;
+  }
+
+  @Override
+  public boolean acceptsURI(String uri) {
     return false;
   }
 
   @Override
-  public Resource nextResource() {
-    return null;
+  public String getConformanceLevel() {
+    return "";
   }
 
+  @Override
+  public String getProperty(String name) {
+    return "";
+  }
+
+  @Override
+  public String getProperty(String name, String defaultValue) {
+    return "";
+  }
+
+  @Override
+  public void setProperty(String name, String value) {
+    // no action
+  }
 }
