@@ -55,7 +55,7 @@ import org.xmldb.api.base.XMLDBException;
  * The default behavior for getContent and setContent is to work with XML data as text so these
  * methods work on {@code String} content.
  */
-public interface XMLResource extends Resource {
+public interface XMLResource extends Resource<String> {
 
   @Override
   default ResourceType getResourceType() {

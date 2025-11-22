@@ -47,7 +47,7 @@ import java.time.Instant;
  * particulary useful. It is necessary to have a resource implementation that provides handling for
  * a specific content type before anything useful can be done.
  */
-public interface Resource extends AutoCloseable {
+public interface Resource<T> extends AutoCloseable {
 
   /**
    * Returns the resource type for this Resource.
@@ -87,7 +87,7 @@ public interface Resource extends AutoCloseable {
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
-  Object getContent() throws XMLDBException;
+  T getContent() throws XMLDBException;
 
   /**
    * Retrieves the content from the resource. The type of the content varies depending what type of
@@ -107,7 +107,7 @@ public interface Resource extends AutoCloseable {
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
    *         vendor specific errors that occur.
    */
-  void setContent(Object value) throws XMLDBException;
+  void setContent(T value) throws XMLDBException;
 
   /**
    * Returns whenever the current resource has been closed or not.

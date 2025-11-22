@@ -39,26 +39,29 @@
  */
 package org.xmldb.api;
 
-import static org.xmldb.api.base.ErrorCodes.NOT_IMPLEMENTED;
-
-import java.io.OutputStream;
 import java.time.Instant;
 
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Resource;
-import org.xmldb.api.base.XMLDBException;
 
-public abstract class TestBaseResource implements Resource {
+public abstract class TestBaseResource<T> implements Resource<T> {
   private final String id;
   private final Collection parentCollection;
   private final Instant creation;
 
   private boolean closed;
+  private Instant lastChange;
 
-  protected TestBaseResource(String id, Collection parentCollection) {
+  protected TestBaseResource(String id, Instant creation, Instant lastChange,
+      Collection parentCollection) {
     this.id = id;
+    this.creation = creation;
+    this.lastChange = lastChange;
     this.parentCollection = parentCollection;
-    creation = Instant.now();
+  }
+
+  protected void updateLastChange() {
+    lastChange = Instant.now();
   }
 
   @Override
@@ -69,21 +72,6 @@ public abstract class TestBaseResource implements Resource {
   @Override
   public String getId() {
     return id;
-  }
-
-  @Override
-  public Object getContent() throws XMLDBException {
-    throw new XMLDBException(NOT_IMPLEMENTED);
-  }
-
-  @Override
-  public void getContentAsStream(OutputStream stream) throws XMLDBException {
-    throw new XMLDBException(NOT_IMPLEMENTED);
-  }
-
-  @Override
-  public void setContent(Object value) throws XMLDBException {
-    throw new XMLDBException(NOT_IMPLEMENTED);
   }
 
   @Override
@@ -103,6 +91,6 @@ public abstract class TestBaseResource implements Resource {
 
   @Override
   public Instant getLastModificationTime() {
-    return creation;
+    return lastChange;
   }
 }

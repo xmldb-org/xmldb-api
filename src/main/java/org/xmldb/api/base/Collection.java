@@ -150,7 +150,7 @@ public interface Collection extends Configurable, AutoCloseable, ServiceProvider
    *
    * @since 2.0
    */
-  <R extends Resource> R createResource(String id, Class<R> type) throws XMLDBException;
+  <T, R extends Resource<T>> R createResource(String id, Class<R> type) throws XMLDBException;
 
   /**
    * Removes the {@code Resource} from the database.
@@ -163,7 +163,7 @@ public interface Collection extends Configurable, AutoCloseable, ServiceProvider
    *         {@link ErrorCodes#COLLECTION_CLOSED} if the {@code close} method has been called on the
    *         {@code Collection}
    */
-  void removeResource(Resource res) throws XMLDBException;
+  void removeResource(Resource<?> res) throws XMLDBException;
 
   /**
    * Stores the provided resource into the database. If the resource does not already exist it will
@@ -175,7 +175,7 @@ public interface Collection extends Configurable, AutoCloseable, ServiceProvider
    *         {@code Resource} is not valid. {@link ErrorCodes#COLLECTION_CLOSED} if the
    *         {@code close} method has been called on the {@code Collection}
    */
-  void storeResource(Resource res) throws XMLDBException;
+  void storeResource(Resource<?> res) throws XMLDBException;
 
   /**
    * Retrieves a {@code Resource} from the database. If the {@code Resource} could not be located a

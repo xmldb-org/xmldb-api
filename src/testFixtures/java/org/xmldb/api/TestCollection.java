@@ -58,11 +58,11 @@ import org.xmldb.api.modules.XMLResource;
 
 public class TestCollection extends ConfigurableImpl implements Collection {
   private final TestCollectionData data;
+  private final Collection parentCollection;
   private final ConcurrentMap<String, Collection> childCollections;
-  private final ConcurrentMap<String, Resource> resources;
+  private final ConcurrentMap<String, Resource<?>> resources;
 
   private boolean closed;
-  private Collection parent;
 
   public TestCollection(final TestCollectionData data) {
     this(data, null);
@@ -70,7 +70,7 @@ public class TestCollection extends ConfigurableImpl implements Collection {
 
   public TestCollection(final TestCollectionData data, final Collection parent) {
     this.data = data;
-    this.parent = parent;
+    this.parentCollection = parent;
     resources = new ConcurrentHashMap<>();
     childCollections = new ConcurrentHashMap<>();
   }
@@ -79,19 +79,35 @@ public class TestCollection extends ConfigurableImpl implements Collection {
     return new TestCollection(new TestCollectionData(name));
   }
 
-  public <T extends TestBaseResource> T addResource(String id,
-      BiFunction<String, Collection, T> createAction) {
-    T resource = createAction.apply(id, this);
+  /**
+   * Adds a new resource to the collection using the specified creation action.
+   *
+   * @param <T> The type of data the resource holds.
+   * @param <R> The type of resource, which must extend TestBaseResource.
+   * @param id The unique identifier for the resource to be added.
+   * @param createAction A function that creates a resource using its identifier and the current
+   *        collection.
+   * @return The newly created and added resource.
+   */
+  public <T, R extends TestBaseResource<T>> R addResource(String id,
+      BiFunction<String, Collection, R> createAction) {
+    R resource = createAction.apply(id, this);
     resources.put(resource.getId(), resource);
     return resource;
   }
 
+  /**
+   * Adds a child collection to the current collection.
+   *
+   * @param child The name of the child collection to be added.
+   * @param childCollection The TestCollection instance representing the child collection.
+   */
   public void addCollection(String child, TestCollection childCollection) {
     childCollections.put(child, childCollection);
   }
 
   @Override
-  public final String getName() throws XMLDBException {
+  public final String getName() {
     return data.name();
   }
 
@@ -127,7 +143,7 @@ public class TestCollection extends ConfigurableImpl implements Collection {
 
   @Override
   public Collection getParentCollection() {
-    return parent;
+    return parentCollection;
   }
 
   @Override
@@ -141,7 +157,8 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public <R extends Resource> R createResource(String id, Class<R> type) throws XMLDBException {
+  public <T, R extends Resource<T>> R createResource(String id, Class<R> type)
+      throws XMLDBException {
     if (BinaryResource.class.equals(type)) {
       return type.cast(new TestBinaryResource(id, this));
     } else if (XMLResource.class.equals(type)) {
@@ -151,17 +168,17 @@ public class TestCollection extends ConfigurableImpl implements Collection {
   }
 
   @Override
-  public void removeResource(Resource res) throws XMLDBException {
+  public void removeResource(Resource<?> res) throws XMLDBException {
     resources.remove(res.getId());
   }
 
   @Override
-  public void storeResource(Resource res) throws XMLDBException {
+  public void storeResource(Resource<?> res) throws XMLDBException {
     resources.put(res.getId(), res);
   }
 
   @Override
-  public Resource getResource(String id) {
+  public Resource<?> getResource(String id) {
     return resources.get(id);
   }
 

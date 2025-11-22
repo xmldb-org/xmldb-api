@@ -41,6 +41,9 @@ package org.xmldb.api;
 
 import static org.xmldb.api.base.ErrorCodes.NOT_IMPLEMENTED;
 
+import java.io.OutputStream;
+import java.time.Instant;
+
 import org.w3c.dom.Node;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXNotRecognizedException;
@@ -50,13 +53,28 @@ import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
-public class TestXMLResource extends TestBaseResource implements XMLResource {
-  public TestXMLResource() {
-    this(null, null);
+public class TestXMLResource extends TestBaseResource<String> implements XMLResource {
+  public TestXMLResource(String id, Collection parentCollection) {
+    this(id, Instant.now(), parentCollection);
   }
 
-  public TestXMLResource(String id, Collection parentCollection) {
-    super(id, parentCollection);
+  public TestXMLResource(String id, Instant creation, Collection parentCollection) {
+    super(id, creation, creation, parentCollection);
+  }
+
+  @Override
+  public void getContentAsStream(OutputStream stream) throws XMLDBException {
+    throw new XMLDBException(NOT_IMPLEMENTED);
+  }
+
+  @Override
+  public String getContent() throws XMLDBException {
+    throw new XMLDBException(NOT_IMPLEMENTED);
+  }
+
+  @Override
+  public void setContent(String value) throws XMLDBException {
+    throw new XMLDBException(NOT_IMPLEMENTED);
   }
 
   @Override

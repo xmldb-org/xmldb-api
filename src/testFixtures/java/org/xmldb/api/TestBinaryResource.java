@@ -39,15 +39,36 @@
  */
 package org.xmldb.api;
 
+import static org.xmldb.api.base.ErrorCodes.NOT_IMPLEMENTED;
+
+import java.io.OutputStream;
+import java.time.Instant;
+
 import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.BinaryResource;
 
-public class TestBinaryResource extends TestBaseResource implements BinaryResource {
-  public TestBinaryResource() {
-    this(null, null);
+public class TestBinaryResource extends TestBaseResource<byte[]> implements BinaryResource {
+  public TestBinaryResource(String id, Collection parentCollection) {
+    this(id, Instant.now(), parentCollection);
   }
 
-  public TestBinaryResource(String id, Collection parentCollection) {
-    super(id, parentCollection);
+  public TestBinaryResource(String id, Instant creation, Collection parentCollection) {
+    super(id, creation, creation, parentCollection);
+  }
+
+  @Override
+  public void getContentAsStream(OutputStream stream) throws XMLDBException {
+    throw new XMLDBException(NOT_IMPLEMENTED);
+  }
+
+  @Override
+  public byte[] getContent() throws XMLDBException {
+    throw new XMLDBException(NOT_IMPLEMENTED);
+  }
+
+  @Override
+  public void setContent(byte[] value) throws XMLDBException {
+    throw new XMLDBException(NOT_IMPLEMENTED);
   }
 }
