@@ -44,6 +44,15 @@ import java.time.Instant;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Resource;
 
+/**
+ * An abstract base class that implements the {@code Resource} interface and provides a foundational
+ * implementation for managing resources within a collection.
+ * <p>
+ * This class encapsulates basic metadata about a resource, such as its identifier, creation time,
+ * last modification time, and parent collection.
+ *
+ * @param <T> the type of content that this resource manages.
+ */
 public abstract class TestBaseResource<T> implements Resource<T> {
   private final String id;
   private final Collection parentCollection;
@@ -52,6 +61,16 @@ public abstract class TestBaseResource<T> implements Resource<T> {
   private boolean closed;
   private Instant lastChange;
 
+  /**
+   * Constructs a protected instance of the {@code TestBaseResource} class with the provided
+   * attributes, initializing the resource identifier, creation time, last modification time, and
+   * associated parent collection.
+   *
+   * @param id the unique identifier for the resource.
+   * @param creation the timestamp representing the creation time of the resource.
+   * @param lastChange the timestamp of the last modification to the resource.
+   * @param parentCollection the collection that this resource is a part of.
+   */
   protected TestBaseResource(String id, Instant creation, Instant lastChange,
       Collection parentCollection) {
     this.id = id;
@@ -60,6 +79,12 @@ public abstract class TestBaseResource<T> implements Resource<T> {
     this.parentCollection = parentCollection;
   }
 
+  /**
+   * Updates the last modification time of the resource to the current instant.
+   * <p>
+   * This method sets the {@code lastChange} property to the current system time, effectively
+   * marking the resource as having been modified.
+   */
   protected void updateLastChange() {
     lastChange = Instant.now();
   }

@@ -43,7 +43,23 @@ import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.XMLDBException;
 
+/**
+ * The TestResourceIterator class implements the ResourceIterator interface and provides a simple,
+ * non-functional implementation of its methods. This class is designed as a placeholder or test
+ * implementation and does not actually iterate over any resources.
+ * <p>
+ * Methods in this implementation are overridden to return default or null values, indicating the
+ * absence of functionality.
+ */
 public class TestResourceIterator implements ResourceIterator {
+
+  /**
+   * Constructs a new instance of the TestResourceIterator class. This constructor initializes a
+   * basic implementation of a resource iterator with no specific functionality or state.
+   */
+  public TestResourceIterator() {
+    super();
+  }
 
   @Override
   public boolean hasMoreResources() {

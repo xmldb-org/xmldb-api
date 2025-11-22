@@ -47,16 +47,38 @@ import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
 import org.xmldb.api.base.XMLDBException;
 
+/**
+ * TestDatabase is an in-memory implementation of the Database interface. It provides support for
+ * managing collections and simulates database operations without requiring a physical or external
+ * database system.
+ * <p>
+ * This class extends ConfigurableImpl, inheriting mechanisms to manage configuration properties
+ * using key-value pairs.
+ * <p>
+ * TestDatabase assigns a default name if no name is provided during construction. It supports
+ * operations to add and retrieve collections and implements the necessary Database interface
+ * methods.
+ */
 public class TestDatabase extends ConfigurableImpl implements Database {
   private static final String DETAULT_NAME = "testdatabase";
 
   private final String name;
   private final Map<String, TestCollection> collections;
 
+  /**
+   * Default constructor for the TestDatabase class. Constructs a new TestDatabase instance using
+   * the default name.
+   */
   public TestDatabase() {
     this(null);
   }
 
+  /**
+   * Constructs a new TestDatabase instance with the specified name. If the provided name is null or
+   * empty, a default name is assigned.
+   *
+   * @param name The name of the database. If null or empty, a default name is used.
+   */
   public TestDatabase(String name) {
     if (name == null || name.isEmpty()) {
       this.name = DETAULT_NAME;
@@ -66,13 +88,21 @@ public class TestDatabase extends ConfigurableImpl implements Database {
     collections = new HashMap<>();
   }
 
+  /**
+   * Adds a new collection to the database if it does not already exist. If the collection with the
+   * specified name exists, the existing instance is returned.
+   *
+   * @param collectionName The name of the collection to be added. Must not be null or empty.
+   * @return The TestCollection instance corresponding to the given name. Either a newly created
+   *         collection or an existing one.
+   */
+  public TestCollection addCollection(String collectionName) {
+    return collections.computeIfAbsent(collectionName, TestCollection::create);
+  }
+
   @Override
   public final String getName() throws XMLDBException {
     return name;
-  }
-
-  public TestCollection addCollection(String collectionName) {
-    return collections.computeIfAbsent(collectionName, TestCollection::create);
   }
 
   @Override

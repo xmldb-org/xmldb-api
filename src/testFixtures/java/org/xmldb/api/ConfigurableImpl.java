@@ -43,11 +43,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.xmldb.api.base.Configurable;
-import org.xmldb.api.base.XMLDBException;
 
+/**
+ * The ConfigurableImpl class provides a concrete implementation of the Configurable interface. It
+ * allows for managing configuration properties using key-value pairs.
+ */
 public class ConfigurableImpl implements Configurable {
   private final Map<String, String> properties;
 
+  /**
+   * Constructs a new instance of ConfigurableImpl.
+   * <p>
+   * Initializes the internal storage for configuration properties using a HashMap. This object
+   * allows managing key-value pairs for configuration purposes.
+   */
   public ConfigurableImpl() {
     properties = new HashMap<>();
   }

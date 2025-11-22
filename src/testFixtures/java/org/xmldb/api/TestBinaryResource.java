@@ -48,11 +48,40 @@ import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.BinaryResource;
 
+/**
+ * A concrete implementation of {@code TestBaseResource<byte[]>} that represents a binary resource.
+ * This class provides foundational behavior for managing binary data within a parent collection,
+ * while implementing the {@code BinaryResource} interface.
+ * <p>
+ * This resource type supports binary data and provides methods specific to handling such data.
+ * However, for this implementation, the functionality of these methods is not provided and throws
+ * exceptions to indicate unimplemented functionality.
+ */
 public class TestBinaryResource extends TestBaseResource<byte[]> implements BinaryResource {
+  /**
+   * Constructs a new {@code TestBinaryResource} with the specified identifier and parent
+   * collection.
+   * <p>
+   * This constructor initializes the resource and sets its creation timestamp to the current time.
+   *
+   * @param id the unique identifier for this resource
+   * @param parentCollection the parent collection to which this resource belongs
+   */
   public TestBinaryResource(String id, Collection parentCollection) {
     this(id, Instant.now(), parentCollection);
   }
 
+  /**
+   * Constructs a new {@code TestBinaryResource} with the specified identifier, creation timestamp,
+   * and parent collection.
+   * <p>
+   * This constructor initializes the resource with the provided parameters, where the creation
+   * timestamp is explicitly supplied.
+   *
+   * @param id the unique identifier for this resource
+   * @param creation the timestamp representing the creation time of this resource
+   * @param parentCollection the parent collection to which this resource belongs
+   */
   public TestBinaryResource(String id, Instant creation, Collection parentCollection) {
     super(id, creation, creation, parentCollection);
   }

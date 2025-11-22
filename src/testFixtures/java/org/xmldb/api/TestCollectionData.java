@@ -42,11 +42,35 @@ package org.xmldb.api;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * Represents a data record containing information about a test collection.
+ * <p>
+ * Instances of this record hold a name and a creation timestamp associated with a test collection,
+ * providing both required attributes for subsequent use in other operations or records.
+ * <p>
+ * Constraints: - The name cannot be null. - The creation timestamp cannot be null.
+ * <p>
+ * This record offers two constructors: 1. A primary constructor accepting both name and creation
+ * timestamp. 2. A secondary constructor accepting only the name and defaulting the creation
+ * timestamp to the current system time.
+ *
+ * @param name the name of the test collection, must not be null
+ * @param creation the creation timestamp of the test collection, must not be null
+ */
 public record TestCollectionData(String name, Instant creation) {
+  /**
+   * Constructs a new {@code TestCollectionData} instance with the specified name and assigns the
+   * current system timestamp as the creation time.
+   *
+   * @param name the name of the test collection, must not be null
+   */
   public TestCollectionData(String name) {
     this(name, Instant.now());
   }
 
+  /**
+   * Constructs a new {@code TestCollectionData} instance with the specified name and creation time.
+   */
   public TestCollectionData {
     Objects.requireNonNull(name);
     Objects.requireNonNull(creation);

@@ -53,11 +53,34 @@ import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
+/**
+ * The {@code TestXMLResource} class provides an implementation of an XML resource within a
+ * collection. It extends the {@code TestBaseResource} for managing resource metadata and implements
+ * the {@code XMLResource} interface for XML-specific operations.
+ * <p>
+ * Instances of this class represent individual XML resources identified by a unique ID and
+ * associated with a parent collection. The class includes functionality for managing XML content
+ * and interaction but does not currently implement its content-handling methods.
+ */
 public class TestXMLResource extends TestBaseResource<String> implements XMLResource {
+  /**
+   * Constructs a new instance of TestXMLResource with the specified identifier and parent
+   * collection.
+   *
+   * @param id the unique identifier for the resource
+   * @param parentCollection the parent collection to which this resource belongs
+   */
   public TestXMLResource(String id, Collection parentCollection) {
     this(id, Instant.now(), parentCollection);
   }
 
+  /**
+   * Constructs a new instance of TestXMLResource.
+   *
+   * @param id the unique identifier for the resource
+   * @param creation the timestamp marking the creation of the resource
+   * @param parentCollection the parent collection to which this resource belongs
+   */
   public TestXMLResource(String id, Instant creation, Collection parentCollection) {
     super(id, creation, creation, parentCollection);
   }

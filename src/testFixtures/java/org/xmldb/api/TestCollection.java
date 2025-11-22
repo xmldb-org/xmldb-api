@@ -56,6 +56,15 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.BinaryResource;
 import org.xmldb.api.modules.XMLResource;
 
+/**
+ * The TestCollection class represents a collection of resources and child collections
+ * <p>
+ * It is an implementation of the Collection interface, providing functionality for managing
+ * resources and hierarchical collections.
+ * <p>
+ * TestCollection instances can also be configured using inherited capabilities from
+ * ConfigurableImpl.
+ */
 public class TestCollection extends ConfigurableImpl implements Collection {
   private final TestCollectionData data;
   private final Collection parentCollection;
@@ -64,10 +73,22 @@ public class TestCollection extends ConfigurableImpl implements Collection {
 
   private boolean closed;
 
+  /**
+   * Constructs a new TestCollection instance with the specified data.
+   *
+   * @param data The data associated with this collection. Must not be null.
+   */
   public TestCollection(final TestCollectionData data) {
     this(data, null);
   }
 
+  /**
+   * Constructs a new TestCollection instance with the specified data and parent collection.
+   *
+   * @param data The data associated with this collection. Must not be null.
+   * @param parent The parent collection, which may be null if this collection does not have a
+   *        parent.
+   */
   public TestCollection(final TestCollectionData data, final Collection parent) {
     this.data = data;
     this.parentCollection = parent;
@@ -75,6 +96,12 @@ public class TestCollection extends ConfigurableImpl implements Collection {
     childCollections = new ConcurrentHashMap<>();
   }
 
+  /**
+   * Creates a new instance of TestCollection with the specified name.
+   *
+   * @param name The name of the collection to be created. Must not be null or empty.
+   * @return A new TestCollection instance with the given name.
+   */
   public static TestCollection create(String name) {
     return new TestCollection(new TestCollectionData(name));
   }
