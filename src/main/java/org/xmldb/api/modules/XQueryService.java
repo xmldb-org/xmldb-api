@@ -44,6 +44,23 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.Service;
 import org.xmldb.api.base.XMLDBException;
 
+/**
+ * The {@code XQueryService} interface provides methods for executing XQuery expressions and
+ * managing related configurations such as namespaces, variables, and module load paths.
+ * <p>
+ * It extends the {@code Service} interface, offering support for interacting with XQuery
+ * functionality in XML database implementations.
+ * <p>
+ * The interface defines methods for setting and retrieving namespace mappings, compiling and
+ * executing XQuery expressions, declaring XQuery variables, managing compatibility modes, and
+ * setting module load paths.
+ * <p>
+ * Implementations must handle potential errors during method execution by throwing
+ * {@code XMLDBException}.
+ *
+ * @see Service
+ * @see XMLDBException
+ */
 public interface XQueryService extends Service {
 
   /**
@@ -123,7 +140,7 @@ public interface XQueryService extends Service {
 
   /**
    * Execute a compiled XQuery.
-   *
+   * <p>
    * The implementation should pass all namespaces and variables declared through
    * {@link XQueryService} to the compiled XQuery code.
    *
@@ -137,7 +154,7 @@ public interface XQueryService extends Service {
    * Declare a global, external XQuery variable and assign a value to it. The variable has the same
    * status as a variable declare through the {@code declare variable} statement in the XQuery
    * prolog.
-   *
+   * <p>
    * The variable can be referenced inside the XQuery expression as {@code $variable}. For example,
    * if you declare a variable with
    *
@@ -166,7 +183,8 @@ public interface XQueryService extends Service {
    * expressions will behave different. In particular, additional automatic type conversions will be
    * applied to the operands of numeric operators.
    *
-   * @param backwardsCompatible true it XPath 1.0 compatibility mode should be enabled.
+   * @param backwardsCompatible {@code true} it XPath 1.0 compatibility mode should be enabled,
+   *        {@code false} otherwise
    */
   void setXPathCompatibility(boolean backwardsCompatible);
 

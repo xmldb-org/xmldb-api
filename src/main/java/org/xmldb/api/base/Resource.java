@@ -43,9 +43,12 @@ import java.io.OutputStream;
 import java.time.Instant;
 
 /**
- * {@code Resource} is a container for data stored within the database. Raw resources are not
- * particulary useful. It is necessary to have a resource implementation that provides handling for
- * a specific content type before anything useful can be done.
+ * The Resource interface represents an abstract encapsulation of a resource within a collection,
+ * providing methods to interact with the resource's content and metadata. Resources can store
+ * various types of data (e.g., XML, binary blobs) and are always associated with a specific
+ * collection.
+ *
+ * @param <T> the type of the resource content managed by this interface.
  */
 public interface Resource<T> extends AutoCloseable {
 

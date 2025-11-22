@@ -156,10 +156,11 @@ public final class ServiceProviderCache implements ServiceProvider {
   @FunctionalInterface
   public interface ProviderRegistry {
     /**
-     * Registers the given service supplier for the given service type.
-     * 
-     * @param serviceType the service type
-     * @param serviceSupplier the supplier for the implementation instance
+     * Registers a service provider for a given service type.
+     *
+     * @param <S> the type of the service, extending {@code Service}
+     * @param serviceType the class object representing the service type
+     * @param serviceSupplier a supplier that provides instances of the service
      */
     <S extends Service> void add(Class<S> serviceType, Supplier<? extends S> serviceSupplier);
   }

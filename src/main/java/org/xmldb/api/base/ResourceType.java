@@ -45,11 +45,20 @@ package org.xmldb.api.base;
  * @since 2.0
  */
 public enum ResourceType {
-  BINARY_RESOURCE("BinaryResource"), XML_RESOURCE("XMLResource");
+  /**
+   * Represents a resource type for binary data. This constant is used to identify and interact with
+   * resources that consist of binary content in a repository or database.
+   */
+  BINARY_RESOURCE("BinaryResource"),
+  /**
+   * Represents a resource type for XML data. This constant is used to identify and interact with
+   * resources consisting of XML content in a repository or database.
+   */
+  XML_RESOURCE("XMLResource");
 
   private final String name;
 
-  private ResourceType(String name) {
+  ResourceType(String name) {
     this.name = name;
   }
 

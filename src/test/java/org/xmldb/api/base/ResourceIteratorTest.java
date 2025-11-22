@@ -39,6 +39,7 @@
  */
 package org.xmldb.api.base;
 
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -48,14 +49,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoSettings;
-import org.xmldb.api.TestResourceIterator;
 
 @MockitoSettings
 class ResourceIteratorTest {
   @Spy
-  TestResourceIterator resourceIterator;
+  ResourceIterator resourceIterator;
   @Mock
-  Resource resource;
+  Resource<?> resource;
   @Mock
   Consumer<? super Resource> action;
 

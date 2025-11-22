@@ -140,6 +140,7 @@ public interface Collection extends Configurable, AutoCloseable, ServiceProvider
    *
    * @param id the unique id to associate with the created {@code Resource}.
    * @param type the {@code Resource} type to create.
+   * @param <T> the content type of the resource (the type of data this resource will hold)
    * @param <R> the final resource type
    * @return an empty {@code Resource} instance.
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any

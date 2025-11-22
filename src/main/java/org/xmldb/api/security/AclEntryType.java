@@ -45,5 +45,12 @@ package org.xmldb.api.security;
  * @since 2.0
  */
 public enum AclEntryType {
-  ALLOW, DENY
+  /**
+   * Represents an access control entry type that allows access.
+   */
+  ALLOW,
+  /**
+   * Represents an access control entry type indicating a denial of access.
+   */
+  DENY
 }

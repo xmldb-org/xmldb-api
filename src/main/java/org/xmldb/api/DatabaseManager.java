@@ -87,26 +87,25 @@ public final class DatabaseManager {
   }
 
   /**
-   * Registers a new {@link Database} implementation with the {@link DatabaseManager}.
+   * Registers a new {@link Database} implementation with the {@link DatabaseManager}. The provided
+   * database will be registered without an associated action.
    *
-   * @param database The database instance to register.
-   * @throws XMLDBException with expected error codes.
-   *         {@link org.xmldb.api.base.ErrorCodes#VENDOR_ERROR} for any vendor specific errors that
-   *         occur. {@link org.xmldb.api.base.ErrorCodes#INVALID_DATABASE} if the provided
-   *         {@link Database} instance is invalid.
+   * @param database The {@link Database} instance to register.
+   * @throws XMLDBException if the database instance is already registered or if an error occurs
+   *         during the registration process.
    */
   public static void registerDatabase(final Database database) throws XMLDBException {
     registerDatabase(database, null);
   }
 
   /**
-   * Registers a new {@link Database} implementation with the {@link DatabaseManager}.
+   * Registers a new {@link Database} implementation with the {@link DatabaseManager}, along with
+   * the specified {@link DatabaseAction} to associate with it.
    *
    * @param database The database instance to register.
-   * @throws XMLDBException with expected error codes.
-   *         {@link org.xmldb.api.base.ErrorCodes#VENDOR_ERROR} for any vendor specific errors that
-   *         occur. {@link org.xmldb.api.base.ErrorCodes#INVALID_DATABASE} if the provided
-   *         {@link Database} instance is invalid.
+   * @param action The action to associate with the database upon registration.
+   * @throws XMLDBException if the database instance is already registered or if an error occurs
+   *         during the registration process.
    */
   public static void registerDatabase(final Database database, final DatabaseAction action)
       throws XMLDBException {
@@ -138,7 +137,7 @@ public final class DatabaseManager {
    * {@link Database#getName()} and a colon character. An example would be for the database named
    * "vendordb" the URI handed to getCollection would look something like the following.
    * {@code xmldb:vendordb://host:port/path/to/collection}.
-   * <p/>
+   * <p>
    * This method is called when no authentication is necessary for the database.
    *
    * @param uri The database specific URI to use to locate the collection.

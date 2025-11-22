@@ -52,10 +52,11 @@ import java.util.Optional;
 public interface ServiceProvider {
 
   /**
-   * Checks if a service of the given serviceType is available. This method will return
-   * {@code false} in case of the specified service can not be provided for any reason.
+   * Determines if a service of the specified type is available.
    *
-   * @return {@code true} if the given service type is supported, {@code false otherwise}
+   * @param <S> the type of service
+   * @param serviceType the class type of the service to check for
+   * @return {@code true} if a service of the specified type is available, {@code false} otherwise
    *
    * @since 2.0
    */

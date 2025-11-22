@@ -41,6 +41,15 @@ package org.xmldb.api.base;
 
 import org.xmldb.api.DatabaseManager;
 
+/**
+ * Represents an action performed on a database when it is deregistered from the system. This
+ * interface provides a mechanism for databases to define custom procedures or behaviors during the
+ * deregistration process.
+ * <p>
+ * Implementations of this interface should handle the logic necessary to clean up resources, close
+ * active connections, or perform any required tasks when the database is removed. The specifics of
+ * these actions depend on the database implementation.
+ */
 public interface DatabaseAction {
   /**
    * Method called by {@linkplain DatabaseManager#deregisterDatabase(Database) } to notify the

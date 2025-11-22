@@ -72,8 +72,8 @@ public final class Permissions {
   private static final byte WRITE = 02;
   private static final byte EXECUTE = 01;
 
-  private static final char SETID_CHAR = 's';
-  private static final char SETID_CHAR_NO_EXEC = 'S';
+  private static final char SET_ID_CHAR = 's';
+  private static final char SET_ID_CHAR_NO_EXEC = 'S';
   private static final char STICKY_CHAR = 't';
   private static final char STICKY_CHAR_NO_EXEC = 'T';
   private static final char READ_CHAR = 'r';
@@ -85,19 +85,19 @@ public final class Permissions {
   private static final char GROUP_CHAR = 'g';
   private static final char OTHER_CHAR = 'o';
 
-  public static final Pattern UNIX_SYMBOLIC_MODE_PATTERN =
-      Pattern.compile("((?:[augo]*(?:[+\\-=](?:[" + READ_CHAR + SETID_CHAR + STICKY_CHAR
+  private static final Pattern UNIX_SYMBOLIC_MODE_PATTERN =
+      Pattern.compile("((?:[augo]*(?:[+\\-=](?:[" + READ_CHAR + SET_ID_CHAR + STICKY_CHAR
           + WRITE_CHAR + EXECUTE_CHAR + "])+)+),?)+");
-  public static final Pattern SIMPLE_SYMBOLIC_MODE_PATTERN = Pattern
+  private static final Pattern SIMPLE_SYMBOLIC_MODE_PATTERN = Pattern
       .compile("(?:(?:" + READ_CHAR + "|" + UNSET_CHAR + ")(?:" + WRITE_CHAR + "|" + UNSET_CHAR
-          + ")(?:[" + EXECUTE_CHAR + SETID_CHAR + SETID_CHAR_NO_EXEC + "]|" + UNSET_CHAR
+          + ")(?:[" + EXECUTE_CHAR + SET_ID_CHAR + SET_ID_CHAR_NO_EXEC + "]|" + UNSET_CHAR
           + ")){2}(?:" + READ_CHAR + "|" + UNSET_CHAR + ")(?:" + WRITE_CHAR + "|" + UNSET_CHAR
           + ")(?:[" + EXECUTE_CHAR + STICKY_CHAR + STICKY_CHAR_NO_EXEC + "]|" + UNSET_CHAR + ")");
 
   private Permissions() {}
 
   private enum PermType {
-    READ, WRITE, EXECUTE, SETID, STICKY;
+    READ, WRITE, EXECUTE, SET_ID, STICKY;
   }
 
   /**
@@ -224,7 +224,7 @@ public final class Permissions {
       final EnumMap<PermType, Boolean> perms) {
     if (clause.indexOf('+') > -1 || clause.indexOf('=') > -1) {
       setPermissions(permissions, perms, GROUP_READ, GROUP_WRITE, GROUP_EXECUTE);
-      if (perms.containsKey(PermType.SETID)) {
+      if (perms.containsKey(PermType.SET_ID)) {
         permissions.add(SET_GID);
       }
     }
@@ -234,7 +234,7 @@ public final class Permissions {
       final EnumMap<PermType, Boolean> perms) {
     if (clause.indexOf('+') > -1 || clause.indexOf('=') > -1) {
       setPermissions(permissions, perms, OWNER_READ, OWNER_WRITE, OWNER_EXECUTE);
-      if (perms.containsKey(PermType.SETID)) {
+      if (perms.containsKey(PermType.SET_ID)) {
         permissions.add(SET_UID);
       }
     }
@@ -258,7 +258,7 @@ public final class Permissions {
         permissions.add(GROUP_EXECUTE);
         permissions.add(OTHERS_EXECUTE);
       }
-      if (perms.containsKey(PermType.SETID)) {
+      if (perms.containsKey(PermType.SET_ID)) {
         permissions.add(SET_UID);
         permissions.add(SET_GID);
       }
@@ -275,7 +275,7 @@ public final class Permissions {
         case READ_CHAR -> perms.put(PermType.READ, TRUE);
         case WRITE_CHAR -> perms.put(PermType.WRITE, TRUE);
         case EXECUTE_CHAR -> perms.put(PermType.EXECUTE, TRUE);
-        case SETID_CHAR -> perms.put(PermType.SETID, TRUE);
+        case SET_ID_CHAR -> perms.put(PermType.SET_ID, TRUE);
         case STICKY_CHAR -> perms.put(PermType.STICKY, TRUE);
         default -> throw new IllegalArgumentException("Unrecognised mode char '" + c + "'");
       }
@@ -307,14 +307,14 @@ public final class Permissions {
           selectPermission(permissions, index - 1, OWNER_WRITE, GROUP_WRITE, OTHERS_WRITE);
         case EXECUTE_CHAR ->
           selectPermission(permissions, index - 2, OWNER_EXECUTE, GROUP_EXECUTE, OTHERS_EXECUTE);
-        case SETID_CHAR_NO_EXEC -> {
+        case SET_ID_CHAR_NO_EXEC -> {
           if (index < 3) {
             permissions.add(SET_UID);
           } else {
             permissions.add(SET_GID);
           }
         }
-        case SETID_CHAR -> {
+        case SET_ID_CHAR -> {
           if (index < 3) {
             permissions.add(OWNER_EXECUTE);
             permissions.add(SET_UID);

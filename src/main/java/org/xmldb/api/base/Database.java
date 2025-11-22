@@ -84,14 +84,14 @@ public interface Database extends Configurable {
    * The {@code Database} should return "null" if it realizes it is the wrong kind of driver to
    * connect to the given URI. This will be common, as when the {@code DatabaseManager} is asked to
    * connect to a given URI it passes the URI to each loaded database in turn.
-   * <p/>
+   * <p>
    * The driver should throw an {@code XMLDBException} if it is the right database to connect for
    * the given URI but has trouble connecting to the database.
-   * <p/>
+   * <p>
    * The {@code Properties} argument can be used to pass arbitrary string tag/value pairs as
    * connection arguments. Normally at least "user" and "password" properties should be included in
    * the {@code Properties} object.
-   * <p/>
+   * <p>
    * <B>Note:</B> If a property is specified as part of the {@code uri} and is also specified in the
    * {@code Properties} object, it is implementation-defined as to which value will take precedence.
    * For maximum portability, an application should only specify a property once.
