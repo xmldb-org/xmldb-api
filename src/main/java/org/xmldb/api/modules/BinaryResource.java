@@ -41,16 +41,15 @@ package org.xmldb.api.modules;
 
 import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.ResourceType;
-import org.xmldb.api.base.XMLDBException;
 
 /**
  * Resource for encapsulation of binary data that is stored in the data base. Support for
  * BinaryResources is optional.
- *
+ * <p>
  * The standard {@code getContent} method returns a {@code byte[]} and the standard setContent
  * expects an {@code byte[]}.
  */
-public interface BinaryResource extends Resource<byte[]> {
+public interface BinaryResource extends Resource {
 
   @Override
   default ResourceType getResourceType() {

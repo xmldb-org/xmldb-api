@@ -51,7 +51,7 @@ public interface ResourceIterator {
    *
    * @return true if there are more resources to iterate, false otherwise.
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
+   *         vendor-specific errors that occur.
    */
   boolean hasMoreResources() throws XMLDBException;
 
@@ -60,7 +60,7 @@ public interface ResourceIterator {
    *
    * @return the next {@code Resource} instance in the iterator.
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.NO_SUCH_RESOURCE} if the resource
+   *         vendor-specific errors that occur. {@code ErrorCodes.NO_SUCH_RESOURCE} if the resource
    *         iterator is empty or all resources have already been retrieved.
    */
   Resource nextResource() throws XMLDBException;
@@ -68,7 +68,7 @@ public interface ResourceIterator {
 
   /**
    * Calls the given action for each resource.
-   * 
+   *
    * @param action the action being called with each resource found
    * @throws XMLDBException if an error during internal loop occurs
    */

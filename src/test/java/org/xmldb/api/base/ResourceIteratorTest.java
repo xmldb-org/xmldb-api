@@ -55,7 +55,7 @@ class ResourceIteratorTest {
   @Spy
   ResourceIterator resourceIterator;
   @Mock
-  Resource<?> resource;
+  Resource resource;
   @Mock
   Consumer<? super Resource> action;
 

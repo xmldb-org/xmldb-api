@@ -55,7 +55,7 @@ import org.xmldb.api.base.XMLDBException;
  * The default behavior for getContent and setContent is to work with XML data as text so these
  * methods work on {@code String} content.
  */
-public interface XMLResource extends Resource<String> {
+public interface XMLResource extends Resource {
 
   @Override
   default ResourceType getResourceType() {
@@ -73,7 +73,7 @@ public interface XMLResource extends Resource<String> {
    * @return the id for the parent document of this {@code Resource} or null if there is no parent
    *         document for this {@code Resource}.
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
+   *         vendor-specific errors that occur.
    */
   String getDocumentId() throws XMLDBException;
 
@@ -82,7 +82,7 @@ public interface XMLResource extends Resource<String> {
    *
    * @return The XML content as a DOM {@code Node}
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
+   *         vendor-specific errors that occur.
    */
   Node getContentAsDOM() throws XMLDBException;
 
@@ -91,7 +91,7 @@ public interface XMLResource extends Resource<String> {
    *
    * @param content The new content value
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.INVALID_RESOURCE} if the content
+   *         vendor-specific errors that occur. {@code ErrorCodes.INVALID_RESOURCE} if the content
    *         value provided is null. {@code ErrorCodes.WRONG_CONTENT_TYPE} if the content provided
    *         in not a valid DOM {@code Node}.
    */
@@ -103,7 +103,7 @@ public interface XMLResource extends Resource<String> {
    *
    * @param handler the SAX {@code ContentHandler} to use to handle the {@code Resource} content.
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur. {@code ErrorCodes.INVALID_RESOURCE} if the
+   *         vendor-specific errors that occur. {@code ErrorCodes.INVALID_RESOURCE} if the
    *         {@code ContentHandler} provided is null.
    */
   void getContentAsSAX(ContentHandler handler) throws XMLDBException;
@@ -113,7 +113,7 @@ public interface XMLResource extends Resource<String> {
    *
    * @return a SAX {@code ContentHandler} that can be used to add content into the {@code Resource}.
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
+   *         vendor-specific errors that occur.
    */
   ContentHandler setContentAsSAX() throws XMLDBException;
 

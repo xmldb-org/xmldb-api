@@ -39,6 +39,7 @@
  */
 package org.xmldb.api.base;
 
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.Instant;
 
@@ -47,14 +48,12 @@ import java.time.Instant;
  * providing methods to interact with the resource's content and metadata. Resources can store
  * various types of data (e.g., XML, binary blobs) and are always associated with a specific
  * collection.
- *
- * @param <T> the type of the resource content managed by this interface.
  */
-public interface Resource<T> extends AutoCloseable {
+public interface Resource extends AutoCloseable {
 
   /**
    * Returns the resource type for this Resource.
-   *
+   * <p>
    * XML:DB defined resource types are: XMLResource - all XML data stored in the database
    * BinaryResource - Binary blob data stored in the database
    *
@@ -68,7 +67,7 @@ public interface Resource<T> extends AutoCloseable {
    *
    * @return the collection associated with the resource.
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
+   *         vendor-specific errors that occur.
    */
   Collection getParentCollection() throws XMLDBException;
 
@@ -88,9 +87,11 @@ public interface Resource<T> extends AutoCloseable {
    *
    * @return the content of the resource.
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
+   *         vendor-specific errors that occur.
+   * @deprecated Use {@link #getContentAsStream(OutputStream)}
    */
-  T getContent() throws XMLDBException;
+  @Deprecated(since = "3.0")
+  Object getContent() throws XMLDBException;
 
   /**
    * Retrieves the content from the resource. The type of the content varies depending what type of
@@ -98,9 +99,20 @@ public interface Resource<T> extends AutoCloseable {
    *
    * @param stream the output stream to write the resource content to
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
+   *         vendor-specific errors that occur.
    */
   void getContentAsStream(OutputStream stream) throws XMLDBException;
+
+  /**
+   * Sets the content of the resource using the provided input stream. The type of the content that
+   * can be set depends on the type of resource being used.
+   *
+   * @param stream the input stream containing the content to be set for the resource
+   * @throws XMLDBException if an error occurs during the operation. This can include expected error
+   *         codes such as {@code ErrorCodes.VENDOR_ERROR} for any vendor-specific errors.
+   * @since 3.0
+   */
+  void setContentAsStream(InputStream stream) throws XMLDBException;
 
   /**
    * Sets the content for this resource. The type of content that can be set depends on the type of
@@ -108,13 +120,15 @@ public interface Resource<T> extends AutoCloseable {
    *
    * @param value the content value to set for the resource.
    * @throws XMLDBException with expected error codes. {@code ErrorCodes.VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
+   *         vendor-specific errors that occur.
+   * @deprecated Use {@link #setContentAsStream(InputStream)}
    */
-  void setContent(T value) throws XMLDBException;
+  @Deprecated(since = "3.0")
+  void setContent(Object value) throws XMLDBException;
 
   /**
    * Returns whenever the current resource has been closed or not.
-   * 
+   *
    * @return {@code true} when the resource has been closed, {@code false} otherwise.
    */
   boolean isClosed();
@@ -125,7 +139,7 @@ public interface Resource<T> extends AutoCloseable {
    * after the {@code close} method has been called.
    *
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
+   *         vendor-specific errors that occur.
    */
   @Override
   void close() throws XMLDBException;
@@ -135,7 +149,7 @@ public interface Resource<T> extends AutoCloseable {
    *
    * @return the creation date of the current resource
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
+   *         vendor-specific errors that occur.
    */
   Instant getCreationTime() throws XMLDBException;
 
@@ -144,7 +158,7 @@ public interface Resource<T> extends AutoCloseable {
    *
    * @return the last modification date of the current resource
    * @throws XMLDBException with expected error codes. {@link ErrorCodes#VENDOR_ERROR} for any
-   *         vendor specific errors that occur.
+   *         vendor-specific errors that occur.
    */
   Instant getLastModificationTime() throws XMLDBException;
 }
