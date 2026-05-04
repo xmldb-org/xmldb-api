@@ -9,10 +9,13 @@ on:
     branches: [ main, protobuf ]
   pull_request:
     branches: [ main, protobuf ]
+  schedule:
+    - cron: '0 2 * * *'
   workflow_dispatch:
 
 jobs:
   codacy-analysis-cli:
+    if: github.event_name != 'schedule' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     name: Codacy Analysis CLI
     steps:
@@ -20,6 +23,7 @@ jobs:
       - name: Run codacy-analysis-cli
         uses: codacy/codacy-analysis-cli-action@master
   build:
+    if: github.event_name != 'schedule' || github.ref == 'refs/heads/main'
     name: ${{ matrix.os }} / OpenJDK ${{ matrix.jdk }}
     runs-on: ${{ matrix.os }}
     env:
@@ -49,7 +53,7 @@ jobs:
     - name: Run codecov analysis
       uses: codecov/codecov-action@v6
   deploy:
-    if: ${{ github.event_name != 'pull_request' && github.repository == 'xmldb-org/xmldb-api' }}
+    if: ${{ github.event_name != 'pull_request' && github.repository == 'xmldb-org/xmldb-api' && (github.event_name != 'schedule' || github.ref == 'refs/heads/main') }}
     needs: [ build, codacy-analysis-cli ]
     runs-on: ubuntu-latest
     name: Deploy
