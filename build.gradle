@@ -68,7 +68,7 @@ if (!project.hasProperty('sonatypePassword')) ext.sonatypePassword = '**undefine
 if (!project.hasProperty('sonarToken')) ext.sonarToken = '**undefined**'
 
 group = 'net.sf.xmldb-org'
-version = '2.0.0'
+version = '2.1.0'
 
 defaultTasks 'build'
 
@@ -176,7 +176,7 @@ config {
     repositories {
       repository {
         name = 'sonatypeRelease'
-        url  = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+        url  = 'https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2'
         credentials {
           username = sonatypeUsername
           password = sonatypePassword
