@@ -176,7 +176,7 @@ config {
     repositories {
       repository {
         name = 'sonatypeRelease'
-        url  = 'https://ossrh-staging-api.central.sonatype.com/service/local/'
+        url  = 'https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2'
         credentials {
           username = sonatypeUsername
           password = sonatypePassword
