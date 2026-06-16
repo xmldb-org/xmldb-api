@@ -199,7 +199,7 @@ config {
     }
     sonar {
       hostUrl = 'https://sonarcloud.io'
-      login = sonarToken
+      login = 'x' // does no longer work using SONAR_TOKEN environment variable
       organization = 'xmldb-org'
       projectKey = 'xmldb-org_xmldb-api'
     }

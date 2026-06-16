@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-      ORG_GRADLE_PROJECT_sonarToken: ${{ secrets.SONAR_TOKEN || '**undefined**' }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN || '**undefined**' }}
     strategy:
       matrix:
         jdk: ['17', '21']
