@@ -61,10 +61,10 @@ import java.util.regex.Pattern;
 
 /**
  * Parser for {@link Permission} values.
- * 
+ * <p>
  * This class provides static methods to parse string and integer based permission modes into a set
  * of permissions.
- * 
+ *
  * @since 2.0
  */
 public final class Permissions {
@@ -102,13 +102,13 @@ public final class Permissions {
 
   /**
    * Parses the permissions from the given mode string.
-   * 
+   * <p>
    * The string can either be in one of two formats:
    * <ol>
    * <li>Unix Symbolic format as given to 'chmod' on Unix/Linux</li>
    * <li>Simple Symbolic format e.g. "rwxr-xr-x"</li>
    * </ol>
-   * 
+   *
    * @param modeStr the mode to be parsed
    * @return the set of parsed permissions
    * @throws IllegalArgumentException if the given mode string is in the wrong format
@@ -129,15 +129,24 @@ public final class Permissions {
     return permissions;
   }
 
-
   /**
    * Parses the permissions from the given octal mode value.
-   * 
+   *
    * @param mode the octal permission mode
    * @return the set of parsed permissions
    */
   public static Set<Permission> fromOctal(int mode) {
     final EnumSet<Permission> permissions = EnumSet.noneOf(Permission.class);
+    // special bits
+    if ((mode & (1 << 11)) != 0) {
+      permissions.add(SET_UID);
+    }
+    if ((mode & (1 << 10)) != 0) {
+      permissions.add(SET_GID);
+    }
+    if ((mode & (1 << 9)) != 0) {
+      permissions.add(STICKY_BIT);
+    }
     // user operations
     if ((mode & (READ << 6)) != 0) {
       permissions.add(OWNER_READ);
@@ -147,9 +156,6 @@ public final class Permissions {
     }
     if ((mode & (EXECUTE << 6)) != 0) {
       permissions.add(OWNER_EXECUTE);
-    }
-    if ((mode & (1 << 11)) != 0) {
-      permissions.add(SET_UID);
     }
     // group operations
     if ((mode & (READ << 3)) != 0) {
@@ -161,10 +167,6 @@ public final class Permissions {
     if ((mode & (EXECUTE << 3)) != 0) {
       permissions.add(GROUP_EXECUTE);
     }
-    if ((mode & (1 << 10)) != 0) {
-      permissions.add(SET_GID);
-    }
-
     // others operations
     if ((mode & READ) != 0) {
       permissions.add(OTHERS_READ);
@@ -175,10 +177,97 @@ public final class Permissions {
     if ((mode & EXECUTE) != 0) {
       permissions.add(OTHERS_EXECUTE);
     }
-    if ((mode & (1 << 9)) != 0) {
-      permissions.add(STICKY_BIT);
-    }
     return permissions;
+  }
+
+  /**
+   * Converts a set of permissions into an octal representation.
+   *
+   * @param permissions the set of {@code Permission} to be converted into the octal representation
+   * @return the octal representation of the given permission set
+   * @since 3.0
+   */
+  public static int toOctal(Set<Permission> permissions) {
+    int octal = 0;
+    // Handle special bits
+    if (permissions.contains(SET_UID)) {
+      octal |= 04000; // SUID
+    }
+    if (permissions.contains(SET_GID)) {
+      octal |= 02000; // SGID
+    }
+    if (permissions.contains(STICKY_BIT)) {
+      octal |= 01000; // Sticky bit
+    }
+    // Handle owner permissions
+    if (permissions.contains(OWNER_READ)) {
+      octal |= 0400; // Owner read
+    }
+    if (permissions.contains(OWNER_WRITE)) {
+      octal |= 0200; // Owner write
+    }
+    if (permissions.contains(OWNER_EXECUTE)) {
+      octal |= 0100; // Owner execute
+    }
+    // Handle group permissions
+    if (permissions.contains(GROUP_READ)) {
+      octal |= 040; // Group read
+    }
+    if (permissions.contains(GROUP_WRITE)) {
+      octal |= 020; // Group write
+    }
+    if (permissions.contains(GROUP_EXECUTE)) {
+      octal |= 010; // Group execute
+    }
+    // Handle others permissions
+    if (permissions.contains(OTHERS_READ)) {
+      octal |= 04; // Others read
+    }
+    if (permissions.contains(OTHERS_WRITE)) {
+      octal |= 02; // Others write
+    }
+    if (permissions.contains(OTHERS_EXECUTE)) {
+      octal |= 01; // Others execute
+    }
+    return octal;
+  }
+
+  /**
+   * Converts the given set of permissions into a string representation. The string format
+   * represents the symbolic mode of the permissions.
+   *
+   * @param permissions the set of {@code Permission} to be converted into a string representation
+   * @return a string representation of the permissions in symbolic mode
+   * @since 3.0
+   */
+  public static String toModeString(Set<Permission> permissions) {
+    StringBuilder mode = new StringBuilder();
+    // Append permissions for owner
+    appendReadWritePermissions(mode, permissions, OWNER_READ, OWNER_WRITE);
+    appendExecuteAndSpecialPermissions(mode, permissions, OWNER_EXECUTE, SET_UID, "s", "S");
+    // Append permissions for group
+    appendReadWritePermissions(mode, permissions, GROUP_READ, GROUP_WRITE);
+    appendExecuteAndSpecialPermissions(mode, permissions, GROUP_EXECUTE, SET_GID, "s", "S");
+    // Append permissions for others
+    appendReadWritePermissions(mode, permissions, OTHERS_READ, OTHERS_WRITE);
+    appendExecuteAndSpecialPermissions(mode, permissions, OTHERS_EXECUTE, STICKY_BIT, "t", "T");
+    return mode.toString();
+  }
+
+  private static void appendReadWritePermissions(StringBuilder mode, Set<Permission> permissions,
+      Permission read, Permission write) {
+    mode.append(permissions.contains(read) ? "r" : "-");
+    mode.append(permissions.contains(write) ? "w" : "-");
+  }
+
+  private static void appendExecuteAndSpecialPermissions(StringBuilder mode,
+      Set<Permission> permissions, Permission execute, Permission special, String withExecute,
+      String withoutExecute) {
+    if (permissions.contains(special)) {
+      mode.append(permissions.contains(execute) ? withExecute : withoutExecute);
+    } else {
+      mode.append(permissions.contains(execute) ? "x" : "-");
+    }
   }
 
   @SuppressWarnings("StringSplitter")
@@ -342,6 +431,7 @@ public final class Permissions {
       case 3 -> permissions.add(groupPermission);
       case 6 -> permissions.add(othersPermission);
       default -> {
+        // no action
       }
     }
   }

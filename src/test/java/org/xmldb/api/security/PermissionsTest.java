@@ -55,6 +55,9 @@ import static org.xmldb.api.security.Permission.STICKY_BIT;
 import static org.xmldb.api.security.Permissions.fromModeString;
 import static org.xmldb.api.security.Permissions.fromOctal;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
 class PermissionsTest {
@@ -154,5 +157,58 @@ class PermissionsTest {
     assertThat(fromOctal(0007)).containsExactly(OTHERS_READ, OTHERS_WRITE, OTHERS_EXECUTE);
     assertThat(fromOctal(01000)).containsExactly(STICKY_BIT);
     assertThat(fromOctal(01001)).containsExactly(OTHERS_EXECUTE, STICKY_BIT);
+  }
+
+  @Test
+  void toOctal() {
+    // Test case 1: All permissions enabled (rwsrwsrwt)
+    Set<Permission> allPermissions = EnumSet.allOf(Permission.class);
+    assertThat(Permissions.toOctal(allPermissions)).isEqualTo(07777);
+    // Test case 2: No permissions (---------)
+    Set<Permission> noPermissions = EnumSet.noneOf(Permission.class);
+    assertThat(Permissions.toOctal(noPermissions)).isZero(); // No permissions
+    // Test case 3: Only owner has read, write, execute (rwx------)
+    Set<Permission> ownerOnly = EnumSet.of(OWNER_READ, OWNER_WRITE, OWNER_EXECUTE);
+    assertThat(Permissions.toOctal(ownerOnly)).isEqualTo(0700);
+    // Test case 4: Group has read and others have execute (---r----x)
+    Set<Permission> groupReadOthersExecute = EnumSet.of(GROUP_READ, OTHERS_EXECUTE);
+    assertThat(Permissions.toOctal(groupReadOthersExecute)).isEqualTo(0041);
+    // Test case 5: SUID and owner read/write (rwS------)
+    Set<Permission> suidOwnerReadWrite = EnumSet.of(SET_UID, OWNER_READ, OWNER_WRITE);
+    assertThat(Permissions.toOctal(suidOwnerReadWrite)).isEqualTo(04600);
+    // Test case 6: SGID and group write/execute (----ws---)
+    Set<Permission> sgidGroupWriteExecute = EnumSet.of(SET_GID, GROUP_WRITE, GROUP_EXECUTE);
+    assertThat(Permissions.toOctal(sgidGroupWriteExecute)).isEqualTo(02030);
+    // Test case 7: Sticky bit and others can only write (-------wT)
+    Set<Permission> stickyOthersWrite = EnumSet.of(STICKY_BIT, OTHERS_WRITE);
+    assertThat(Permissions.toOctal(stickyOthersWrite)).isEqualTo(01002);
+  }
+
+  @Test
+  void toModeString() {
+    // Test case 1: All permissions enabled
+    Set<Permission> allPermissions = EnumSet.allOf(Permission.class);
+    assertThat(Permissions.toModeString(allPermissions)).isEqualTo("rwsrwsrwt");
+    // Test case 2: No permissions
+    Set<Permission> noPermissions = EnumSet.noneOf(Permission.class);
+    assertThat(Permissions.toModeString(noPermissions)).isEqualTo("---------");
+    // Test case 3: Owner full, group/others read-only
+    Set<Permission> ownerFullGroupReadOthersRead =
+        EnumSet.of(OWNER_READ, OWNER_WRITE, OWNER_EXECUTE, GROUP_READ, OTHERS_READ);
+    assertThat(Permissions.toModeString(ownerFullGroupReadOthersRead)).isEqualTo("rwxr--r--");
+    // Test case 4: SUID and owner execution only
+    Set<Permission> suidOwnerExecute = EnumSet.of(SET_UID, OWNER_EXECUTE);
+    assertThat(Permissions.toModeString(suidOwnerExecute)).isEqualTo("--s------");
+    // Test case 5: SGID and group write with sticky others write
+    Set<Permission> sgidGroupWriteSticky =
+        EnumSet.of(SET_GID, GROUP_WRITE, STICKY_BIT, OTHERS_WRITE);
+    assertThat(Permissions.toModeString(sgidGroupWriteSticky)).isEqualTo("----wS-wT");
+    // Test case 6: SUID and Sticky bit and other execute
+    Set<Permission> stickyNoExecute = EnumSet.of(SET_UID, STICKY_BIT, OTHERS_EXECUTE);
+    assertThat(Permissions.toModeString(stickyNoExecute)).isEqualTo("--S-----t");
+    // Test case 7: Mixed permissions
+    Set<Permission> mixedPermissions =
+        EnumSet.of(OWNER_READ, OWNER_EXECUTE, GROUP_WRITE, GROUP_EXECUTE, OTHERS_EXECUTE);
+    assertThat(Permissions.toModeString(mixedPermissions)).isEqualTo("r-x-wx--x");
   }
 }
