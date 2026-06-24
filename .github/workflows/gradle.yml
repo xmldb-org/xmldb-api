@@ -45,10 +45,10 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build without sonar
-      if:  ${{ env.ORG_GRADLE_PROJECT_sonarToken == '**undefined**' || matrix.jdk != env.MIN_JDK }}
+      if:  ${{ env.SONAR_TOKEN == '**undefined**' || matrix.jdk != env.MIN_JDK }}
       run: ./gradlew check
     - name: Build with sonar
-      if:  ${{ env.ORG_GRADLE_PROJECT_sonarToken != '**undefined**' }}
+      if:  ${{ env.SONAR_TOKEN != '**undefined**' && matrix.jdk == env.MIN_JDK  }}
       run: ./gradlew check sonar
     - name: Run codecov analysis
       uses: codecov/codecov-action@v7
