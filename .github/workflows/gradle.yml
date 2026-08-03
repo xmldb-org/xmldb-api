@@ -3,7 +3,8 @@
 
 name: CI
 env:
-  MIN_JDK: '17'
+  DIST_JDK: '17'
+  SONAR_JDK: '21'
 on:
   push:
     branches: [ main, protobuf ]
@@ -45,10 +46,10 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build without sonar
-      if:  ${{ env.SONAR_TOKEN == '**undefined**' || matrix.jdk != env.MIN_JDK }}
+      if:  ${{ env.SONAR_TOKEN == '**undefined**' || matrix.jdk != env.SONAR_JDK }}
       run: ./gradlew check
     - name: Build with sonar
-      if:  ${{ env.SONAR_TOKEN != '**undefined**' && matrix.jdk == env.MIN_JDK  }}
+      if:  ${{ env.SONAR_TOKEN != '**undefined**' && matrix.jdk == env.SONAR_JDK  }}
       run: ./gradlew check sonar
     - name: Run codecov analysis
       uses: codecov/codecov-action@v7
@@ -65,7 +66,7 @@ jobs:
       uses: actions/setup-java@v5
       with:
         distribution: temurin
-        java-version: ${{ env.MIN_JDK }}
+        java-version: ${{ env.DIST_JDK }}
     - name: Deploy
       env:
         ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_SIGNING_KEY }}
